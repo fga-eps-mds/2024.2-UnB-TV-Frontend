@@ -48,3 +48,5 @@ Thumbs.db
 certificate.cnf
 localhost.crt
 localhost.key
+
+.env
