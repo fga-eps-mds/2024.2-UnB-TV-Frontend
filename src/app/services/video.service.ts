@@ -9,7 +9,7 @@ import {
 } from 'src/app/app.constant';
 import { IVideo } from 'src/shared/model/video.model';
 import { IEduplayVideosByInstitution } from 'src/shared/model/eduplay-by-institution.model';
-import { EDUPLAY_CLIENT_KEY } from '../environment/environment';
+import { environment } from '../environment/environment';
 
 type VideoResponseType = HttpResponse<IVideo>;
 type EduplayByInstitutionResponseType =
@@ -20,13 +20,13 @@ type EduplayByInstitutionResponseType =
 })
 export class VideoService {
   public resourceUrl = EDUPLAY_API_URL + 'video';
-  public eduplayClientKey = EDUPLAY_CLIENT_KEY;
+  public eduplayClientKey = environment.EDUPLAY_CLIENT_KEY;
   public unbId = UNB_ID;
   public limit = VIDEOS_LIMIT;
   public order = VIDEOS_ORDER;
   private selectedCatalogProgram = new BehaviorSubject<IVideo[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   findAll(): Observable<EduplayByInstitutionResponseType> {
     let headers = new HttpHeaders({ clientkey: this.eduplayClientKey });

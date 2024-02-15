@@ -9,7 +9,7 @@ import {
   VIDEOS_LIMIT,
   VIDEOS_ORDER,
 } from 'src/app/app.constant';
-import { EDUPLAY_CLIENT_KEY } from '../environment/environment';
+import { environment } from '../environment/environment';
 import { VideoService } from './video.service';
 import { IVideo } from 'src/shared/model/video.model';
 
@@ -416,7 +416,7 @@ describe('VideoService', () => {
         `${EDUPLAY_API_URL}video?institution=${UNB_ID}&limit=${VIDEOS_LIMIT}&order=${VIDEOS_ORDER}`
       );
       expect(req.request.method).toBe('GET');
-      expect(req.request.headers.get('clientkey')).toBe(EDUPLAY_CLIENT_KEY);
+      expect(req.request.headers.get('clientkey')).toBe(environment.EDUPLAY_CLIENT_KEY);
 
       req.flush(mockData);
     });
@@ -470,7 +470,7 @@ describe('VideoService', () => {
 
       const req = httpMock.expectOne(`${EDUPLAY_API_URL}video/${mockId}`);
       expect(req.request.method).toBe('GET');
-      expect(req.request.headers.get('clientkey')).toBe(EDUPLAY_CLIENT_KEY);
+      expect(req.request.headers.get('clientkey')).toBe(environment.EDUPLAY_CLIENT_KEY);
 
       req.flush(mockData);
     });
