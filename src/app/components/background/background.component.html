@@ -43,14 +43,14 @@
             </li>
           </div>
           <div class="mx-2 text-blue-brand">|</div>
-          <div *ngIf="getActualRoute() === '/participate'">
+          <div *ngIf="getActualRoute() === '/suggestAgenda'">
             <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/participate']">Participe</a>
+              <a [routerLink]="['/suggestAgenda']">Pauta</a>
             </li>
           </div>
-          <div *ngIf="getActualRoute() !== '/participate'">
+          <div *ngIf="getActualRoute() !== '/suggestAgenda'">
             <li class="text-blue-brand">
-              <a [routerLink]="['/participate']">Participe</a>
+              <a [routerLink]="['/suggestAgenda']">Pauta</a>
             </li>
           </div>
         </ul>
