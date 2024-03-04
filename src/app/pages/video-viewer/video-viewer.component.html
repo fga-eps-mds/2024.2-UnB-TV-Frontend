@@ -1,6 +1,6 @@
 <div class="justify-center flex flex-col">
   <div class="flex justify-end p-2">
-    <img src="../../../assets/share.png" alt="Share" (click)="shareVideo()">
+    <img src="../../../assets/share.png" alt="Share" (click)="shareVideo()" />
   </div>
   <div class="relative w-full max-h-96 overflow-hidden aspect-video">
     <iframe
@@ -16,7 +16,9 @@
         {{ video.title }}
       </h4>
     </div>
-    <div class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800">
+    <div
+      class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800"
+    >
       <div>
         <span
           *ngIf="!showDescription && videoDescription.length > characterLimit"
@@ -39,8 +41,8 @@
         </div>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <app-video-comment />
-    </div>
+    </div> -->
   </div>
 </div>
