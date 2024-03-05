@@ -13,6 +13,6 @@ export class GridService {
   constructor(private http: HttpClient) { }
 
   getSchedule(day?: string): Observable<any> {
-    return this.http.get(`${this.videoServiceApiURL}/schedule${day ? '?day=' + day : ''}`)
+    return this.http.get(`${this.videoServiceApiURL}/schedule/${day ? '?day=' + day : ''}`)
   }
 }

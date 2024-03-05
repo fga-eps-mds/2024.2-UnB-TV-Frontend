@@ -20,7 +20,7 @@ export class StreamViewComponent {
   constructor(
     private gridService: GridService,
     private dateService: DateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.date = this.dateService.getCurrentDate();
@@ -43,7 +43,8 @@ export class StreamViewComponent {
   }
 
   formatWeekday(value: string): string {
-    return value.replace('-feira', '').toUpperCase();
+    let formattedValue = value.replace('-feira', '').toUpperCase();
+    return formattedValue.replace('Ç', 'C')
   }
 
   getTodaysSchedule(): void {
