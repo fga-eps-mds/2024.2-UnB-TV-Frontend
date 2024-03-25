@@ -34,7 +34,7 @@ import { AuthService } from './services/auth.service';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { StreamViewComponent } from './pages/stream-view/stream-view.component';
 import { UpdateRoleComponent } from './pages/update-role/update-role.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MenuModule } from 'primeng/menu';
 import { VideoCommentComponent } from './components/video-comment/video-comment.component';
 import { SuggestAgendaComponent } from './pages/suggest-agenda/suggest-agenda.component';
@@ -44,6 +44,7 @@ import { GridDaysComponent } from './pages/grid-days/grid-days.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { CatalogComponent } from './pages/catalog/catalog.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { CatalogComponent } from './pages/catalog/catalog.component';
     GridComponent,
     GridDaysComponent,
     VideoCommentComponent,
-    CatalogComponent
+    CatalogComponent,
+    PrivacyPolicyComponent
   ],
 
   providers: [
@@ -125,4 +127,4 @@ import { CatalogComponent } from './pages/catalog/catalog.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
