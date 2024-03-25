@@ -3,7 +3,7 @@
   "short_name": "UnB-TV",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "./",
   "start_url": "./",
   "prefer_related_applications": false,
@@ -56,5 +56,6 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "display_override": ["window-controls-overlay", "fullscreen"]
 }
