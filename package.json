@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
+    "@angular/service-worker": "^16.2.12",
     "@types/gapi.auth2": "^0.0.60",
     "angular-oauth2-oidc": "^16.0.0",
     "hls.js": "^1.4.12",

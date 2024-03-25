@@ -16,7 +16,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-s
 
 
 // Declaration
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -45,6 +45,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   imports: [
@@ -65,7 +66,13 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
     MatPaginatorModule,
     SocialLoginModule,
     NgxGoogleAnalyticsModule.forRoot('G-XL7Z0L7VM8'),
-    NgxGoogleAnalyticsRouterModule
+    NgxGoogleAnalyticsRouterModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
 
   declarations: [
