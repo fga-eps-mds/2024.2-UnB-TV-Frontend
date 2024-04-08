@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.netlify.unbtvweb.twa",
+      "sha256_cert_fingerprints": [
+        "EE:00:21:F2:23:AA:C5:1F:AB:6C:C3:F1:FE:B0:89:BD:CC:B7:53:96:E5:F3:BD:7D:FB:40:A6:AC:0C:1D:FE:43"
+      ]
+    }
+  }
+]
