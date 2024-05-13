@@ -1,6 +1,6 @@
 export const environment = {
   // videoAPIURL: process.env["videoAPIURL"],
-  videoAPIURL: "https://unbtv-videoservice.onrender.com/api",
+  videoAPIURL: "https://unbtv-videoservice.vercel.app/api",
   // usersAPIURL: process.env["usersAPIURL"],
   usersAPIURL: "https://unbtv.vercel.app/api",
   // adminAPIURL: process.env["adminAPIURL"],
