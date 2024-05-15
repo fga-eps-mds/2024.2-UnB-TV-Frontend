@@ -1,4 +1,4 @@
-FROM node:16 as angular
+FROM node:20 as angular
 
 WORKDIR /unb-tv-web
 
