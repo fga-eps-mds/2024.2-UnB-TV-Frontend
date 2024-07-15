@@ -56,6 +56,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/environment/environment.ts",
+                  "with": "src/app/environment/environment.test.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -90,7 +98,13 @@
             ],
             "styles": ["src/styles.css"],
             "scripts": [],
-            "karmaConfig": "karma.conf.js"
+            "karmaConfig": "karma.conf.js",
+            "fileReplacements": [
+                {
+                  "replace": "src/app/environment/environment.ts",
+                  "with": "src/app/environment/environment.test.ts"
+                }
+              ]
           }
         }
       }

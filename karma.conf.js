@@ -12,6 +12,10 @@ module.exports = function (config) {
           '--headless',
           '--remote-debugging-port=9222'
         ]
+      },
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
       }
     },
     basePath: '',
@@ -47,7 +51,7 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessCI'],
     restartOnFileChange: true
   });
 };
