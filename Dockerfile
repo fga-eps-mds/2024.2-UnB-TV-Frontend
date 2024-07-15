@@ -16,5 +16,7 @@ COPY package.json /unb-tv-web/
 RUN npm install -g @angular/cli
 RUN npm install
 
+COPY . /unb-tv-web
+
 EXPOSE 4200
 EXPOSE 9876

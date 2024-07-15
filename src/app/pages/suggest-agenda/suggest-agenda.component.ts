@@ -44,7 +44,7 @@ export class SuggestAgendaComponent implements OnInit {
       emailData.responsavel = this.suggestAgendaForm.value.responsavel;
       emailData.telefone_responsavel = this.suggestAgendaForm.value.telefoneResponsavel;
       emailData.email_contato = this.suggestAgendaForm.value.emailContato;
-      const emailUnB = 'unbtv@unb.br';
+      const emailUnB = 'unbtv20241@gmail.com';
       emailData.recipients = [emailUnB];
       this.isSendingEmail = true;
       this.emailService.sendEmail(emailData).subscribe((res: HttpResponse<string>) => {
