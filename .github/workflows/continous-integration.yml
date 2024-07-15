@@ -5,6 +5,7 @@ on: push
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
+    environment: actions
 
     steps:
       - name: Checkout ✅
