@@ -8,6 +8,7 @@ export interface IEmailData {
     telefone_responsavel?: string;
     email_contato?: string;
     recipients?: string[];
+    url_video?: string;
 }
 
 export class EmailData implements IEmailData {
@@ -20,5 +21,6 @@ export class EmailData implements IEmailData {
         public telefone_responsavel?: string,
         public email_contato?: string,
         public recipients?: string[],
+        public url_video?: string,
     ) { }
 }
