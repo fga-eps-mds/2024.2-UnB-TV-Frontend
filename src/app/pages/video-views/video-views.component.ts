@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './video-views.component.css'
 })
 export class VideoViewsComponent {
-
+  
 }
