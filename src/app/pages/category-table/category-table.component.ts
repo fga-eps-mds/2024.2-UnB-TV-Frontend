@@ -207,6 +207,62 @@ export class CategoryTableComponent {
         categoria: "Variedades",
       },
     ];
+
+    videos.forEach((video) => {
+      const keyWordsTitle = video?.title?.toLowerCase() ?? '';
+      
+      if ( keyWordsTitle ) {
+        const category = keywordsCategories.find((config) => 
+          config.keywords.some((keyWord) => keyWordsTitle.includes(keyWord))
+        );
+
+        if ( category ) {
+          video['catalog'] = category?.categoria;
+          category.category.push(video);
+        } else {
+          video['catalog'] = "UnBTV";
+          this.catalog.unbtv.push(video);
+        }
+      };
+
+    });
+  }
+
+  aggregateVideosByCategory(): void{
+    const categoryMap = new Map<string, { count: number, views: number }>();
+    const categories = [
+      "Arte e Cultura",
+      "Documentais",
+      "Entrevista",
+      "Jornalismo",
+      "Pesquisa e Ciência",
+      "Séries Especiais",
+      "UnBTV",
+      "Variedades"
+    ];
+
+    categories.forEach( category => {
+      categoryMap.set( category, { count: 0, views: 0 });
+    });
+
+    this.unbTvVideos.forEach((video) => {
+      const category = video['catalog'];
+      const views = video.qtAccess || 0;
+
+      const categoryData = categoryMap.get(category);
+
+      if ( categoryData ) {
+        categoryData.count+= 1;
+        categoryData.views+= views;
+      }
+    });
+
+    this.aggregatedVideos = Array.from(categoryMap.entries()).map(([category, data]) => ({
+      category,
+      videoCount: data.count, 
+      totalViews: data.views,
+      viewsPerVideo: data.count > 0 ? data.views/data.count : 0
+    }));
   }
 }
 
