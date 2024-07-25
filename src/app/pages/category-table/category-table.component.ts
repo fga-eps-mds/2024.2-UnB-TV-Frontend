@@ -8,7 +8,7 @@ import { IVideo } from 'src/shared/model/video.model';
 @Component({
   selector: 'app-category-table',
   templateUrl: './category-table.component.html',
-  styleUrl: './category-table.component.css'
+  styleUrls: ['./category-table.component.css']
 })
 export class CategoryTableComponent {
   unbTvChannelId = UNB_TV_CHANNEL_ID;
