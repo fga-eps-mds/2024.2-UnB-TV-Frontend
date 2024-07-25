@@ -1,1 +1,20 @@
-<p>category-table works!</p>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>N° Vídeos</th>
+                <th>N° Visualizações</th>
+                <th>Visualizações/Vídeo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let video of aggreatedVideos">
+                <td>{{ video.category }}</td>
+                <td>{{ video.videoCount }}</td>
+                <td>{{ video.totalViews }}</td>
+                <td>{{ video.viewsPerVideo | number:'1.0-2' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
