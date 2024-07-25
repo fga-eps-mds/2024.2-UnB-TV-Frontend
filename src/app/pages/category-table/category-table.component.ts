@@ -42,5 +42,13 @@ export class CategoryTableComponent {
     })
   }
 
+  filterVideosByChannel(videos: IVideo[]): void {
+    videos.forEach((video) => {
+      const channel = video?.channels;
+      if ( channel )
+        if ( channel[0].id === this.unbTvChannelId) this.unbTvVideos.push(video);
+    });
+  }
+  
 }
 
