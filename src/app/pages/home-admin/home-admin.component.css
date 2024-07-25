@@ -1,0 +1,84 @@
+.body{
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+
+    width: 129px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.pagina{
+    display: flex;
+    flex-direction: row;
+}
+
+.topo-esquerdo{
+    width: 129px;
+    height: 60px;
+    background: #FFF;
+    box-shadow: 2px 1px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.lateral-esquerda{
+    width: 129px;
+    height: 500px; /*alterar após fixar lugar da logo*/
+    background: #FFF;
+    box-shadow: 2px 1px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.main{
+    width: 1151px;
+    height: 720px;
+    background-color: #F5F5F5;
+}
+
+.cards{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.card {
+    width: 287px;
+    height: 100px;
+    background-color: #00A5E1;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 26.5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-text{
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    padding-left: 20px;
+    padding-top: 15px;
+    color: #FFF;
+}
+
+h1{
+    padding-left: 30px;
+    color: #00A550;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+h3{
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #000;
+    font-size: 15px;
+}
+
+p{
+    color: #0286C9;
+    font-size: 12px;
+}
+
+a{
+    padding-left: 10px;
+    color: #6D6D6D;
+    font-size: 13px;
+}
