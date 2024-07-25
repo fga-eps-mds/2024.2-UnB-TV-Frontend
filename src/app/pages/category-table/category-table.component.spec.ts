@@ -6,11 +6,10 @@ describe('CategoryTableComponent', () => {
   let component: CategoryTableComponent;
   let fixture: ComponentFixture<CategoryTableComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CategoryTableComponent]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+    declarations: [CategoryTableComponent]
     })
-    .compileComponents();
     
     fixture = TestBed.createComponent(CategoryTableComponent);
     component = fixture.componentInstance;
