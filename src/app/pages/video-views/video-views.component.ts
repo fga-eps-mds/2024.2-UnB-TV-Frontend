@@ -32,11 +32,24 @@ export class VideoViewsComponent {
       complete: () => {
         this.filterVideosByChannel(this.videosEduplay);
         this.videoService.videosCatalog(this.unbTvVideos); // Chamando a função do serviço
-        console.log(this.unbTvVideos)
-        //this.cleanDescriptions();
+        this.cleanDescriptions();
       },
     });
   } 
+
+  cleanDescriptions() {
+    const cleanHtml = (html:string) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || "";
+    };
+  
+    this.unbTvVideos.forEach((video) => {
+      if (video.description) {
+        video.description = cleanHtml(video.description);
+      }
+    });
+  } 
+  
 
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
