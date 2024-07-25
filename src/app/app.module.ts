@@ -46,6 +46,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { VideoViewsComponent } from './pages/video-views/video-views.component';
 
 @NgModule({
   imports: [
@@ -97,6 +98,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     VideoCommentComponent,
     CatalogComponent,
     PrivacyPolicyComponent
+    VideoViewsComponent
   ],
 
   providers: [

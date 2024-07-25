@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AgoraComponent } from './agora.component';
+import { VideoViewsComponent } from './video-views.component';
 
-describe('AgoraComponent', () => {
-  let component: AgoraComponent;
-  let fixture: ComponentFixture<AgoraComponent>;
+describe('VideoViewsComponent', () => {
+  let component: VideoViewsComponent;
+  let fixture: ComponentFixture<VideoViewsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AgoraComponent ]
+      imports: [VideoViewsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AgoraComponent);
+    fixture = TestBed.createComponent(VideoViewsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
