@@ -1,1 +1,23 @@
-<p>video-views works!</p>
+
+<div>
+    <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Nº Visualizações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let video of unbTvVideos">
+            <td>{{ video.id }}</td>
+            <td>{{ video.title }}</td>
+            <td>{{ video.description }}</td>
+            <td>{{ video.catalog }}</td>
+            <td>{{ video.qtAccess }}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

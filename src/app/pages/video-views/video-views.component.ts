@@ -6,10 +6,8 @@ import { IVideo } from 'src/shared/model/video.model';
 
 @Component({
   selector: 'app-video-views',
-  standalone: true,
-  imports: [],
   templateUrl: './video-views.component.html',
-  styleUrl: './video-views.component.css'
+  styleUrls: ['./video-views.component.css']
 })
 export class VideoViewsComponent {
   unbTvChannelId = UNB_TV_CHANNEL_ID;
@@ -34,6 +32,7 @@ export class VideoViewsComponent {
       complete: () => {
         this.filterVideosByChannel(this.videosEduplay);
         this.videoService.videosCatalog(this.unbTvVideos); // Chamando a função do serviço
+        console.log(this.unbTvVideos)
         //this.cleanDescriptions();
       },
     });

@@ -97,7 +97,7 @@ import { VideoViewsComponent } from './pages/video-views/video-views.component';
     GridDaysComponent,
     VideoCommentComponent,
     CatalogComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
     VideoViewsComponent
   ],
 
