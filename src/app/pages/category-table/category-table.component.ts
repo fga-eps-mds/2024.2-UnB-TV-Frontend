@@ -16,6 +16,8 @@ export class CategoryTableComponent {
   unbTvVideos: IVideo[] = [];
   aggregatedVideos: any[] = [];
   catalog: Catalog = new Catalog();
+  sortColumn: string = '';
+  sortAscending: boolean = true;
 
   constructor(
     private videoService: VideoService,
@@ -264,5 +266,22 @@ export class CategoryTableComponent {
       viewsPerVideo: data.count > 0 ? data.views/data.count : 0
     }));
   }
+
+  sortAggregatedVideos(): void {
+    if(this.sortColumn){
+      this.aggregatedVideos.sort((a, b) => {
+        const valueA = a[this.sortColumn];
+        const valueB = b[this.sortColumn];
+
+        if(valueA < valueB){
+          return this.sortAscending ? -1 : 1;
+        }else if(valueA > valueB){
+          return this.sortAscending ? 1 : -1;
+        }else return 0;
+
+      })
+    }
+  }
+
 }
 
