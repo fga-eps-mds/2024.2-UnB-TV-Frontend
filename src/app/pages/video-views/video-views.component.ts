@@ -20,6 +20,7 @@ export class VideoViewsComponent {
   filterDescription: string = '';
   selectedCategories: { [key: string]: boolean } = {};
   categories: string[] = ['Jornalismo', 'Entrevista', 'Pesquisa e Ciência', 'Arte e Cultura', 'Séries Especiais', 'Documentais', 'UnBTV'];
+  sortAscending: boolean = true;
 
   constructor(private videoService: VideoService) {}
 
@@ -70,22 +71,35 @@ export class VideoViewsComponent {
   }
 
   filterVideos() {
-    this.filteredVideos = this.unbTvVideos.filter(video => 
-      (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
-      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
-      (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
-      this.filterByCategory(video.catalog)
-    );
-
-  }
-
-  filterByCategory(catalog: string): boolean {
     const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
-    if (selectedCategories.length === 0) {
-      return true;
-    }
-    return selectedCategories.includes(catalog);
+    
+    this.filteredVideos = this.unbTvVideos.filter(video => 
+        (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
+        (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
+        (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
+        (selectedCategories.length === 0 || selectedCategories.includes(video.catalog))
+    );
+    this.sortVideos();
   }
 
+  sortVideos(): void {
+    this.filteredVideos.sort((videoA, videoB) => {
+        const accessA = videoA.qtAccess  || 0;
+        const accessB = videoB.qtAccess  || 0;
 
+        if (this.sortAscending) {
+            // Ordenação crescente
+            return accessA - accessB;
+        } else {
+            // Ordenação decrescente
+            return accessB - accessA;
+        }
+    });
+  }
+
+  changeSortOrder(): void {
+      this.sortAscending = !this.sortAscending;
+      this.sortVideos();
+  } 
+   
 }
