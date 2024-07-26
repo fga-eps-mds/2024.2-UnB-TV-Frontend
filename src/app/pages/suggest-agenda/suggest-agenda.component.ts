@@ -73,7 +73,7 @@ export class SuggestAgendaComponent implements OnInit {
         });
     } else {
       if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']){
-        this.alertService.showMessage("error", "Erro", "Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.");
+        this.alertService.showMessage("error", "Erro", "ERRO - A URL (endereço do vídeo) não é válida. Favor corrigir ou deletar.");
       }else{
         this.alertService.showMessage("info", "Alerta", "Preencha todos os campos corretamente!");
       }
