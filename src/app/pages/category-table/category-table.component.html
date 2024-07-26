@@ -3,9 +3,9 @@
         <thead>
             <tr>
                 <th>Categoria</th>
-                <th>N° Vídeos</th>
-                <th>N° Visualizações</th>
-                <th>Visualizações/Vídeo</th>
+                <th (click)="setSortColumn('videoCount')">N° Vídeos</th>
+                <th (click)="setSortColumn('totalViews')">N° Visualizações</th>
+                <th (click)="setSortColumn('viewsPerVideo')">Visualizações/Vídeo</th>
             </tr>
         </thead>
         <tbody>
