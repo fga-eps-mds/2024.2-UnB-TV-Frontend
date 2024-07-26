@@ -1,5 +1,31 @@
 
 <div>
+  <div>
+    <div class="filter-item">
+      <label>
+        Filtrar por ID:
+        <input [(ngModel)]="filterId" (ngModelChange)="filterVideos()" placeholder="Filtrar por ID" />
+      </label>
+    </div>
+    <div class="filter-item">
+      <label>
+        Filtrar por Título:
+        <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Filtrar por Título" />
+      </label>
+    </div>
+    <div class="filter-item">
+      <label>
+        Filtrar por Descrição:
+        <input [(ngModel)]="filterDescription" (ngModelChange)="filterVideos()" placeholder="Filtrar por Descrição" />
+      </label>
+    </div>
+    <div class="filter-item">
+      <label>Filtrar por Categoria:</label>
+      <div *ngFor="let category of categories" class="category-checkbox">
+        <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterVideos()" /> {{ category }}
+      </div>
+    </div>
+  </div>
     <table>
         <thead>
           <tr>
@@ -11,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let video of unbTvVideos">
+          <tr *ngFor="let video of filteredVideos">
             <td>{{ video.id }}</td>
             <td>{{ video.title }}</td>
             <td>{{ video.description }}</td>

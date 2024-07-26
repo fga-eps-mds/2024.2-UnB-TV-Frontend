@@ -14,11 +14,19 @@ export class VideoViewsComponent {
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
   catalog: Catalog = new Catalog();
+  filteredVideos: IVideo[] = [];
+  filterId: string = '';
+  filterTitle: string = '';
+  filterDescription: string = '';
+  selectedCategories: { [key: string]: boolean } = {};
+  categories: string[] = ['Jornalismo', 'Entrevista', 'Pesquisa e Ciência', 'Arte e Cultura', 'Séries Especiais', 'Documentais', 'UnBTV'];
 
   constructor(private videoService: VideoService) {}
 
   ngOnInit(): void {
     this.findAll();
+    this.filteredVideos = this.unbTvVideos;
+    this.categories.forEach(category => this.selectedCategories[category] = false);
   }
 
   findAll(): void {
@@ -33,6 +41,7 @@ export class VideoViewsComponent {
         this.filterVideosByChannel(this.videosEduplay);
         this.videoService.videosCatalog(this.unbTvVideos); // Chamando a função do serviço
         this.cleanDescriptions();
+        this.filterVideos();
       },
     });
   } 
@@ -59,5 +68,24 @@ export class VideoViewsComponent {
         if (channel[0].id === this.unbTvChannelId) this.unbTvVideos.push(video);
     });
   }
+
+  filterVideos() {
+    this.filteredVideos = this.unbTvVideos.filter(video => 
+      (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
+      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
+      (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
+      this.filterByCategory(video.catalog)
+    );
+
+  }
+
+  filterByCategory(catalog: string): boolean {
+    const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
+    if (selectedCategories.length === 0) {
+      return true;
+    }
+    return selectedCategories.includes(catalog);
+  }
+
 
 }
