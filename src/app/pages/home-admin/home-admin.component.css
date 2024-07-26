@@ -17,11 +17,12 @@
     height: 60px;
     background: #FFF;
     box-shadow: 2px 1px 10px -5px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
 }
 
 .lateral-esquerda{
     width: 129px;
-    height: 500px; /*alterar após fixar lugar da logo*/
+    height: auto;
     background: #FFF;
     box-shadow: 2px 1px 10px -5px rgba(0, 0, 0, 0.3);
 }
@@ -43,7 +44,7 @@
     background-color: #00A5E1;
     color: #fff;
     border-radius: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.3);
     margin: 26.5px;
     justify-content: center;
     align-items: center;
@@ -75,10 +76,16 @@ h3{
 p{
     color: #0286C9;
     font-size: 12px;
+    padding-left: 10px;
 }
 
 a{
     padding-left: 10px;
     color: #6D6D6D;
     font-size: 13px;
+}
+
+.logo{
+    padding-top: 380%;
+    padding-left: 20px;
 }
