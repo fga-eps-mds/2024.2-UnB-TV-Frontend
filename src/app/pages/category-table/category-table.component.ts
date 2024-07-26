@@ -265,6 +265,7 @@ export class CategoryTableComponent {
       totalViews: data.views,
       viewsPerVideo: data.count > 0 ? data.views/data.count : 0
     }));
+    this.sortAggregatedVideos();
   }
 
   sortAggregatedVideos(): void {
@@ -282,6 +283,17 @@ export class CategoryTableComponent {
       })
     }
   }
+
+  setSortColumn(column: string): void {
+    if(this.sortColumn === column){
+      this.sortAscending = !this.sortAscending;
+    }
+    else{
+      this.sortColumn = column;
+      this.sortAscending = true;
+    }
+    this.sortAggregatedVideos();
+  } 
 
 }
 
