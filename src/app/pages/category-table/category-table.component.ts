@@ -18,6 +18,7 @@ export class CategoryTableComponent {
   catalog: Catalog = new Catalog();
   sortColumn: string = '';
   sortAscending: boolean = true;
+  selectedColumn: string = '';
   categories: string[] = [
     "Arte e Cultura",
     "Documentais",
@@ -123,6 +124,7 @@ export class CategoryTableComponent {
   }
 
   setSortColumn(column: string): void {
+    this.selectedColumn = column;
     if(this.sortColumn === column){
       this.sortAscending = !this.sortAscending;
     }
@@ -142,6 +144,10 @@ export class CategoryTableComponent {
       this.filteredAggregatedVideos = this.aggregatedVideos.filter(video => selectedCategories.includes(video.category));  
     }
     this.sortAggregatedVideos();
+  }
+
+  logout(): void {
+    //Desenvolvimento do logout.
   }
 
 }
