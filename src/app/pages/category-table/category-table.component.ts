@@ -18,6 +18,19 @@ export class CategoryTableComponent {
   catalog: Catalog = new Catalog();
   sortColumn: string = '';
   sortAscending: boolean = true;
+  categories: string[] = [
+    "Arte e Cultura",
+    "Documentais",
+    "Entrevista",
+    "Jornalismo",
+    "Pesquisa e Ciência",
+    "Séries Especiais",
+    "UnBTV",
+    "Variedades"
+  ];
+  filteredAggregatedVideos: any[] = [];
+  selectedCategories: { [key: string]: boolean } = {};
+
 
   constructor(
     private videoService: VideoService,
@@ -40,6 +53,7 @@ export class CategoryTableComponent {
         this.filterVideosByChannel(this.videosEduplay);
         this.videosCatalog(this.unbTvVideos);
         this.aggregateVideosByCategory();
+        this.filterCategories();
       }
     })
   }
@@ -265,12 +279,13 @@ export class CategoryTableComponent {
       totalViews: data.views,
       viewsPerVideo: data.count > 0 ? data.views/data.count : 0
     }));
+    this.filterCategories();
     this.sortAggregatedVideos();
   }
 
   sortAggregatedVideos(): void {
     if(this.sortColumn){
-      this.aggregatedVideos.sort((a, b) => {
+      this.filteredAggregatedVideos.sort((a, b) => {
         const valueA = a[this.sortColumn];
         const valueB = b[this.sortColumn];
 
@@ -294,6 +309,17 @@ export class CategoryTableComponent {
     }
     this.sortAggregatedVideos();
   } 
+
+  filterCategories(): void {
+    const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
+    if(selectedCategories.length === 0){
+      this.filteredAggregatedVideos = this.aggregatedVideos;
+    }
+    else{
+      this.filteredAggregatedVideos = this.aggregatedVideos.filter(video => selectedCategories.includes(video.category));  
+    }
+    this.sortAggregatedVideos();
+  }
 
 }
 
