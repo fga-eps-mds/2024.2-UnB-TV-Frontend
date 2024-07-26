@@ -1,4 +1,10 @@
 <div>
+    <label>Filtrar por Categoria:</label>
+    <div *ngFor="let category of categories">
+        <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterCategories()" /> {{ category }} 
+    </div>
+</div>
+<div>
     <table>
         <thead>
             <tr>
@@ -9,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let video of aggregatedVideos">
+            <tr *ngFor="let video of filteredAggregatedVideos">
                 <td>{{ video.category }}</td>
                 <td>{{ video.videoCount }}</td>
                 <td>{{ video.totalViews }}</td>
