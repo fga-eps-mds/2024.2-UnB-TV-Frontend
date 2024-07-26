@@ -1,26 +1,56 @@
-<div>
-    <label>Filtrar por Categoria:</label>
-    <div *ngFor="let category of categories">
-        <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterCategories()" /> {{ category }} 
+<div class="containerPrincipal">
+  <aside>
+    <div class="informacoesUsuario">
+      <p>Olá, Admin!</p>
+      <div class="linksBarraLateral">
+        <a href="#" class="linkLogout" (click)="logout()">Sair</a>
+        <a href="/homeAdmin" class="linkVoltar">Voltar</a>
+      </div>
     </div>
-</div>
-<div>
-    <table>
+    <hr class="solid">
+    <nav>
+      <ul>
+        <li><a href="/video-views">Dados - Vídeos</a></li>
+        <li><a href="/category-views" class="linkSelecionado">Dados - Categorias</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <header>
+      <h1>Dados - Categorias</h1>
+      <hr class="solid2">
+    </header>
+    <div class="containerConteudo">
+      <div class="containerFiltro">
+        <div class="dropdown">
+          <button class="botaoDropdown">Categorias <span class="setinha"></span></button>
+          <div class="conteudoDropdown">
+            <div *ngFor="let category of categories">
+              <label>
+                <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterCategories()" /> {{ category }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table>
         <thead>
-            <tr>
-                <th>Categoria</th>
-                <th (click)="setSortColumn('videoCount')">N° Vídeos</th>
-                <th (click)="setSortColumn('totalViews')">N° Visualizações</th>
-                <th (click)="setSortColumn('viewsPerVideo')">Visualizações/Vídeo</th>
-            </tr>
+          <tr>
+            <th>Categoria</th>
+            <th (click)="setSortColumn('videoCount')" [class.selected]="selectedColumn === 'videoCount'" class="ordenavel">N° Vídeos</th>
+            <th (click)="setSortColumn('totalViews')" [class.selected]="selectedColumn === 'totalViews'" class="ordenavel">N° Visualizações</th>
+            <th (click)="setSortColumn('viewsPerVideo')" [class.selected]="selectedColumn === 'viewsPerVideo'" class="ordenavel">Visualizações/Vídeo</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let video of filteredAggregatedVideos">
-                <td>{{ video.category }}</td>
-                <td>{{ video.videoCount }}</td>
-                <td>{{ video.totalViews }}</td>
-                <td>{{ video.viewsPerVideo | number:'1.0-2' }}</td>
-            </tr>
+          <tr *ngFor="let video of filteredAggregatedVideos">
+            <td>{{ video.category }}</td>
+            <td>{{ video.videoCount }}</td>
+            <td>{{ video.totalViews }}</td>
+            <td>{{ video.viewsPerVideo | number:'1.0-0' }}</td>
+          </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </main>
 </div>
