@@ -1,8 +1,8 @@
-<div class="home-container">
+   <div class="home-container">
     <aside>
       <div class="user-info">
-        <strong><p>Olá, Admin!</p></strong>
-        <a href="/loginsocial" class="logout-link">Sair</a>
+        <p>Olá, Admin!</p>
+       <a class="linkLogout" (click)="logoutUser()">Sair</a> 
       </div>
       <hr class="solid">
       <nav>
@@ -11,9 +11,6 @@
           <li><a href="/category-views">Dados - Categorias</a></li>
         </ul>
       </nav>
-      <div class="logo">
-        <img src="../../../assets/Icone-unbtv.svg" alt="Logo">
-      </div>
     </aside>
     <main>
       <header>
@@ -22,11 +19,12 @@
     </header>
       <div class="card-container">
         <div class="card">
-          <a href="/video-views">Página: Dados de Vídeos</a>
+          <p>Página: Dados de vídeos</p>
         </div>
         <div class="card">
-          <a href="/category-views">Página: Dados de categorias</a>
+          <p>Página: Dados de categorias</p>
         </div>
       </div>
     </main>
   </div>
+  
