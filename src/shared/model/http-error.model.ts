@@ -1,3 +1,4 @@
 export interface IError {
-    detail: string;
+    message: string;
+    detail?: string;
 }
