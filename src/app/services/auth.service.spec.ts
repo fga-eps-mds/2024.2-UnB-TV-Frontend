@@ -10,8 +10,11 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes(
-        [{ path: 'login', component: LoginComponent }])], providers: [AuthService]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([{ path: 'login', component: LoginComponent }])
+      ],
+      providers: [AuthService]
     });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -27,11 +30,11 @@ describe('AuthService', () => {
 
   it('should register a user', () => {
     const userResponse: any = {
-      "name": "Mario",
-      "connection": "ALUNO",
-      "email": "mario@gmail.com",
-      "password": "123456",
-    }
+      name: 'Mario',
+      connection: 'ALUNO',
+      email: 'mario@gmail.com',
+      password: '123456',
+    };
     service.registerUser(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -42,10 +45,9 @@ describe('AuthService', () => {
 
   it('should login a user', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-      "password": "123456",
-    }
-
+      email: 'mario@gmail.com',
+      password: '123456',
+    };
     service.loginUser(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -56,9 +58,9 @@ describe('AuthService', () => {
 
   it('should activate a user account', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-      "code": "901472",
-    }
+      email: 'mario@gmail.com',
+      code: '901472',
+    };
     service.activeAccount(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -69,8 +71,8 @@ describe('AuthService', () => {
 
   it('should resend a code', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-    }
+      email: 'mario@gmail.com',
+    };
     service.resendCode(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -81,8 +83,8 @@ describe('AuthService', () => {
 
   it('should send an email to reset password', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-    }
+      email: 'mario@gmail.com',
+    };
     service.sendEmailPassword(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -93,9 +95,9 @@ describe('AuthService', () => {
 
   it('should verify code to reset password', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-      "code": "901472",
-    }
+      email: 'mario@gmail.com',
+      code: '901472',
+    };
     service.verifyCodePassword(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -106,10 +108,10 @@ describe('AuthService', () => {
 
   it('should update password', () => {
     const userResponse: any = {
-      "email": "mario@gmail.com",
-      "password": "123456",
-      "code": "901472",
-    }
+      email: 'mario@gmail.com',
+      password: '123456',
+      code: '901472',
+    };
     service.updatePassword(userResponse).subscribe(res => {
       expect(res).toEqual(userResponse);
     });
@@ -120,15 +122,15 @@ describe('AuthService', () => {
 
   it('should refresh token', () => {
     const dummyResponse = { access_token: 'dummyToken' };
-    
+
     service.refreshToken().subscribe(res => {
       expect(res).toEqual(dummyResponse);
     });
-    
+
     const req = httpMock.expectOne(`${service.usersAPIURL}/auth/refresh`);
     expect(req.request.method).toBe('POST');
     req.flush(dummyResponse);
-  });  
+  });
 
   it('should logout', () => {
     localStorage.setItem('token', 'testtoken');
@@ -137,5 +139,16 @@ describe('AuthService', () => {
     expect(localStorage.getItem('token')).toBeNull();
     expect(navigateSpy).toHaveBeenCalledWith(['/loginsocial']);
   });
-  
+
+  it('deve configurar o administrador', () => {
+    const adminResponse: any = { email: 'admin@unb.br' };
+    
+    service.setupAdmin(adminResponse).subscribe(res => {
+      expect(res).toEqual(adminResponse);
+    });
+
+    const req = httpMock.expectOne(`${service.usersAPIURL}/auth/admin-setup`);
+    expect(req.request.method).toBe('POST');
+    req.flush(adminResponse);
+  });
 });
