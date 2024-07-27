@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-home-admin',
-  templateUrl: './home-admin.component.html',
-  styleUrls: ['./home-admin.component.css']
-})
-export class HomeAdminComponent {
+import { HomeAdminComponent } from './home-admin.component';
 
-}
+describe('HomeAdminComponent', () => {
+  let component: HomeAdminComponent;
+  let fixture: ComponentFixture<HomeAdminComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [HomeAdminComponent]
+    });
+    fixture = TestBed.createComponent(HomeAdminComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
