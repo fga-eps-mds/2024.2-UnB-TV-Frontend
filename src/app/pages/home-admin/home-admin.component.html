@@ -1,37 +1,32 @@
-<body>
-
-    <section class="pagina">
-
-        <nav class="lateral-esquerda">
-            <div class="topo-esquerdo">
-                <h3>Olá, Admin!</h3>
-                <p href=" ">Sair</p><!-- adicionar link para tela pós log out-->
-            </div>
-          
-        
-            <div class="links">
-                <a href="">Dados - Vídeos</a> <!-- adicionar link para tela detalhes - dados de vídeos-->
-                <br>
-                <a href="">Dados - Categorias</a> <!-- adicionar link para tela detalhes - dados de categorias-->
-            </div>
-            <img class="logo" src="../../../assets/icons/icon-72x72.png" alt="Logo">
-        </nav>
-          
-        <main>
-            <h1>Olá, administrador!</h1>
-          
-            <section class="cards">
-                <div class="card">
-                    <p class="card-text">Página: Dados de vídeos</p>
-                    <!-- adicionar link para tela detalhes - dados de vídeos-->
-                </div>
-                <div class="card">
-                    <p class="card-text">Página: Dados de categorias</p>
-                    <!-- adicionar link para tela detalhes - dados de categorias-->
-                </div>
-            </section>
-        </main>
-
-    </section>
-      
-</body>
+<div class="home-container">
+    <aside>
+      <div class="user-info">
+        <strong><p>Olá, Admin!</p></strong>
+        <a href="/loginsocial" class="logout-link">Sair</a>
+      </div>
+      <hr class="solid">
+      <nav>
+        <ul>
+          <li><a href="/video-views">Dados - Vídeos</a></li>
+          <li><a href="/category-views">Dados - Categorias</a></li>
+        </ul>
+      </nav>
+      <div class="logo">
+        <img src="../../../assets/Icone-unbtv.svg" alt="Logo">
+      </div>
+    </aside>
+    <main>
+      <header>
+        <strong><h1>Olá, administrador!</h1></strong>
+        <hr class="solid2">
+    </header>
+      <div class="card-container">
+        <div class="card">
+          <a href="/video-views">Página: Dados de Vídeos</a>
+        </div>
+        <div class="card">
+          <a href="/category-views">Página: Dados de categorias</a>
+        </div>
+      </div>
+    </main>
+  </div>
