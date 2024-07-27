@@ -3,6 +3,8 @@ import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { VideoService } from 'src/app/services/video.service';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-video-views',
@@ -25,7 +27,11 @@ export class VideoViewsComponent {
   sortAscending: boolean = true;
   isSorted: boolean = false;
 
-  constructor(private videoService: VideoService) {}
+  constructor(
+    private videoService: VideoService,
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
+  ) {};
 
   ngOnInit(): void {
     this.findAll();
@@ -106,4 +112,16 @@ export class VideoViewsComponent {
       this.isSorted = true;
   } 
    
+  logoutUser() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja sair?',
+      header: 'Confirmação',
+      key: 'myDialog',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.authService.logout();
+      },
+      reject: () => {},
+    });
+  }
 }
