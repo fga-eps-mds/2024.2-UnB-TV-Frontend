@@ -1,39 +1,56 @@
+<div class="containerPrincipal">
+  <aside>
+    <div class="informacoesUsuario">
+      <p>Olá, Admin!</p>
+      <div class="linksBarraLateral">
 
-<div>
-  <div>
-    <div class="filter-item">
-      <label>
-        Filtrar por ID:
-        <input [(ngModel)]="filterId" (ngModelChange)="filterVideos()" placeholder="Filtrar por ID" />
-      </label>
-    </div>
-    <div class="filter-item">
-      <label>
-        Filtrar por Título:
-        <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Filtrar por Título" />
-      </label>
-    </div>
-    <div class="filter-item">
-      <label>
-        Filtrar por Descrição:
-        <input [(ngModel)]="filterDescription" (ngModelChange)="filterVideos()" placeholder="Filtrar por Descrição" />
-      </label>
-    </div>
-    <div class="filter-item">
-      <label>Filtrar por Categoria:</label>
-      <div *ngFor="let category of categories" class="category-checkbox">
-        <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterVideos()" /> {{ category }}
       </div>
     </div>
-  </div>
-    <table>
+    <hr class="solid">
+    <nav>
+      <ul>
+        <li><a href="/video-views" class="linkSelecionado">Dados - Vídeos</a></li>
+        <li><a href="/category-views">Dados - Categorias</a></li>
+      </ul>
+    </nav>
+  </aside>  
+  <main>
+    <header>
+      <h1>Dados - Vídeos</h1>
+      <hr class="solid2">
+    </header>
+    <div class="containerConteudo">
+      <div class="containerFiltro">
+        <div class="filtroItem">
+          <input [(ngModel)]="filterId" (ngModelChange)="filterVideos()" placeholder="Filtrar por ID" />
+        </div>
+        <div class="filtroItem">
+          <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Filtrar por Título" />
+        </div>
+        <div class="filtroItem">
+          <input [(ngModel)]="filterDescription" (ngModelChange)="filterVideos()" placeholder="Filtrar por Descrição" />
+        </div>
+        <div class="filtroItem">
+          <div class="dropdown">
+            <button class="botaoDropdown">Filtrar por Categoria <span class="setinha"></span></button>
+            <div class="conteudoDropdown">
+              <div *ngFor="let category of categories">
+                <label>
+                  <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterVideos()" /> {{ category }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Título</th>
             <th>Descrição</th>
             <th>Categoria</th>
-            <th (click)="changeSortOrder()">Nº Visualizações</th>
+            <th (click)="changeSortOrder()" [class.ordenadoAzul]="isSorted" class="ordenavel">Nº Visualizações</th>
           </tr>
         </thead>
         <tbody>
@@ -46,4 +63,6 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </main>
 </div>

@@ -14,13 +14,16 @@ export class VideoViewsComponent {
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
   catalog: Catalog = new Catalog();
+
   filteredVideos: IVideo[] = [];
   filterId: string = '';
   filterTitle: string = '';
   filterDescription: string = '';
   selectedCategories: { [key: string]: boolean } = {};
   categories: string[] = ['Jornalismo', 'Entrevista', 'Pesquisa e Ciência', 'Arte e Cultura', 'Séries Especiais', 'Documentais', 'UnBTV'];
+  
   sortAscending: boolean = true;
+  isSorted: boolean = false;
 
   constructor(private videoService: VideoService) {}
 
@@ -100,6 +103,7 @@ export class VideoViewsComponent {
   changeSortOrder(): void {
       this.sortAscending = !this.sortAscending;
       this.sortVideos();
+      this.isSorted = true;
   } 
    
 }
