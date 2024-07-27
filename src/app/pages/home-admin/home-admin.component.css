@@ -1,5 +1,5 @@
 .home-container {
-    height: 100vh;
+    height: 100%;
     display: flex;
 
     text-decoration: none;
@@ -18,19 +18,17 @@ aside {
 }
 
 .user-info {
-    border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
 }
 
 .user-info p {
     margin: 0;
-    margin-bottom: 8px;
 }
 
 .logout-link {
     text-decoration: none;
 
-    margin-top: 10px;
+    margin-top: 5px;
 
     display: inline-block;
 
@@ -67,13 +65,12 @@ nav ul li a {
 .logo img {
     width: 50px;
     height: 50px;
-
-    align-self: center;
 }
 
 main {
     padding: 20px;
 
+    display: flex;
     flex-direction: column;
     flex-grow: 1;
 
@@ -127,7 +124,7 @@ header h1 {
 }
 
 hr.solid {
-    border-top: 3px solid #bbb;
+    border-top: 2px solid #bbb;
 }
 
 hr.solid2 {
