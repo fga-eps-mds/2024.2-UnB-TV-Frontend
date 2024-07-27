@@ -3,7 +3,7 @@
     <div class="informacoesUsuario">
       <p>Olá, Admin!</p>
       <div class="linksBarraLateral">
-        <a href="#" class="linkLogout" (click)="logout()">Sair</a>
+        <a class="linkLogout" (click)="logoutUser()">Sair</a>
         <a href="/homeAdmin" class="linkVoltar">Voltar</a>
       </div>
     </div>
@@ -23,7 +23,7 @@
     <div class="containerConteudo">
       <div class="containerFiltro">
         <div class="dropdown">
-          <button class="botaoDropdown">Categorias <span class="setinha"></span></button>
+          <button class="botaoDropdown">Filtrar por Categoria <span class="setinha"></span></button>
           <div class="conteudoDropdown">
             <div *ngFor="let category of categories">
               <label>

@@ -4,6 +4,8 @@ import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { VideoService } from 'src/app/services/video.service';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-category-table',
@@ -35,7 +37,9 @@ export class CategoryTableComponent {
 
   constructor(
     private videoService: VideoService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
   ) {};
   
   ngOnInit(): void{
@@ -146,9 +150,17 @@ export class CategoryTableComponent {
     this.sortAggregatedVideos();
   }
 
-  logout(): void {
-    //Desenvolvimento do logout.
+  logoutUser() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja sair?',
+      header: 'Confirmação',
+      key: 'myDialog',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.authService.logout();
+      },
+      reject: () => {},
+    });
   }
-
 }
 

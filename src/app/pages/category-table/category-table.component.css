@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Helvetic';
+  src: url('../../../assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: Helvetic, sans-serif;
+}
+
 .containerPrincipal {
   display: flex;
   min-height: 10vh;
@@ -34,6 +45,7 @@ aside {
 .linkLogout:hover, .linkVoltar:hover {
   text-decoration: underline;
   color: #0056b3;
+  cursor: pointer;
 }
 
 hr.solid {
@@ -83,6 +95,7 @@ hr.solid2 {
   margin-bottom: 1.25em;
   display: flex;
   justify-content: flex-start;
+  margin-left: 1.5em;
 }
 
 .dropdown {
