@@ -39,6 +39,12 @@ aside {
   text-decoration: none;
 }
 
+.linkLogout:hover, .linkVoltar:hover {
+  text-decoration: underline;
+  color: #0056b3;
+  cursor: pointer;
+}
+
 hr.solid {
   border-top: 0.0625em solid #bbb;
 }
