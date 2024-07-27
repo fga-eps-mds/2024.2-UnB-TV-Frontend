@@ -20,7 +20,9 @@ import { GridDaysComponent } from './pages/grid-days/grid-days.component';
 import { GridComponent } from './pages/grid/grid.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
-import { HomeAdminComponent } from './pages/home-admin/home-admin.component'
+import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
+
 
 import { WithTokenGuard } from './guard/with-token.guard';
 
@@ -85,7 +87,14 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
-  { path: 'home-admin', component: HomeAdminComponent},
+  { path: 'homeAdmin',
+    component: HomeAdminComponent,
+    canActivate: [TokenAdminGuard],
+  },
+  {
+    path: 'adminActivate',
+    component: AdminActivateComponent
+  },
 ];
 
 @NgModule({
