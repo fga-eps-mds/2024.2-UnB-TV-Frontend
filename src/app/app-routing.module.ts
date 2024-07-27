@@ -25,6 +25,8 @@ import { AdminActivateComponent } from './pages/admin-activate/admin-activate.co
 
 
 import { WithTokenGuard } from './guard/with-token.guard';
+import { TokenAdminGuard } from './guard/admin.guard';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
