@@ -20,6 +20,7 @@ import { GridDaysComponent } from './pages/grid-days/grid-days.component';
 import { GridComponent } from './pages/grid/grid.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { CategoryTableComponent } from './pages/category-table/category-table.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 
@@ -84,6 +85,7 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'category-views', component: CategoryTableComponent},
 ];
 
 @NgModule({

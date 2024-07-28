@@ -15,6 +15,7 @@ export interface IVideo {
   images?: IImage[];
   embed?: string;
   channels?: IChannel[];
+  catalog?: any;
 }
 
 export class Video implements IVideo {
@@ -31,6 +32,7 @@ export class Video implements IVideo {
     public qtLikes?: number,
     public images?: IImage[],
     public embed?: string,
-    public channels?: IChannel[]
+    public channels?: IChannel[],
+    public catalog?: any
   ) {}
 }
