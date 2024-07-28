@@ -71,6 +71,10 @@ export class ProfileComponent {
     });
   }
 
+  acessoAdmin(){
+    this.router.navigate(['/homeAdmin']);
+  }
+
   deleteUser() {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar esse usuário?',

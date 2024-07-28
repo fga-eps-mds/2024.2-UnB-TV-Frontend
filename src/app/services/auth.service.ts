@@ -58,4 +58,8 @@ export class AuthService {
     localStorage.removeItem('token');
     this.router.navigate(['/loginsocial']);
   }
+
+  setupAdmin(data: any): Observable<any> {
+    return this.http.post(`${this.usersAPIURL}/auth/admin-setup`, data);
+  }
 }
