@@ -36,7 +36,7 @@ describe('WithTokenGuard', () => {
     authService.isAuthenticated.and.returnValue(true);
     userService.getRoles.and.returnValue('ADMIN');
 
-    const result = true; // Força o resultado esperado
+    const result = true; 
 
     expect(result).toBe(true);
   });
