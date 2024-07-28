@@ -121,6 +121,7 @@ hr.solid2 {
   display: inline-block;
   padding: 0.125em;
   transform: rotate(45deg);
+  margin-bottom: 0.25em;
 }
 
 .conteudoDropdown {
@@ -172,6 +173,10 @@ th.ordenavel:hover {
   cursor: pointer;
   text-decoration: underline;
   color: #0056b3;
+}
+
+th.selected {
+  color: #0087c8;
 }
 
 th.ordenavel .setinha.up {
