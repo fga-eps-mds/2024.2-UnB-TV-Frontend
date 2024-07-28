@@ -174,8 +174,8 @@ th.ordenavel:hover {
   color: #0056b3;
 }
 
-th.selected {
-  color: #0087c8;
+th.ordenavel .setinha.up {
+  transform: rotate(225deg);
 }
 
 thead {

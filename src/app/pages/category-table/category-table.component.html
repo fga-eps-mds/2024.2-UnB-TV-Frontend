@@ -37,9 +37,17 @@
         <thead>
           <tr>
             <th>Categoria</th>
-            <th (click)="setSortColumn('videoCount')" [class.selected]="selectedColumn === 'videoCount'" class="ordenavel">N° Vídeos</th>
-            <th (click)="setSortColumn('totalViews')" [class.selected]="selectedColumn === 'totalViews'" class="ordenavel">N° Visualizações</th>
-            <th (click)="setSortColumn('viewsPerVideo')" [class.selected]="selectedColumn === 'viewsPerVideo'" class="ordenavel">Visualizações/Vídeo</th>
+            <th (click)="setSortColumn('videoCount')" [class.selected]="selectedColumn === 'videoCount'" class="ordenavel">
+              N° Vídeos
+              <span class="setinha" [ngClass]="{'up': selectedColumn === 'videoCount' && !sortAscending, 'down': selectedColumn === 'videoCount' && sortAscending}"></span>
+          </th>
+          <th (click)="setSortColumn('totalViews')" [class.selected]="selectedColumn === 'totalViews'" class="ordenavel">
+              N° Visualizações
+              <span class="setinha" [ngClass]="{'up': selectedColumn === 'totalViews' && !sortAscending, 'down': selectedColumn === 'totalViews' && sortAscending}"></span>
+          </th>
+          <th (click)="setSortColumn('viewsPerVideo')" [class.selected]="selectedColumn === 'viewsPerVideo'" class="ordenavel">
+              Visualizações/Vídeo
+              <span class="setinha" [ngClass]="{'up': selectedColumn === 'viewsPerVideo' && !sortAscending, 'down': selectedColumn === 'viewsPerVideo' && sortAscending}"></span>
           </tr>
         </thead>
         <tbody>
