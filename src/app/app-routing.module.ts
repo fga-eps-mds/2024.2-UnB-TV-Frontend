@@ -24,6 +24,8 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
+import { VideoViewsComponent } from './pages/video-views/video-views.component';
+
 
 
 import { WithTokenGuard } from './guard/with-token.guard';
@@ -101,6 +103,7 @@ const routes: Routes = [
     component: AdminActivateComponent
   },
   { path: 'category-views', component: CategoryTableComponent},
+  { path: 'video-views', component: VideoViewsComponent},
 ];
 
 @NgModule({

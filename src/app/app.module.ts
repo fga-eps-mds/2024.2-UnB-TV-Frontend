@@ -51,7 +51,7 @@ import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
-
+import { VideoViewsComponent } from './pages/video-views/video-views.component';
 
 @NgModule({
   imports: [
@@ -105,6 +105,7 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
     PrivacyPolicyComponent,
     HomeAdminComponent,
     CategoryTableComponent,
+    VideoViewsComponent,
   ],
 
   providers: [
