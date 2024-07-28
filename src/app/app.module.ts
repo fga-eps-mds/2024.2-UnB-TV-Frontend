@@ -46,8 +46,12 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
+
+import { CategoryTableComponent } from './pages/category-table/category-table.component';
+
 
 @NgModule({
   imports: [
@@ -100,6 +104,7 @@ import { AdminActivateComponent } from './pages/admin-activate/admin-activate.co
     CatalogComponent,
     PrivacyPolicyComponent,
     HomeAdminComponent
+    CategoryTableComponent
   ],
 
   providers: [
