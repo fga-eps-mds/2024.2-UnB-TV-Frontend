@@ -103,8 +103,8 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
     VideoCommentComponent,
     CatalogComponent,
     PrivacyPolicyComponent,
-    HomeAdminComponent
-    CategoryTableComponent
+    HomeAdminComponent,
+    CategoryTableComponent,
   ],
 
   providers: [
