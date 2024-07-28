@@ -5,6 +5,7 @@ import { VideoService } from 'src/app/services/video.service';
 import { VideoViewsComponent } from './video-views.component';
 import { IVideo } from 'src/shared/model/video.model';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
+import { ConfirmationService } from 'primeng/api'; // Adicione esta linha
 
 import { HttpResponse } from '@angular/common/http';
 
@@ -17,7 +18,7 @@ describe('VideoViewsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [VideoViewsComponent],
       imports: [HttpClientTestingModule],
-      providers: [VideoService]
+      providers: [VideoService, ConfirmationService] // Adicione o ConfirmationService aqui
     }).compileComponents();
 
     fixture = TestBed.createComponent(VideoViewsComponent);
