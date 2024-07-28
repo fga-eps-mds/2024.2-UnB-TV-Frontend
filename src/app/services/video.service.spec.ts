@@ -498,4 +498,85 @@ describe('VideoService', () => {
       });
     });
   });
+
+  describe('videosCatalog', () => {
+    it('should categorize videos correctly', () => {
+      const mockVideos: IVideo[] = [
+        {
+          id: 1,
+          title: 'Fala, jovem',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 2,
+          title: 'Informe UnB',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 3,
+          title: 'Esboços: Artista',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 4,
+          title: 'Vídeo sem categoria específica',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+      ];
+  
+      service.videosCatalog(mockVideos);
+  
+      expect(mockVideos[0]['catalog']).toBe('Jornalismo');
+      expect(service.catalog.journalism.falaJovem).toContain(mockVideos[0]);
+  
+      expect(mockVideos[1]['catalog']).toBe('Jornalismo');
+      expect(service.catalog.journalism.informeUnB).toContain(mockVideos[1]);
+  
+      expect(mockVideos[2]['catalog']).toBe('Arte e Cultura');
+      expect(service.catalog.artAndCulture.esbocos).toContain(mockVideos[2]);
+  
+      expect(mockVideos[3]['catalog']).toBe('UnBTV');
+      expect(service.catalog.unbtv).toContain(mockVideos[3]);
+    }); 
+  });
 });
