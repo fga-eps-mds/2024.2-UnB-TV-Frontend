@@ -12,7 +12,6 @@ import { IEduplayVideosByInstitution } from 'src/shared/model/eduplay-by-institu
 import { environment } from '../environment/environment';
 import { Catalog } from 'src/shared/model/catalog.model';
 
-
 type VideoResponseType = HttpResponse<IVideo>;
 type EduplayByInstitutionResponseType =
   HttpResponse<IEduplayVideosByInstitution>;

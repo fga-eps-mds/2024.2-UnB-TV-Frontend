@@ -47,6 +47,7 @@ import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
+import { VideoViewsComponent } from './pages/video-views/video-views.component';
 
 @NgModule({
   imports: [
@@ -98,7 +99,8 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
     VideoCommentComponent,
     CatalogComponent,
     PrivacyPolicyComponent,
-    CategoryTableComponent
+    CategoryTableComponent,
+    VideoViewsComponent
   ],
 
   providers: [
