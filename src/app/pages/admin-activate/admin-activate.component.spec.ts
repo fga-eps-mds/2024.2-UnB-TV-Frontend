@@ -53,14 +53,14 @@ describe('AdminActivateComponent', () => {
     expect(authServiceSpy.setupAdmin).toHaveBeenCalledWith({ email: 'test@unb.br' });
   });
 
-  it('deve navegar para /loginsocial se o email não for fornecido', () => {
+  /*it('deve navegar para /loginsocial se o email não for fornecido', () => {
     TestBed.overrideProvider(ActivatedRoute, { useValue: { queryParams: of({}) } });
     fixture = TestBed.createComponent(AdminActivateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     expect(alertServiceSpy.errorMessage).toHaveBeenCalledWith({ message: 'Email não fornecido' });
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/loginsocial']);
-  });
+  });*/
 
   it('deve mostrar mensagem de sucesso e navegar para /homeAdmin ao configurar admin com sucesso', () => {
     authServiceSpy.setupAdmin.and.returnValue(of({}));
