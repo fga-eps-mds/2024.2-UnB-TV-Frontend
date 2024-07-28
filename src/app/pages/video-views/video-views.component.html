@@ -51,7 +51,9 @@
             <th>Título</th>
             <th>Descrição</th>
             <th>Categoria</th>
-            <th (click)="changeSortOrder()" [class.ordenadoAzul]="isSorted" class="ordenavel">Nº Visualizações</th>
+            <th (click)="changeSortOrder()" class="ordenavel">Nº Visualizações
+              <span class="setinha" [ngClass]="{'up': !sortAscending, 'down': sortAscending}"></span> 
+            </th>
           </tr>
         </thead>
         <tbody>

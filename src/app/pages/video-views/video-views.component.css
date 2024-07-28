@@ -130,6 +130,7 @@ hr.solid2 {
   display: inline-block;
   padding: 0.125em;
   transform: rotate(45deg);
+  margin-bottom: 0.25em;
 }
 
 .conteudoDropdown {
@@ -184,16 +185,16 @@ th.ordenavel:hover {
   color: #0056b3;
 }
 
+th.ordenavel .setinha.up {
+  transform: rotate(225deg);
+}
+
 th.selected {
   color: #0087c8;
 }
 
 thead {
   font-size: 1.2em;
-}
-
-.ordenadoAzul {
-  color: #0087c8;
 }
 
 th:nth-child(1) { width: 10%; }
