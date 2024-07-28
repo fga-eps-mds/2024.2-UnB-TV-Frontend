@@ -43,11 +43,11 @@
             </th>
             <th (click)="setSortColumn('totalViews')" [class.selected]="selectedColumn === 'totalViews'" class="ordenavel">
                 N° Visualizações
-                <span class="setinha" [ngClass]="{'up': selectedColumn === 'totalViews' && !sortAscending, 'down': selectedColumn === 'totalViews' && sortAscending}"></span>
+              <span class="setinha" [ngClass]="{'up': selectedColumn === 'totalViews' && !sortAscending, 'down': selectedColumn === 'totalViews' && sortAscending}"></span>
             </th>
             <th (click)="setSortColumn('viewsPerVideo')" [class.selected]="selectedColumn === 'viewsPerVideo'" class="ordenavel">
                 Visualizações/Vídeo
-                <span class="setinha" [ngClass]="{'up': selectedColumn === 'viewsPerVideo' && !sortAscending, 'down': selectedColumn === 'viewsPerVideo' && sortAscending}"></span>
+              <span class="setinha" [ngClass]="{'up': selectedColumn === 'viewsPerVideo' && !sortAscending, 'down': selectedColumn === 'viewsPerVideo' && sortAscending}"></span>
             </th>
           </tr>
         </thead>
