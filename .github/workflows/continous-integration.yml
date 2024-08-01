@@ -26,10 +26,11 @@ jobs:
       - name: Test 📋
         run: npm run test:prod
 
-      - name: Testing lcov generation
+      - name: Remove src/app/app.constant.ts from lcov.info
         run: |
-          sed -i 's+/home/runner/work/2024.1-UnB-TV-Frontend/2024.1-UnB-TV-Frontend+/github/workspace+g' ./coverage/unb-tv-frontend/lcov.info
-
+          grep -v "SF:src/app/app.constant.ts" coverage/unb-tv-frontend/lcov.info > coverage/unb-tv-frontend/lcov_temp.info
+          mv coverage/unb-tv-frontend/lcov_temp.info coverage/unb-tv-frontend/lcov.info
+          
       - name: Executa SonarCloud Scan
         if: ${{ always() }}
         uses: SonarSource/sonarcloud-github-action@master
