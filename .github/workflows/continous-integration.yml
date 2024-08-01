@@ -26,6 +26,12 @@ jobs:
       - name: Test 📋
         run: npm run test:prod
 
+      - name: Testing lcov generation
+        run: |
+          ls -la
+          ls -la ./coverage
+          ls -la ./coverage/unb-tv-frontend
+
       - name: Executa SonarCloud Scan
         if: ${{ always() }}
         uses: SonarSource/sonarcloud-github-action@master
