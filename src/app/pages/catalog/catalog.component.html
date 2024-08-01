@@ -330,4 +330,22 @@
       </div>
     </div>
   </div>
+  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl">
+    
+    <div *ngFor="let video of unbTvVideos" class="flex">
+      <div>
+        <div
+          *ngFor="let image of video.images"
+          [routerLink]="['/video', video.id]"
+          class="cursor-pointer"
+        >
+          <img
+            src="{{ image.href }}"
+            alt="{{ video.title }}"
+            class="w-36 h-[85px] rounded-[7px]"
+          />
+        </div>
+      </div>
+    </div>
+  </div>  
 </div>

@@ -78,7 +78,7 @@ export class VideoService {
         category: this.catalog.interviews.brasilEmQuestao,
         categoria: "Entrevista",
       },
-      { 
+      {   
         keywords: ['diálogos'], 
         category: this.catalog.interviews.dialogos,
         categoria: "Entrevista",
