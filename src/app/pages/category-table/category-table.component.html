@@ -21,6 +21,7 @@
       <hr class="solid2">
     </header>
     <div class="containerConteudo">
+      <button (click)="exportExcel()">Download Excel</button>
       <div class="containerFiltro">
         <div class="dropdown">
           <button class="botaoDropdown">Filtrar por Categoria <span class="setinha"></span></button>
@@ -33,7 +34,7 @@
           </div>
         </div>
       </div>
-      <table>
+      <table id="tabela-categoria">
         <thead>
           <tr>
             <th>Categoria</th>
