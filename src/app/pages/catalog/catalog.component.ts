@@ -51,7 +51,9 @@ export class CatalogComponent {
 
   filterVideos() {
     this.filteredVideos = this.unbTvVideos.filter(video => 
-      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) 
+      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) ||
+      (this.filterTitle ? video.description?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) ||
+      (this.filterTitle ? video.keywords?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true)
     );
   }
 
