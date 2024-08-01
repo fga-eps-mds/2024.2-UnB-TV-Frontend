@@ -15,7 +15,6 @@ export class CatalogComponent {
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
   catalog: Catalog = new Catalog();
-  mostraCatalogo: number = 1;
   filteredVideos: IVideo[] = [];
   filterTitle: string = '';
 
