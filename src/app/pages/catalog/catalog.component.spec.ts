@@ -773,3 +773,22 @@ describe('CatalogComponent', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/videos']);
   });
 });
+
+describe('VideoComponent', () => {
+
+  it('should filter videos based on filters and selected categories', () => {
+    component.unbTvVideos = [
+      { title: 'Video 1', description: 'Description 1', keywords: 'keywords 1'},
+      { title: 'Video 2', description: 'Description 2', keywords: 'keywords 2'},
+    ];
+
+    component.filterTitle = 'Video';
+    component.filterDescription = 'Description';
+    Component.filterKeywords = 'Keywords';
+
+    component.filterVideos();
+
+    expect(component.filteredVideos.length).toBe(1);
+  });
+
+});
