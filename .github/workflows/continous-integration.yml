@@ -28,7 +28,6 @@ jobs:
 
       - name: Testing lcov generation
         run: |
-          pwd
           sed -i 's+/home/runner/work/2024.1-UnB-TV-Frontend/2024.1-UnB-TV-Frontend+/github/workspace+g' ./coverage/unb-tv-frontend/lcov.info
 
       - name: Executa SonarCloud Scan
