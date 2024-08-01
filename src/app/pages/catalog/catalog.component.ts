@@ -15,11 +15,15 @@ export class CatalogComponent {
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
   catalog: Catalog = new Catalog();
+  mostraCatalogo: number = 1;
+  filteredVideos: IVideo[] = [];
+  filterTitle: string = '';
 
   constructor(private videoService: VideoService, private router: Router) {}
 
   ngOnInit(): void {
     this.findAll();
+    this.filteredVideos = this.unbTvVideos;
   }
 
   findAll(): void {
@@ -44,6 +48,12 @@ export class CatalogComponent {
       if (channel)
         if (channel[0].id === this.unbTvChannelId) this.unbTvVideos.push(video);
     });
+  }
+
+  filterVideos() {
+    this.filteredVideos = this.unbTvVideos.filter(video => 
+      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) 
+    );
   }
 
   videosCatalog(videos: IVideo[]): void {
