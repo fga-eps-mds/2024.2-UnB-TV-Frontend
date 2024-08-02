@@ -10,21 +10,58 @@ import { VideoViewerComponent } from './video-viewer.component';
 import { VideoCommentComponent } from 'src/app/components/video-comment/video-comment.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { VideoService } from 'src/app/services/video.service';
+import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import * as jwt_decode from 'jwt-decode';
+
 
 class VideoServiceMock {
-  constructor() { }
-  findVideoById() {
-    return of({});
+  findVideoById(id: number) {
+    const mockVideo = {
+      id: id,
+      title: 'Mock Video Title',
+      description: 'Mock Video Description',
+    };
+    return of(new HttpResponse({ body: mockVideo }));
+  }
+
+
+  addToWatchLater(videoId: string, userId: string) {
+    return of({ message: 'Added to watch later list' });
+  }
+
+
+  removeFromWatchLater(videoId: string, userId: string) {
+    return of({ message: 'Removed from watch later list' });
+  }
+
+
+  checkWatchLater(videoId: string, userId: string) {
+    return of({ status: true });
   }
 }
+
+
+class UserServiceMock {
+  getUser(userId: string) {
+    const mockUser = {
+      id: userId,
+      name: 'Mock User',
+      email: 'mockuser@example.com',
+    };
+    return of(mockUser);
+  }
+}
+
 
 describe('VideoViewerComponent', () => {
   let component: VideoViewerComponent;
   let fixture: ComponentFixture<VideoViewerComponent>;
   let videoService: VideoService;
+  let userService: UserService;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,19 +76,22 @@ describe('VideoViewerComponent', () => {
           provide: ActivatedRoute,
           useValue: { snapshot: { params: { idVideo: 190329 } } },
         },
-        { provide: VideoService, useValue: new VideoServiceMock() },
+        { provide: VideoService, useClass: VideoServiceMock },
+        { provide: UserService, useClass: UserServiceMock },
         FormBuilder,
       ],
     }).compileComponents();
+
 
     fixture = TestBed.createComponent(VideoViewerComponent);
     component = fixture.componentInstance;
     localStorage.setItem(
       'token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2FvMTV2aWN0b3IwOEBnbWFpbC5jb20iLCJleHAiOjE2OTkzMTI5MzV9.1B9qBJt8rErwBKyD5JCdsPozsw86oQ38tdfDuMM2HFI'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImpvYW8xNnZpY3RvcjIwQGdtYWlsLmNvbSIsImV4cCI6MTY5OTMxMjkzNX0.1B9qBJt8rErwBKyD5JCdsPozsw86oQ38tdfDuMM2HFI'
     );
     fixture.detectChanges();
     videoService = TestBed.inject(VideoService);
+    userService = TestBed.inject(UserService);
     navigator.share = () => {
       {
         return new Promise((resolve, reject) => {
@@ -60,25 +100,37 @@ describe('VideoViewerComponent', () => {
       }
     };
 
+
     navigator.canShare = () => {
       {
         return true;
       }
     }
-
-
   });
 
-  class VideoServiceMock {
-    findVideoById(id: number) {
-      const mockVideo = {
-        id: id,
-        title: 'Mock Video Title',
-        description: 'Mock Video Description',
-      };
-      return of(new HttpResponse({ body: mockVideo }));
-    }
-  }
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+
+  /*it('should decode token and set userId as a string', () => {
+    const token = localStorage.getItem('token') as string;
+    const originalJwtDecode = jwt_decode.default;
+
+
+    // Redefinir a função jwt_decode
+    (jwt_decode as any).default = (): { id: string } => ({ id: '1' });
+
+
+    component.setUserIdFromToken(token);
+    expect(component.userId).toBe('1'); // Ensure the userId is '1' as string
+
+
+    // Restaurar a função original após o teste
+    (jwt_decode as any).default = originalJwtDecode;
+  });*/
+
 
   it('should call findVideoById and set video description', () => {
     const expectedVideo = {
@@ -96,9 +148,6 @@ describe('VideoViewerComponent', () => {
     expect(component.videoDescription).toEqual(expectedVideo.description);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 
   it('should toggle showDescription when expandDescription is called', () => {
     expect(component.showDescription).toBe(false);
@@ -108,30 +157,19 @@ describe('VideoViewerComponent', () => {
     expect(component.showDescription).toBe(false);
   });
 
-  it('should call findVideoById and set video description', () => {
-    const expectedVideo = {
-      id: 190329,
-      title: 'Mock Video Title',
-      description: 'Mock Video Description',
-    };
-    spyOn(videoService, 'findVideoById').and.returnValue(
-      of(new HttpResponse({ body: expectedVideo }))
-    );
-    component.findVideoById();
-    fixture.detectChanges();
-    expect(component.video).toEqual(expectedVideo);
-    expect(component.videoDescription).toEqual(expectedVideo.description);
-  });
 
   it('should return the correct video URL', () => {
     component.eduplayVideoUrl = 'https://eduplay.rnp.br/portal/video/';
     component.idVideo = 190329;
 
+
     const expectedUrl = 'https://eduplay.rnp.br/portal/video/190329';
     const returnedUrl = component.getVideoUrl();
 
+
     expect(returnedUrl).toEqual(expectedUrl);
   });
+
 
   it('should share video with native share API on mobile', fakeAsync(() => {
     const shareData = {
@@ -157,17 +195,18 @@ describe('VideoViewerComponent', () => {
     spyOn((window as any).navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
     const consoleWarnSpy = spyOn(console, 'error');
 
+
     component.shareVideo();
     tick();
     expect(consoleWarnSpy).toHaveBeenCalledWith('Erro ao compartilhar:', undefined);
   }));
 
-  it('should copy video URL to clipboard if native share is not supported', fakeAsync(() => {
 
+  it('should copy video URL to clipboard if native share is not supported', fakeAsync(() => {
     spyOn(navigator, 'canShare').and.returnValue(false);
-    // spyOnProperty(navigator, 'clipboard').and.resolveTo();
     spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
     const consoleWarnSpy = spyOn(console, 'error');
+
 
     component.shareVideo();
     tick();
@@ -175,10 +214,12 @@ describe('VideoViewerComponent', () => {
     expect(consoleWarnSpy).not.toHaveBeenCalled();
   }));
 
+
   it('should handle clipboard errors gracefully', fakeAsync(() => {
     spyOn(navigator, 'canShare').and.returnValue(false);
     spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.reject());
     const consoleWarnSpy = spyOn(console, 'error');
+
 
     component.shareVideo();
     tick();
@@ -186,5 +227,43 @@ describe('VideoViewerComponent', () => {
   }));
 
 
+  it('should fetch user details and set user object', () => {
+    const expectedUser = {
+      id: '1',
+      name: 'Mock User',
+      email: 'mockuser@example.com',
+    };
+    const mySpy = spyOn(userService, 'getUser').and.returnValue(of(expectedUser));
+    component.getUserDetails();
+    fixture.detectChanges();
+    expect(mySpy).toHaveBeenCalledWith('1'); // Ensure '1' as string
+    expect(component.user).toEqual(expectedUser);
+  });
 
-}); 
+
+  it('should toggle watch later status and call appropriate service method', () => {
+    const addSpy = spyOn(videoService, 'addToWatchLater').and.callThrough();
+    const removeSpy = spyOn(videoService, 'removeFromWatchLater').and.callThrough();
+
+
+    // Initial state is true, so it should call remove first
+    component.toggleWatchLater();
+    expect(component.isWatchLater).toBe(false);
+    expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+
+
+    // Now state is false, so it should call add next
+    component.toggleWatchLater();
+    expect(component.isWatchLater).toBe(true);
+    expect(addSpy).toHaveBeenCalledWith('190329', '1');
+  });
+
+
+  it('should check watch later status and set isWatchLater correctly', () => {
+    const mySpy = spyOn(videoService, 'checkWatchLater').and.returnValue(of({ status: true }));
+    component.checkWatchLaterStatus();
+    fixture.detectChanges();
+    expect(mySpy).toHaveBeenCalledWith('190329', '1');
+    expect(component.isWatchLater).toBe(true);
+  });
+});

@@ -498,4 +498,158 @@ describe('VideoService', () => {
       });
     });
   });
+
+  describe('videosCatalog', () => {
+    it('should categorize videos correctly', () => {
+      const mockVideos: IVideo[] = [
+        {
+          id: 1,
+          title: 'Fala, jovem',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 2,
+          title: 'Informe UnB',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 3,
+          title: 'Esboços: Artista',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+        {
+          id: 4,
+          title: 'Vídeo sem categoria específica',
+          description: '',
+          keywords: '',
+          visibility: 'PUBLIC',
+          duration: 1000,
+          embed: '',
+          generateLibras: false,
+          generateSubtitle: false,
+          qtAccess: 0,
+          qtLikes: 0,
+          images: [],
+          channels: [],
+        },
+      ];
+
+
+      service.videosCatalog(mockVideos);
+
+
+      expect(mockVideos[0]['catalog']).toBe('Jornalismo');
+      expect(service.catalog.journalism.falaJovem).toContain(mockVideos[0]);
+
+
+      expect(mockVideos[1]['catalog']).toBe('Jornalismo');
+      expect(service.catalog.journalism.informeUnB).toContain(mockVideos[1]);
+
+
+      expect(mockVideos[2]['catalog']).toBe('Arte e Cultura');
+      expect(service.catalog.artAndCulture.esbocos).toContain(mockVideos[2]);
+
+
+      expect(mockVideos[3]['catalog']).toBe('UnBTV');
+      expect(service.catalog.unbtv).toContain(mockVideos[3]);
+    });
+  });
+
+
+  describe('addToWatchLater', () => {
+    it('should add a video to the watch later list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { message: 'Added to watch later list' };
+
+
+      service.addToWatchLater(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+
+      const req = httpMock.expectOne(`${environment.videoAPIURL}/watch-later/`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ video_id: mockVideoId, user_id: mockUserId });
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('removeFromWatchLater', () => {
+    it('should remove a video from the watch later list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { message: 'Removed from watch later list' };
+
+
+      service.removeFromWatchLater(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/watch-later/${mockVideoId}?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('DELETE');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('checkWatchLater', () => {
+    it('should check if a video is in the watch later list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { status: true };
+
+
+      service.checkWatchLater(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/watch-later/status/${mockVideoId}?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
 });
