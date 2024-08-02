@@ -20,6 +20,7 @@ type EduplayByInstitutionResponseType =
   providedIn: 'root',
 })
 export class VideoService {
+  public videoServiceApiURL = environment.videoAPIURL;
   public resourceUrl = EDUPLAY_API_URL + 'video';
   public eduplayClientKey = environment.EDUPLAY_CLIENT_KEY;
   public unbId = UNB_ID;
@@ -230,6 +231,24 @@ export class VideoService {
           this.catalog.unbtv.push(video);
         }
       }
+    });
+  }
+
+  //Assistir Mais Tarde 
+  addToWatchLater(videoId: string, userId: string): Observable<any> {
+    console.log(videoId,userId)
+    return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
+  }
+
+  removeFromWatchLater(videoId: string, userId: string): Observable<any> {
+    return this.http.delete(`${this.videoServiceApiURL}/watch-later/${videoId}`, {
+      params: { user_id: userId }
+    });
+  }
+
+  checkWatchLater(videoId: string, userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/watch-later/status/${videoId}`, {
+      params: { user_id: userId }
     });
   }
 }
