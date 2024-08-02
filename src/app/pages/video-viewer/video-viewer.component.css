@@ -4,4 +4,21 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
-  
+
+  .watch-later-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+   }
+   
+   
+   .watch-later-button.watch-later-active {
+    background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
+   }
+   
