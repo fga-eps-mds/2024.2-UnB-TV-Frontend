@@ -170,6 +170,14 @@ export class CategoryTableComponent {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
+    const columnWidths = [
+      { wch:20 },
+      { wch:10 },
+      { wch:15 },
+      { wch:20 },
+    ];
+
+    ws['!cols'] = columnWidths;
     XLSX.utils.book_append_sheet(wb, ws,'Sheet1'); 
     XLSX.writeFile(wb, this.fileName);
   }
