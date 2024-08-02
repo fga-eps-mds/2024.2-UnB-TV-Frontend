@@ -49,7 +49,7 @@ export class VideoViewsComponent {
       },
       complete: () => {
         this.filterVideosByChannel(this.videosEduplay);
-        this.videoService.videosCatalog(this.unbTvVideos); // Chamando a função do serviço
+        this.videoService.videosCatalog(this.unbTvVideos, this.catalog); // Chamando a função do serviço
         this.cleanDescriptions();
         this.filterVideos();
       },
