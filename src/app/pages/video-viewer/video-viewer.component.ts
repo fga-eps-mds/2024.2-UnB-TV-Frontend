@@ -18,6 +18,7 @@ export class VideoViewerComponent implements OnInit {
   video: IVideo = new Video();
   idVideo!: number;
   isWatchLater = true;
+  isFavorite = true;
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   userId: string = '';
   user :any;
@@ -77,6 +78,7 @@ export class VideoViewerComponent implements OnInit {
     });
   };
 
+  // Assistir mais tarde
   toggleWatchLater() {
     console.log('User ID when toggling watch later:', this.userId);
     this.isWatchLater = !this.isWatchLater;
@@ -115,6 +117,33 @@ export class VideoViewerComponent implements OnInit {
         console.error('Error checking watch later status', err);
       }
     });
+  }
+
+  // Favoritar
+  toggleFavorite() {
+    console.log('User ID when toggling favorite:', this.userId);
+    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite) {
+      this.videoService.addToFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          console.log('Video added to favorites list');
+          alert('Vídeo adicionado à lista de "Favoritos".');
+        },
+        error: (err) => {
+          console.error('Error adding to favorite', err);
+        }
+      });
+    } /*else {
+      this.videoService.removeFromFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          console.log('Video removed from favorite list');
+          alert('Vídeo removido da lista de "Favoritos".');
+        },
+        error: (err) => {
+          console.error('Error removing from favorite', err);
+        }
+      });
+    }*/
   }
 
   getVideoUrl(): string {

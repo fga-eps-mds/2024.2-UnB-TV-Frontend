@@ -27,20 +27,24 @@ class VideoServiceMock {
     return of(new HttpResponse({ body: mockVideo }));
   }
 
-
+  // Assistr mais tarde
   addToWatchLater(videoId: string, userId: string) {
     return of({ message: 'Added to watch later list' });
   }
-
 
   removeFromWatchLater(videoId: string, userId: string) {
     return of({ message: 'Removed from watch later list' });
   }
 
-
   checkWatchLater(videoId: string, userId: string) {
     return of({ status: true });
   }
+
+  // Favorito
+  addToFavorite(videoId: string, userId: string) {
+    return of({ message: 'Added to favorites list' });
+  }
+
 }
 
 
@@ -240,7 +244,7 @@ describe('VideoViewerComponent', () => {
     expect(component.user).toEqual(expectedUser);
   });
 
-
+  // Assistir mais tarde
   it('should toggle watch later status and call appropriate service method', () => {
     const addSpy = spyOn(videoService, 'addToWatchLater').and.callThrough();
     const removeSpy = spyOn(videoService, 'removeFromWatchLater').and.callThrough();
@@ -266,4 +270,22 @@ describe('VideoViewerComponent', () => {
     expect(mySpy).toHaveBeenCalledWith('190329', '1');
     expect(component.isWatchLater).toBe(true);
   });
+
+  // Favoritar
+
+  it('should toggle favorite status and call appropriate service method', () => {
+    const addSpy = spyOn(videoService, 'addToFavorite').and.callThrough();
+    //const removeSpy = spyOn(videoService, 'removeFromFavorite').and.callThrough();
+
+    // Initial state is true, so it should call remove first
+    component.toggleFavorite();
+    expect(component.isFavorite).toBe(false);
+    //expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+
+    // Now state is false, so it should call add next
+    component.toggleFavorite();
+    expect(component.isFavorite).toBe(true);
+    expect(addSpy).toHaveBeenCalledWith('190329', '1');
+  });
+
 });
