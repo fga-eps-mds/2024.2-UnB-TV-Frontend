@@ -251,4 +251,11 @@ export class VideoService {
       params: { user_id: userId }
     });
   }
+
+  // Favoritar
+  addToFavorite(videoId: string, userId: string): Observable<any> {
+    console.log('Adding to favorite:', videoId, userId)
+    return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
+  }
+
 }

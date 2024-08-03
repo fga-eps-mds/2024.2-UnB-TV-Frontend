@@ -652,4 +652,26 @@ describe('VideoService', () => {
       req.flush(mockResponse);
     });
   });
+
+  describe('addToFavorite', () => {
+    it('should add a video to the favorite list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { message: 'Added to favorite list' };
+
+
+      service.addToFavorite(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+
+      const req = httpMock.expectOne(`${environment.videoAPIURL}/favorite/`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ video_id: mockVideoId, user_id: mockUserId });
+
+
+      req.flush(mockResponse);
+    });
+  });
+
 });
