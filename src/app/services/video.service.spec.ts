@@ -679,19 +679,43 @@ describe('VideoService', () => {
       const mockVideoId = '12345';
       const mockUserId = 'user123';
       const mockResponse = { message: 'Removed from favorite list' };
- 
- 
+
+
       service.removeFromFavorite(mockVideoId, mockUserId).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
- 
- 
+
+
       const req = httpMock.expectOne(
         `${environment.videoAPIURL}/favorite/${mockVideoId}?user_id=${mockUserId}`
       );
       expect(req.request.method).toBe('DELETE');
- 
- 
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+
+  describe('checkFavorite', () => {
+    it('should check if a video is in the favorite list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { statusfavorite: true };
+
+
+      service.checkFavorite(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/favorite/status/${mockVideoId}?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
       req.flush(mockResponse);
     });
   });

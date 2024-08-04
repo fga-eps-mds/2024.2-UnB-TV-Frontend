@@ -47,8 +47,12 @@ class VideoServiceMock {
   
   removeFromFavorite(videoId: string, userId: string) {
     return of({ message: 'Removed from favorite list' });
-    }
+  }
 
+  checkFavorite(videoId: string, userId: string) {
+    return of({ statusfavorite: true });
+  }
+  
 }
 
 
