@@ -22,3 +22,7 @@
     background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
    }
    
+   .watch-later-button.favorite-active {
+    background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
+  }
+   
