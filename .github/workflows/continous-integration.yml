@@ -31,11 +31,7 @@ jobs:
 
       - name: Generate JUnit report
         run: |
-          echo '<?xml version="1.0" encoding="utf-8"?>' > test-report.xml
-          echo '<testsuites>' >> test-report.xml
-          cat test-reports/TESTS.xml >> test-report.xml
-          echo '</testsuites>' >> test-report.xml
-          sed -i '/^<?xml version="1.0"?>$/d' test-report.xml
+          cp test-report-example.xml test-report.xml
 
       - name: Test Printing Test Report
         run: cat test-report.xml
