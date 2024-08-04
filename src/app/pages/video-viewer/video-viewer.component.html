@@ -21,6 +21,13 @@
         {{ isWatchLater ? 'Remover da lista': 'Assistir Mais Tarde'}}
       </button>
     </div>
+
+    <div class="flex justify-start">
+      <button class="watch-later-button" (click)="toggleFavorite()" [ngClass]="{'favorite-active': isFavorite}">
+        {{ isFavorite ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos' }}
+      </button>
+    </div> 
+
     <div
       class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800"
     >

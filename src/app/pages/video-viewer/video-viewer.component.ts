@@ -118,6 +118,7 @@ export class VideoViewerComponent implements OnInit {
       }
     });
   }
+  
 
   // Favoritar
   toggleFavorite() {
@@ -133,7 +134,7 @@ export class VideoViewerComponent implements OnInit {
           console.error('Error adding to favorite', err);
         }
       });
-    } /*else {
+    } else {
       this.videoService.removeFromFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
           console.log('Video removed from favorite list');
@@ -143,7 +144,21 @@ export class VideoViewerComponent implements OnInit {
           console.error('Error removing from favorite', err);
         }
       });
-    }*/
+    }
+  }
+
+  checkFavoriteStatus() {
+    console.log(`Checking favorite status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
+    this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
+      next: (response) => {
+        console.log(response); // Exibe a resposta completa
+        this.isFavorite = response.statusfavorite; // Verifique se a resposta tem a estrutura correta
+        console.log('Favorite status:', this.isFavorite);
+      },
+      error: (err) => {
+        console.error('Error checking favorite status', err);
+      }
+    });
   }
 
   getVideoUrl(): string {
