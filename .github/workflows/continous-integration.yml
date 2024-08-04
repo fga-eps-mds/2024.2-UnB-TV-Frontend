@@ -20,6 +20,9 @@ jobs:
       - name: Install ⚙️
         run: npm install
 
+      - name: Install Junit
+        run: npm install --save-dev karma-junit-reporter
+
       - name: Build 🛠
         run: npm run build
 
