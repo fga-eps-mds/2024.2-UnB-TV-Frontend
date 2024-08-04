@@ -674,4 +674,26 @@ describe('VideoService', () => {
     });
   });
 
+  describe('removeFromFavorite', () => {
+    it('should remove a video from the favorite list', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { message: 'Removed from favorite list' };
+ 
+ 
+      service.removeFromFavorite(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+ 
+ 
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/favorite/${mockVideoId}?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('DELETE');
+ 
+ 
+      req.flush(mockResponse);
+    });
+  });
+
 });

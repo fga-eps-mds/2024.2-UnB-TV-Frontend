@@ -44,8 +44,15 @@ class VideoServiceMock {
   addToFavorite(videoId: string, userId: string) {
     return of({ message: 'Added to favorites list' });
   }
+  
+  removeFromFavorite(videoId: string, userId: string) {
+    return of({ message: 'Removed from favorite list' });
+    }
 
 }
+
+
+
 
 
 class UserServiceMock {
