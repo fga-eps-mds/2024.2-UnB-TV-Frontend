@@ -29,6 +29,9 @@ jobs:
       - name: Test 📋
         run: npm run test:prod
 
+      - name: Test Printing Test Report
+        run: cat test-reports/TESTS.xml
+
       - name: Remove src/app/app.constant.ts from lcov.info
         run: |
           grep -v "SF:src/app/app.constant.ts" coverage/unb-tv-frontend/lcov.info > coverage/unb-tv-frontend/lcov_temp.info
