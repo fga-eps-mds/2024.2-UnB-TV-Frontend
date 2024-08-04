@@ -29,8 +29,15 @@ jobs:
       - name: Test 📋
         run: npm run test:prod
 
+      - name: Generate JUnit report
+        run: |
+          echo '<?xml version="1.0"?>' > test-report.xml
+          echo '<testsuites>' >> test-report.xml
+          cat test-reports/TESTS.xml >> test-report.xml
+          echo '</testsuites>' >> test-report.xml
+
       - name: Test Printing Test Report
-        run: cat test-reports/TESTS.xml
+        run: cat test-report.xml
 
       - name: Remove src/app/app.constant.ts from lcov.info
         run: |
