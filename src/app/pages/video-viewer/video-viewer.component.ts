@@ -56,7 +56,9 @@ export class VideoViewerComponent implements OnInit {
         console.log('Fetched User:', user); // Log para verificar o objeto `user`
         this.user = user;
         this.checkWatchLaterStatus();
+        this.checkFavoriteStatus();
         console.log(this.isWatchLater);
+        console.log(this.isFavorite);
       },
       error: (err) => {
         console.error('Error fetching user details', err);

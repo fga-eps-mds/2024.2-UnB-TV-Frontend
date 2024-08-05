@@ -286,12 +286,12 @@ describe('VideoViewerComponent', () => {
 
   it('should toggle favorite status and call appropriate service method', () => {
     const addSpy = spyOn(videoService, 'addToFavorite').and.callThrough();
-    //const removeSpy = spyOn(videoService, 'removeFromFavorite').and.callThrough();
+    const removeSpy = spyOn(videoService, 'removeFromFavorite').and.callThrough();
 
     // Initial state is true, so it should call remove first
     component.toggleFavorite();
     expect(component.isFavorite).toBe(false);
-    //expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+    expect(removeSpy).toHaveBeenCalledWith('190329', '1');
 
     // Now state is false, so it should call add next
     component.toggleFavorite();
