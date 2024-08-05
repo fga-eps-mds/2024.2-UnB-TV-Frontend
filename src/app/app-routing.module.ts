@@ -102,8 +102,16 @@ const routes: Routes = [
     path: 'adminActivate',
     component: AdminActivateComponent
   },
-  { path: 'category-views', component: CategoryTableComponent},
-  { path: 'video-views', component: VideoViewsComponent},
+  { 
+    path: 'category-views',
+    component: CategoryTableComponent,
+    canActivate: [TokenAdminGuard],
+  },
+  { 
+    path: 'video-views', 
+    component: VideoViewsComponent,
+    canActivate: [TokenAdminGuard],
+  },
 ];
 
 @NgModule({

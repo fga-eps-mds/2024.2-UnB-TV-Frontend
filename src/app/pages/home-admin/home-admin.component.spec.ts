@@ -5,6 +5,11 @@ import { VideoService } from 'src/app/services/video.service';
 import { ConfirmationService } from 'primeng/api';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms'
+
+class ConfirmationServiceMock {
+  confirm() { }
+}
 
 describe('HomeAdminComponent', () => {
   let component: HomeAdminComponent;
@@ -13,11 +18,14 @@ describe('HomeAdminComponent', () => {
   let confirmationService: ConfirmationService;
 
   beforeEach(async () => {
+    confirmationService = jasmine.createSpyObj('ConfirmationService', ['confirm']);
+
     await TestBed.configureTestingModule({
       declarations: [HomeAdminComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
       providers: [AuthService, VideoService, ConfirmationService]
     }).compileComponents();
+
     fixture = TestBed.createComponent(HomeAdminComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);
@@ -29,13 +37,16 @@ describe('HomeAdminComponent', () => {
     expect(component).toBeTruthy();
   });
 
-/*  it('should call logoutUser and confirm logout', () => {
-    spyOn(confirmationService, 'confirm').and.callFake((confirm) => confirm.accept());
-    spyOn(authService, 'logout').and.callThrough();
+  it('should call confirm of confirmationService when logout is clicked', () => {
+    spyOn(component, 'logoutUser').and.callThrough();
+    const mySpy = spyOn(confirmationService, 'confirm');
+    fixture.detectChanges();
 
-    component.logoutUser();
+    const submitButton = fixture.nativeElement.querySelector(
+      '.linkLogout'
+    );
 
-    expect(confirmationService.confirm).toHaveBeenCalled();
-    expect(authService.logout).toHaveBeenCalled();
-  }); */
+    submitButton.click();
+    expect(mySpy).toHaveBeenCalled();
+  });
 }); 
