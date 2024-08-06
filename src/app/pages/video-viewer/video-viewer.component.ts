@@ -4,6 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { VideoService } from '../../services/video.service';
 import { IVideo, Video } from 'src/shared/model/video.model';
 import { UserService } from 'src/app/services/user.service';
+import { AlertService } from 'src/app/services/alert.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -30,7 +31,8 @@ export class VideoViewerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private videoService: VideoService,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -87,8 +89,7 @@ export class VideoViewerComponent implements OnInit {
     if (this.isWatchLater) {
       this.videoService.addToWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          console.log('Video added to watch later list');
-          alert('Vídeo adicionado à lista de "Assistir Mais Tarde".');
+          this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Assistir Mais tarde");
         },
         error: (err) => {
           console.error('Error adding to watch later', err);
@@ -97,8 +98,7 @@ export class VideoViewerComponent implements OnInit {
     } else {
       this.videoService.removeFromWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          console.log('Video removed from watch later list');
-          alert('Vídeo removido da lista de "Assistir Mais Tarde".');
+          this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Assistir mais tarde.");
         },
         error: (err) => {
           console.error('Error removing from watch later', err);
@@ -111,9 +111,8 @@ export class VideoViewerComponent implements OnInit {
     console.log(`Checking watch later status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
     this.videoService.checkWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
-        console.log(response); // Exibe a resposta completa
         this.isWatchLater = response.status; // Acessa a propriedade status do objeto response
-        console.log('Watch later status:', this.isWatchLater);
+        //console.log('Watch later status:', this.isWatchLater);
       },
       error: (err) => {
         console.error('Error checking watch later status', err);
@@ -124,13 +123,13 @@ export class VideoViewerComponent implements OnInit {
 
   // Favoritar
   toggleFavorite() {
-    console.log('User ID when toggling favorite:', this.userId);
+    //console.log('User ID when toggling favorite:', this.userId);
     this.isFavorite = !this.isFavorite;
     if (this.isFavorite) {
       this.videoService.addToFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          console.log('Video added to favorites list');
-          alert('Vídeo adicionado à lista de "Favoritos".');
+          //console.log('Video added to favorites list');
+          this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
         },
         error: (err) => {
           console.error('Error adding to favorite', err);
@@ -139,8 +138,8 @@ export class VideoViewerComponent implements OnInit {
     } else {
       this.videoService.removeFromFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          console.log('Video removed from favorite list');
-          alert('Vídeo removido da lista de "Favoritos".');
+          //console.log('Video removed from favorite list');
+          this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
         },
         error: (err) => {
           console.error('Error removing from favorite', err);
@@ -150,12 +149,12 @@ export class VideoViewerComponent implements OnInit {
   }
 
   checkFavoriteStatus() {
-    console.log(`Checking favorite status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
+    //console.log(`Checking favorite status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
     this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
-        console.log(response); // Exibe a resposta completa
+        //console.log(response); // Exibe a resposta completa
         this.isFavorite = response.statusfavorite; // Verifique se a resposta tem a estrutura correta
-        console.log('Favorite status:', this.isFavorite);
+        //console.log('Favorite status:', this.isFavorite);
       },
       error: (err) => {
         console.error('Error checking favorite status', err);
