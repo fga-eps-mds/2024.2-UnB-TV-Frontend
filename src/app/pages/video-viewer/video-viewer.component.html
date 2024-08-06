@@ -15,7 +15,7 @@
       <h4 class="font-custom font-bold text-gray-800">
         {{ video.title }}
       </h4>
-      <div class="flex gap-2">
+      <div class="flex gap-2" *ngIf="userId!==''">
         <button class="favorite-button" (click)="toggleFavorite()" [class.favorited]="isFavorite">
           <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon"/> 
           <span *ngIf="isFavorite"> Favoritado</span>

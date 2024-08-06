@@ -5,6 +5,7 @@ import { VideoService } from '../../services/video.service';
 import { IVideo, Video } from 'src/shared/model/video.model';
 import { UserService } from 'src/app/services/user.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -22,7 +23,7 @@ export class VideoViewerComponent implements OnInit {
   isFavorite = true;
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   userId: string = '';
-  user :any;
+  user : any;
 
   expandDescription() {
     this.showDescription = !this.showDescription;
@@ -30,6 +31,7 @@ export class VideoViewerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private videoService: VideoService,
     private userService: UserService,
     private alertService: AlertService
@@ -38,10 +40,12 @@ export class VideoViewerComponent implements OnInit {
   ngOnInit(): void {
     const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
     this.idVideo = this.route.snapshot.params['idVideo'];
-    console.log('ID do vídeo:', this.idVideo);
 
-    this.setUserIdFromToken(localStorage.getItem('token') as string);
-    this.getUserDetails();
+    if (this.authService.isAuthenticated()){
+      this.setUserIdFromToken(localStorage.getItem('token') as string);
+      this.getUserDetails();
+    }
+
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
   }
@@ -49,18 +53,16 @@ export class VideoViewerComponent implements OnInit {
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
-    console.log('Decoded User ID:', this.userId);
   }
 
   getUserDetails() {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
-        console.log('Fetched User:', user); // Log para verificar o objeto `user`
         this.user = user;
         this.checkWatchLaterStatus();
         this.checkFavoriteStatus();
-        console.log(this.isWatchLater);
-        console.log(this.isFavorite);
+        // console.log(this.isWatchLater);
+        // console.log(this.isFavorite);
       },
       error: (err) => {
         console.error('Error fetching user details', err);
@@ -84,7 +86,6 @@ export class VideoViewerComponent implements OnInit {
 
   // Assistir mais tarde
   toggleWatchLater() {
-    console.log('User ID when toggling watch later:', this.userId);
     this.isWatchLater = !this.isWatchLater;
     if (this.isWatchLater) {
       this.videoService.addToWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
@@ -110,7 +111,7 @@ export class VideoViewerComponent implements OnInit {
   }
 
   checkWatchLaterStatus() {
-    console.log(`Checking watch later status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
+    //console.log(`Checking watch later status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
     this.videoService.checkWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
         this.isWatchLater = response.status; // Acessa a propriedade status do objeto response
