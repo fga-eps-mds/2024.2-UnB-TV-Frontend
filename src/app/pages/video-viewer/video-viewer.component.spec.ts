@@ -8,7 +8,7 @@ import { VideoService } from 'src/app/services/video.service';
 import { UserService } from 'src/app/services/user.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 
@@ -280,8 +280,8 @@ describe('VideoViewerComponent', () => {
   });
 
   it('should handle favorite toggle errors gracefully', fakeAsync(() => {
-    const addSpy = spyOn(videoService, 'addToFavorite').and.returnValue(Promise.reject());
-    const removeSpy = spyOn(videoService, 'removeFromFavorite').and.returnValue(Promise.reject());
+    const addSpy = spyOn(videoService, 'addToFavorite').and.returnValue(throwError('Error'));
+    const removeSpy = spyOn(videoService, 'removeFromFavorite').and.returnValue(throwError('Error'));
     const alertSpy = spyOn(alertService, 'showMessage');
 
     // Initial state is true, so it should call remove first
