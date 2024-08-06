@@ -1,41 +1,20 @@
-name: netlify-deploy
+name: Trigger Fork Workflow
+
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - main
+      - develop
 
 jobs:
-  build:
+  trigger-workflow:
     runs-on: ubuntu-latest
+    environment: actions
 
     steps:
-      - name: Checkout ✅
-        uses: actions/checkout@v3
-
-      - name: Setup 🏗
-        uses: actions/setup-node@v2
-        with:
-          node-version: lts/*
-          cache: 'npm'
-
-      - name: Install ⚙️
-        run: npm install
-
-      - name: Build 🛠
-        run: npm run build
-
-      - name: Test 📋
-        run: npm run test:prod
-      
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2.0
-        with:
-          publish-dir: './dist/unb-tv-frontend'
-          production-branch: devel
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+      - name: Trigger workflow in forked repo
+        run: |
+          curl -X POST https://api.github.com/repos/victorleaoo/2024.1-UnB-TV-Frontend/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -H 'Authorization: token ${{ secrets.API_TOKEN_GITHUB }}' \
+          --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'

@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Helvetic';
+  src: url('../../../assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: Helvetic, sans-serif;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -71,7 +82,7 @@ nav ul li a.linkSelecionado {
 
 main {
   flex: 1;
-  margin-left: 12em; /* Certifique-se de que este valor esteja sincronizado com a largura do aside */
+  margin-left: 12em;
   padding: 0.25em;
   display: flex;
   flex-direction: column;

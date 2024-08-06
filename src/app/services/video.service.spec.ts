@@ -564,7 +564,6 @@ describe('VideoService', () => {
         },
       ];
 
-
       service.videosCatalog(mockVideos);
 
 
@@ -719,5 +718,4 @@ describe('VideoService', () => {
       req.flush(mockResponse);
     });
   });
-
 });
