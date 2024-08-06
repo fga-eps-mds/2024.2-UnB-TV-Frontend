@@ -25,4 +25,43 @@
    .watch-later-button.favorite-active {
     background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
   }
+    
+.title-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
   
+.favorite-button {
+  color: white;
+  background-color: #0087c8;
+  padding: 0.15em 0.9em;
+  border: none;
+  cursor: pointer;
+  border-radius: 5em;
+  font-size: 1.2em;
+  display: flex; /* Utiliza flexbox para alinhar o conteúdo */
+  align-items: center; /* Alinha verticalmente o conteúdo */
+  gap: 0.3em;
+}
+  
+.favorite-icon {
+  display: flex;
+  width: 1em; /* Define a largura do ícone */
+  height: 1em; /* Define a altura do ícone */
+  fill: #ffffff; /* Define a cor do ícone */
+}
+
+.favorite-button:hover {
+  background-color:#0085c894; ; /* Fundo gradiente ao passar o mouse */
+  color: white; /* Cor das letras ao passar o mouse */
+}
+
+.favorite-button:active {
+  background: linear-gradient(180deg, lightblue, lightblue); /* Fundo gradiente ao clicar */
+  color: white; /* Cor das letras ao clicar */
+}
+
+button.favorited span {
+  color: rgb(255, 255, 255);
+}
