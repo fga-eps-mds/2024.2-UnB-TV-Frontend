@@ -1,37 +1,43 @@
 .clamped-description {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 
-  .watch-later-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-   }
-   
-   
-   .watch-later-button.watch-later-active {
-    background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
-   }
+.watch-later-button {
+  background-color: black;
+  color: #fff;
+  border: none;
+  padding: 0.15em 0.9em;
+  border-radius: 5em;
+  cursor: pointer;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
 
-   .watch-later-button.favorite-active {
-    background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
-  }
-    
+.watch-later-button.watch-later-active {
+  background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
+}
+
+.watch-later-button:hover {
+  background-color: #00000094; /* Fundo ao passar o mouse */
+  color: white; /* Cor das letras ao passar o mouse */
+}
+
+.watch-later-button:active {
+  background-color: red; /* Fundo ao clicar */
+  color: white; /* Cor das letras ao clicar */
+}
+
 .title-button-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-  
+
 .favorite-button {
   color: white;
   background-color: #0087c8;
@@ -44,7 +50,12 @@
   align-items: center; /* Alinha verticalmente o conteúdo */
   gap: 0.3em;
 }
-  
+
+.favorite-button.favorited {
+  background-color: red; /* Fundo quando favorito */
+  color: white; /* Cor das letras quando favorito */
+}
+
 .favorite-icon {
   display: flex;
   width: 1em; /* Define a largura do ícone */
@@ -53,12 +64,12 @@
 }
 
 .favorite-button:hover {
-  background-color:#0085c894; ; /* Fundo gradiente ao passar o mouse */
+  background-color: #0085c894; /* Fundo ao passar o mouse */
   color: white; /* Cor das letras ao passar o mouse */
 }
 
 .favorite-button:active {
-  background: linear-gradient(180deg, lightblue, lightblue); /* Fundo gradiente ao clicar */
+  background-color: red; /* Fundo ao clicar */
   color: white; /* Cor das letras ao clicar */
 }
 
