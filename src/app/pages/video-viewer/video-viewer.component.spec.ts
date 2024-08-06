@@ -1,9 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VideoViewerComponent } from './video-viewer.component';
@@ -11,12 +6,13 @@ import { VideoCommentComponent } from 'src/app/components/video-comment/video-co
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { VideoService } from 'src/app/services/video.service';
 import { UserService } from 'src/app/services/user.service';
+import { AlertService } from 'src/app/services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 
-
+// Mocks
 class VideoServiceMock {
   findVideoById(id: number) {
     const mockVideo = {
@@ -27,7 +23,7 @@ class VideoServiceMock {
     return of(new HttpResponse({ body: mockVideo }));
   }
 
-  // Assistr mais tarde
+  // Assistir mais tarde
   addToWatchLater(videoId: string, userId: string) {
     return of({ message: 'Added to watch later list' });
   }
@@ -44,7 +40,7 @@ class VideoServiceMock {
   addToFavorite(videoId: string, userId: string) {
     return of({ message: 'Added to favorites list' });
   }
-  
+
   removeFromFavorite(videoId: string, userId: string) {
     return of({ message: 'Removed from favorite list' });
   }
@@ -52,12 +48,7 @@ class VideoServiceMock {
   checkFavorite(videoId: string, userId: string) {
     return of({ statusfavorite: true });
   }
-  
 }
-
-
-
-
 
 class UserServiceMock {
   getUser(userId: string) {
@@ -70,13 +61,18 @@ class UserServiceMock {
   }
 }
 
+class AlertServiceMock {
+  showMessage() {
+    // Apenas um stub para o teste, não precisa fazer nada
+  }
+}
 
 describe('VideoViewerComponent', () => {
   let component: VideoViewerComponent;
   let fixture: ComponentFixture<VideoViewerComponent>;
   let videoService: VideoService;
   let userService: UserService;
-
+  let alertService: AlertService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -93,10 +89,10 @@ describe('VideoViewerComponent', () => {
         },
         { provide: VideoService, useClass: VideoServiceMock },
         { provide: UserService, useClass: UserServiceMock },
+        { provide: AlertService, useClass: AlertServiceMock },
         FormBuilder,
       ],
     }).compileComponents();
-
 
     fixture = TestBed.createComponent(VideoViewerComponent);
     component = fixture.componentInstance;
@@ -107,6 +103,7 @@ describe('VideoViewerComponent', () => {
     fixture.detectChanges();
     videoService = TestBed.inject(VideoService);
     userService = TestBed.inject(UserService);
+    alertService = TestBed.inject(AlertService);
     navigator.share = () => {
       {
         return new Promise((resolve, reject) => {
@@ -115,7 +112,6 @@ describe('VideoViewerComponent', () => {
       }
     };
 
-
     navigator.canShare = () => {
       {
         return true;
@@ -123,29 +119,23 @@ describe('VideoViewerComponent', () => {
     }
   });
 
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   /*it('should decode token and set userId as a string', () => {
     const token = localStorage.getItem('token') as string;
     const originalJwtDecode = jwt_decode.default;
 
-
     // Redefinir a função jwt_decode
     (jwt_decode as any).default = (): { id: string } => ({ id: '1' });
-
 
     component.setUserIdFromToken(token);
     expect(component.userId).toBe('1'); // Ensure the userId is '1' as string
 
-
     // Restaurar a função original após o teste
     (jwt_decode as any).default = originalJwtDecode;
   });*/
-
 
   it('should call findVideoById and set video description', () => {
     const expectedVideo = {
@@ -163,7 +153,6 @@ describe('VideoViewerComponent', () => {
     expect(component.videoDescription).toEqual(expectedVideo.description);
   });
 
-
   it('should toggle showDescription when expandDescription is called', () => {
     expect(component.showDescription).toBe(false);
     component.expandDescription();
@@ -172,19 +161,15 @@ describe('VideoViewerComponent', () => {
     expect(component.showDescription).toBe(false);
   });
 
-
   it('should return the correct video URL', () => {
     component.eduplayVideoUrl = 'https://eduplay.rnp.br/portal/video/';
     component.idVideo = 190329;
 
-
     const expectedUrl = 'https://eduplay.rnp.br/portal/video/190329';
     const returnedUrl = component.getVideoUrl();
 
-
     expect(returnedUrl).toEqual(expectedUrl);
   });
-
 
   it('should share video with native share API on mobile', fakeAsync(() => {
     const shareData = {
@@ -203,25 +188,21 @@ describe('VideoViewerComponent', () => {
     expect(navigator.share).toHaveBeenCalledWith(shareData);
   }));
 
-
   it('should handle unsupported share options gracefully', fakeAsync(() => {
     spyOn(navigator, 'canShare').and.returnValue(true);
     spyOn(navigator, 'share').and.returnValue(Promise.reject());
     spyOn((window as any).navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
     const consoleWarnSpy = spyOn(console, 'error');
 
-
     component.shareVideo();
     tick();
     expect(consoleWarnSpy).toHaveBeenCalledWith('Erro ao compartilhar:', undefined);
   }));
 
-
   it('should copy video URL to clipboard if native share is not supported', fakeAsync(() => {
     spyOn(navigator, 'canShare').and.returnValue(false);
     spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
     const consoleWarnSpy = spyOn(console, 'error');
-
 
     component.shareVideo();
     tick();
@@ -229,18 +210,15 @@ describe('VideoViewerComponent', () => {
     expect(consoleWarnSpy).not.toHaveBeenCalled();
   }));
 
-
   it('should handle clipboard errors gracefully', fakeAsync(() => {
     spyOn(navigator, 'canShare').and.returnValue(false);
     spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.reject());
     const consoleWarnSpy = spyOn(console, 'error');
 
-
     component.shareVideo();
     tick();
     expect(consoleWarnSpy).toHaveBeenCalledWith('Erro ao copiar URL:', undefined);
   }));
-
 
   it('should fetch user details and set user object', () => {
     const expectedUser = {
@@ -259,20 +237,20 @@ describe('VideoViewerComponent', () => {
   it('should toggle watch later status and call appropriate service method', () => {
     const addSpy = spyOn(videoService, 'addToWatchLater').and.callThrough();
     const removeSpy = spyOn(videoService, 'removeFromWatchLater').and.callThrough();
-
+    const alertSpy = spyOn(alertService, 'showMessage');
 
     // Initial state is true, so it should call remove first
     component.toggleWatchLater();
     expect(component.isWatchLater).toBe(false);
     expect(removeSpy).toHaveBeenCalledWith('190329', '1');
-
+    expect(alertSpy).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo removido da lista de Assistir mais tarde.');
 
     // Now state is false, so it should call add next
     component.toggleWatchLater();
     expect(component.isWatchLater).toBe(true);
     expect(addSpy).toHaveBeenCalledWith('190329', '1');
+    expect(alertSpy).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo adicionado à lista de Assistir Mais tarde');
   });
-
 
   it('should check watch later status and set isWatchLater correctly', () => {
     const mySpy = spyOn(videoService, 'checkWatchLater').and.returnValue(of({ status: true }));
@@ -283,20 +261,39 @@ describe('VideoViewerComponent', () => {
   });
 
   // Favoritar
-
   it('should toggle favorite status and call appropriate service method', () => {
     const addSpy = spyOn(videoService, 'addToFavorite').and.callThrough();
     const removeSpy = spyOn(videoService, 'removeFromFavorite').and.callThrough();
+    const alertSpy = spyOn(alertService, 'showMessage');
 
     // Initial state is true, so it should call remove first
     component.toggleFavorite();
     expect(component.isFavorite).toBe(false);
     expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+    expect(alertSpy).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo removido da lista de Favoritos');
 
     // Now state is false, so it should call add next
     component.toggleFavorite();
     expect(component.isFavorite).toBe(true);
     expect(addSpy).toHaveBeenCalledWith('190329', '1');
+    expect(alertSpy).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo adicionado à lista de Favoritos');
   });
 
+  it('should handle favorite toggle errors gracefully', fakeAsync(() => {
+    const addSpy = spyOn(videoService, 'addToFavorite').and.returnValue(Promise.reject());
+    const removeSpy = spyOn(videoService, 'removeFromFavorite').and.returnValue(Promise.reject());
+    const alertSpy = spyOn(alertService, 'showMessage');
+
+    // Initial state is true, so it should call remove first
+    component.toggleFavorite();
+    tick();
+    expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
+
+    // Now state is false, so it should call add next
+    component.toggleFavorite();
+    tick();
+    expect(addSpy).toHaveBeenCalledWith('190329', '1');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
+  }));
 });
