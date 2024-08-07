@@ -1,5 +1,30 @@
-<p>dashboard-category works!</p>
-<div class="chart-container">
-    <canvas id="MyChart">{{ chart }}</canvas>
-    <canvas id="meuGraficoPizza">{{ chartPizza }}</canvas>
-</div>
+<div class="containerPrincipal">
+    <aside>
+      <div class="informacoesUsuario">
+        <p>Olá, Admin!</p>
+        <div class="linksBarraLateral">
+          <a class="linkLogout">Sair</a>
+          <a href="/homeAdmin" class="linkVoltar">Voltar</a>
+        </div>
+      </div>
+      <hr class="solid">
+      <nav>
+        <ul>
+          <li><a href="/video-views">Dados - Vídeos</a></li>
+          <li><a href="/category-views" class="linkSelecionado">Dados - Categorias</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <header>
+        <h1>Dados - Categorias</h1>
+        <hr class="solid2">
+      </header>
+      <div class="containerConteudo">
+        <div class="chart-container">
+            <canvas id="MyChart">{{ chart }}</canvas>
+            <canvas id="meuGraficoPizza">{{ chartPizza }}</canvas>
+        </div>
+      </div>
+    </main>
+  </div>
