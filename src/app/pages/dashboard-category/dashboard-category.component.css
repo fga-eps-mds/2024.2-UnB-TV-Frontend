@@ -188,9 +188,34 @@
   }
   .chart-container {
     display: flex;
-    width: 400px;
-    height: 400px;
-    };
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .chart {
+    width: 30%;
+    min-width: 300px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+
+  .legend-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
     .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

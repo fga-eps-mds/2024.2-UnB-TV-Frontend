@@ -12,7 +12,10 @@ import { ConfirmationService } from 'primeng/api';
   templateUrl: './dashboard-category.component.html',
   styleUrls: ['./dashboard-category.component.css'],
 })
-export class DashboardCategoryComponent {
+export class DashboardCategoryComponent implements OnInit {
+  @ViewChild('videoCountChart') videoCountChartRef: ElementRef;
+  @ViewChild('totalViewsChart') totalViewsChartRef: ElementRef;
+  @ViewChild('viewsPerVideoChart') viewsPerVideoChartRef: ElementRef;
   unbTvChannelId = UNB_TV_CHANNEL_ID;
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
@@ -35,6 +38,20 @@ export class DashboardCategoryComponent {
   selectedCategories: { [key: string]: boolean } = {};
   viewsAllCategories: number = 0;
   videosAllCategories: number = 0;
+
+  public categoryColors: { [key: string]: string } = {};
+  public videoCountChartData: ChartData<'bar'>;
+  public totalViewsChartData: ChartData<'bar'>;
+  public viewsPerVideoChartData: ChartData<'bar'>;
+
+  public chartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
 
   constructor(
     private videoService: VideoService,
@@ -72,7 +89,7 @@ export class DashboardCategoryComponent {
   }
 
   aggregateVideosByCategory(): void{
-    const categoryMap = new Map<string, { count: number, views: number }>();
+    const categoryMap = new Map<string, { count: number, views: number, color: string }>();
     const categories = [
       "Arte e Cultura",
       "Documentais",
@@ -84,8 +101,21 @@ export class DashboardCategoryComponent {
       "Variedades"
     ];
 
-    categories.forEach( category => {
-      categoryMap.set( category, { count: 0, views: 0 });
+    const colors = [
+      '#ADD8E6',
+      '#FFB6C1',
+      '#FF0000',
+      '#FF9F40',
+      '#90EE90',
+      '#654321',
+      '#800080',
+      '#808080'
+    ];
+
+    categories.forEach((category, index) => {
+      const color = colors[index % colors.length];
+      categoryMap.set( category, { count: 0, views: 0, color: color });
+      this.categoryColors[category] = color;
     });
 
     this.unbTvVideos.forEach((video) => {
@@ -106,8 +136,94 @@ export class DashboardCategoryComponent {
       category,
       videoCount: data.count, 
       totalViews: data.views,
-      viewsPerVideo: data.count > 0 ? data.views/data.count : 0
+      viewsPerVideo: data.count > 0 ? data.views/data.count : 0,
+      color: data.color
     }));
+    this.createCharts(categoryMap);
+  }
+
+  createCharts(categoryMap: Map<string, { count: number, views: number, color: string }>): void {
+    const categories = Array.from(categoryMap.keys());
+    const videoCounts = Array.from(categoryMap.values()).map(data => data.count);
+    const totalViews = Array.from(categoryMap.values()).map(data => data.views);
+    const viewsPerVideo = Array.from(categoryMap.values()).map(data => data.count > 0 ? data.views/data.count : 0);
+    const colors = Array.from(categoryMap.values()).map(data => data.color);
+
+    new Chart(this.videoCountChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Quantidade de vídeos',
+          data: videoCounts,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          }
+        }
+      }
+    });
+
+    new Chart(this.totalViewsChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Quantidade de visualizações',
+          data: totalViews,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          }
+        }
+      }
+    });
+
+    new Chart(this.viewsPerVideoChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Visualizações por vídeo',
+          data: viewsPerVideo,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          }
+        }
+      }
+    });
+
   }
 
   logoutUser() {

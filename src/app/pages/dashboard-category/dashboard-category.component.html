@@ -30,5 +30,26 @@
             <p>Vídeos totais</p>
         </div>
       </div>
+
+      <div class="legend-container">
+        <div *ngFor="let color of categories" class="legend-item">
+            <span class="legend-color" [ngStyle]="{'background-color': categoryColors[color]}"></span>
+            <span>{{ color }}</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart">
+            <canvas #videoCountChart></canvas>
+            <h2>Quantidade de videos por categorias</h2>
+        </div>
+        <div class="chart">
+            <canvas #totalViewsChart></canvas>
+            <h2>Quantidade de visualizações por categorias</h2>
+        </div>
+        <div class="chart">
+            <canvas #viewsPerVideoChart></canvas>
+            <h2>Quantidade de visualizações por vídeo</h2>
+        </div>
+      </div>
     </main>
   </div>
