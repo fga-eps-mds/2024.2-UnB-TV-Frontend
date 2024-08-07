@@ -17,13 +17,17 @@
     </aside>
     <main>
       <header>
-        <h1>Dados - Categorias</h1>
+        <h1>Dashboard - Categorias</h1>
         <hr class="solid2">
       </header>
-      <div class="containerConteudo">
-        <div class="chart-container">
-            <canvas id="MyChart">{{ chart }}</canvas>
-            <canvas id="meuGraficoPizza">{{ chartPizza }}</canvas>
+      <div class="card-container">
+        <div class="card">
+            <p>{{ viewsAllCategories }}</p>
+            <p>Visualizações totais</p>
+        </div>
+        <div class="card">
+            <p>{{ videosAllCategories }}</p>
+            <p>Vídeos totais</p>
         </div>
       </div>
     </main>

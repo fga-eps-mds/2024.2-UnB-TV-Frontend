@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Chart, ChartData, ChartOptions } from 'chart.js';
+import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
+import { VideoService } from 'src/app/services/video.service';
+import { Catalog } from 'src/shared/model/catalog.model';
+import { IVideo } from 'src/shared/model/video.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-dashboard-category',
@@ -9,80 +13,113 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard-category.component.css'],
 })
 export class DashboardCategoryComponent {
+  unbTvChannelId = UNB_TV_CHANNEL_ID;
+  videosEduplay: IVideo[] = [];
+  unbTvVideos: IVideo[] = [];
+  aggregatedVideos: any[] = [];
+  catalog: Catalog = new Catalog();
+  sortColumn: string = '';
+  sortAscending: boolean = true;
+  selectedColumn: string = '';
+  categories: string[] = [
+    "Arte e Cultura",
+    "Documentais",
+    "Entrevista",
+    "Jornalismo",
+    "Pesquisa e Ciência",
+    "Séries Especiais",
+    "UnBTV",
+    "Variedades"
+  ];
 
-  config: any = {
-    type: 'bar', // Alterado para gráfico de pizza
-    data: {
-      labels: ['Produto 1', 'Produto 2', 'Produto 3', 'Produto 4'], // Legendas
-      datasets: [
-        {
-          label: ['Produto 1'],
-          data: [467, 302, 102, 583],
-          backgroundColor: [
-            'rgba(0, 0, 255, 0.5)',   // Azul com 50% de transparência
-          ],
-          borderColor: ['blue'],
-          borderWidth: 1, 
-        },
-        {
-          label: ['Produto 2'],
-          data: [767, 362, 402, 271],
-          backgroundColor: [
-            'rgba(255, 0, 0, 0.5)',   // Vermelho com 50% de transparência
-          ],
-          borderColor: ['red'],
-          borderWidth: 1, 
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        legend: {
-          position: 'bottom', // Legenda na parte inferior
-        },
-        title: {
-          display: true,
-          text: 'Distribuição de Produtos (barra)', // Título do gráfico
-        },
+  selectedCategories: { [key: string]: boolean } = {};
+  viewsAllCategories: number = 0;
+  videosAllCategories: number = 0;
+
+  constructor(
+    private videoService: VideoService,
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
+  ) {};
+  
+  ngOnInit(): void{
+    this.categories.forEach(category => this.selectedCategories[category] = false);
+    this.findAll();
+  }
+  
+  findAll(): void {
+    this.videoService.findAll().subscribe({
+      next: (data) => {
+        this.videosEduplay = data.body?.videoList ?? [];
       },
-    },
-  };
-
-  configPizza: any = {
-    type: 'pie', // Alterado para gráfico de pizza
-    data: {
-      labels: ['Produto 1', 'Produto 2', 'Produto 3', 'Produto 4'], // Legendas
-      datasets: [
-        {
-          data: [467, 302, 102, 583],
-          backgroundColor: [
-            'rgba(0, 0, 255, 0.5)',   // Azul com 50% de transparência
-            'rgba(255, 0, 0, 0.5)',   // Vermelho com 50% de transparência
-            'rgba(0, 128, 0, 0.5)',   // Verde com 50% de transparência
-            'rgba(255, 255, 0, 0.5)', // Amarelo com 50% de transparência
-          ],
-          borderColor: ['blue', 'red', 'green', 'yellow'],
-          borderWidth: 1, 
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        legend: {
-          position: 'bottom', // Legenda na parte inferior
-        },
-        title: {
-          display: true,
-          text: 'Distribuição de Produtos', // Título do gráfico
-        },
+      error: (error) => {
+        console.log(error);
       },
-    },
-  };
+      complete: () => {
+        this.filterVideosByChannel(this.videosEduplay);
+        this.videoService.videosCatalog(this.unbTvVideos);
+        this.aggregateVideosByCategory();
+      }
+    })
+  }
 
-  chartPizza: any;
-  chart: any;
-  ngOnInit(): void {
-    this.chart = new Chart('MyChart', this.config);
-    this.chartPizza = new Chart('meuGraficoPizza', this.configPizza);
+  filterVideosByChannel(videos: IVideo[]): void {
+    videos.forEach((video) => {
+      const channel = video?.channels;
+      if ( channel )
+        if ( channel[0].id === this.unbTvChannelId) this.unbTvVideos.push(video);
+    });
+  }
+
+  aggregateVideosByCategory(): void{
+    const categoryMap = new Map<string, { count: number, views: number }>();
+    const categories = [
+      "Arte e Cultura",
+      "Documentais",
+      "Entrevista",
+      "Jornalismo",
+      "Pesquisa e Ciência",
+      "Séries Especiais",
+      "UnBTV",
+      "Variedades"
+    ];
+
+    categories.forEach( category => {
+      categoryMap.set( category, { count: 0, views: 0 });
+    });
+
+    this.unbTvVideos.forEach((video) => {
+      const category = video['catalog'];
+      const views = video.qtAccess || 0;
+
+      const categoryData = categoryMap.get(category);
+
+      if ( categoryData ) {
+        categoryData.count+= 1;
+        categoryData.views+= views;
+      }
+      this.viewsAllCategories += views;
+      this.videosAllCategories += 1;
+    });
+
+    this.aggregatedVideos = Array.from(categoryMap.entries()).map(([category, data]) => ({
+      category,
+      videoCount: data.count, 
+      totalViews: data.views,
+      viewsPerVideo: data.count > 0 ? data.views/data.count : 0
+    }));
+  }
+
+  logoutUser() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja sair?',
+      header: 'Confirmação',
+      key: 'myDialog',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.authService.logout();
+      },
+      reject: () => {},
+    });
   }
 }

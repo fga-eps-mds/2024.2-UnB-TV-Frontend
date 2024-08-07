@@ -190,5 +190,27 @@
     display: flex;
     width: 400px;
     height: 400px;
-};
+    };
+    .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-items: start;
+    gap: 20px;
+    }
+
+    .card {
+    background-color: #00aaff;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 250px;
+    }
+
+    .card p {
+    margin: 0;
+    font-size: 1.2em;
+    }
   

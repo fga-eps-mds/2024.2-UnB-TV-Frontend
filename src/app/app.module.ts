@@ -46,7 +46,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
+import { NgChartsModule } from 'ng2-charts';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 
@@ -79,7 +79,8 @@ import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    NgChartsModule,
   ],
 
   declarations: [

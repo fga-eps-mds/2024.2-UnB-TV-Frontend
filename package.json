@@ -41,7 +41,8 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.13.3",
     "xlsx": "^0.18.5",
-    "chart.js": "^4.4.3"
+    "chart.js": "^4.4.3",
+    "ng2-charts": "^4.0.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^16.0.1",
