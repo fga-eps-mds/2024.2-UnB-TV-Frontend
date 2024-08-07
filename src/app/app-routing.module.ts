@@ -114,6 +114,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardCategoryComponent,
+    canActivate: [TokenAdminGuard],
   },
 ];
 

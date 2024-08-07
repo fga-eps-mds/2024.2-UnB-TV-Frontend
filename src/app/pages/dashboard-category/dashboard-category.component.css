@@ -1,0 +1,7 @@
+.chart-container {
+    display: flex; /* Ativa o flexbox */
+    width: 70%;
+    height: 70%;
+};
+
+  
