@@ -19,15 +19,15 @@ export class RecordComponent {
   filteredVideos: IVideo[] = [];
   filterTitle: string = '';
   userId: string = '';
-  recordVideos: any[] = [];
+  recordVideos: any;
 
   constructor(private videoService: VideoService, private router: Router) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.setUserIdFromToken(localStorage.getItem('token') as string);
-    this.checkRecord();
+    await this.checkRecord();
     this.findAll();
-    this.filterVideosByRecord(this.unbTvVideos, this.recordVideos);
+    this.filterVideosByRecord();
   }
 
   setUserIdFromToken(token: string) {
@@ -35,15 +35,19 @@ export class RecordComponent {
     this.userId = decodedToken.id;
   }
 
-  checkRecord() {
-    this.videoService.checkRecord(this.userId.toString()).subscribe({
-      next: (response) => {
-        this.recordVideos = response;
-        console.log(this.recordVideos); 
-      },
-      error: (err) => {
-        console.error('Error checking record', err);
-      }
+  checkRecord(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.checkRecord(this.userId.toString()).subscribe({
+        next: (response) => {
+          this.recordVideos = response;
+          // console.log(this.recordVideos);
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error checking record', err);
+          reject(err);
+        }
+      });
     });
   }
 
@@ -71,8 +75,11 @@ export class RecordComponent {
     });
   }
 
-  filterVideosByRecord(videos: IVideo[], videosId: any[]): void {
-    const keys = Object.keys(videosId).map(id => parseInt(id, 10))
-    this.filteredVideos = videos.filter(video => videosId.includes(video.id));
+  filterVideosByRecord(): void {
+    const keys = Object.keys(this.recordVideos.videos).map(id => parseInt(id, 10))
+    console.log(keys);
+    console.log(this.unbTvVideos)
+    this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
+    console.log(this.filteredVideos);
   }
 }
