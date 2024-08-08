@@ -8,10 +8,8 @@ import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-record',
-  standalone: true,
-  imports: [],
   templateUrl: './record.component.html',
-  styleUrl: './record.component.css'
+  styleUrls: ['./record.component.css']
 })
 export class RecordComponent {
   unbTvChannelId = UNB_TV_CHANNEL_ID;
@@ -40,7 +38,8 @@ export class RecordComponent {
   checkRecord() {
     this.videoService.checkRecord(this.userId.toString()).subscribe({
       next: (response) => {
-        this.recordVideos = response; 
+        this.recordVideos = response;
+        console.log(this.recordVideos); 
       },
       error: (err) => {
         console.error('Error checking record', err);
