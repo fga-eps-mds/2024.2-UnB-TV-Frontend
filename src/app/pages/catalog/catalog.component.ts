@@ -6,6 +6,7 @@ import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
