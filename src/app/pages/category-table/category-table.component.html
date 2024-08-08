@@ -18,10 +18,10 @@
   <main>
     <header>
       <h1>Dados - Categorias</h1>
-      <hr class="solid2">
+      <button class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white" (click)="exportExcel()">Exportar para Excel</button>
     </header>
+    <hr class="solid2">
     <div class="containerConteudo">
-      <button (click)="exportExcel()">Download Excel</button>
       <div class="containerFiltro">
         <div class="dropdown">
           <button class="botaoDropdown">Filtrar por Categoria <span class="setinha"></span></button>

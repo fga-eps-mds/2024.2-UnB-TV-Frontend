@@ -78,6 +78,15 @@ main {
   margin-left: 12em;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.download-button {
+  margin-right: 3em;
+}
+
 header h1 {
   font-size: 2.4em;
   color: #00a550;
