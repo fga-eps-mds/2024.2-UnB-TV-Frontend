@@ -3,7 +3,7 @@
       <div class="informacoesUsuario">
         <p>Olá, Admin!</p>
         <div class="linksBarraLateral">
-          <a class="linkLogout">Sair</a>
+          <a class="linkLogout" (click)="logoutUser()">Sair</a>
           <a href="/homeAdmin" class="linkVoltar">Voltar</a>
         </div>
       </div>
@@ -11,7 +11,8 @@
       <nav>
         <ul>
           <li><a href="/video-views">Dados - Vídeos</a></li>
-          <li><a href="/category-views" class="linkSelecionado">Dados - Categorias</a></li>
+          <li><a href="/category-views">Dados - Categorias</a></li>
+          <li><a href="/dashboard" class="linkSelecionado">Dashboard - Categorias</a></li>
         </ul>
       </nav>
     </aside>
