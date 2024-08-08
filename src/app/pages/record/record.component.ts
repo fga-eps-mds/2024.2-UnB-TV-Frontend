@@ -27,7 +27,7 @@ export class RecordComponent {
     this.setUserIdFromToken(localStorage.getItem('token') as string);
     this.checkRecord();
     this.findAll();
-    this.filteredVideos = this.unbTvVideos;
+    this.filterVideosByRecord(this.unbTvVideos, this.recordVideos);
   }
 
   setUserIdFromToken(token: string) {
@@ -71,5 +71,8 @@ export class RecordComponent {
     });
   }
 
-
+  filterVideosByRecord(videos: IVideo[], videosId: any[]): void {
+    const keys = Object.keys(videosId).map(id => parseInt(id, 10))
+    this.filteredVideos = videos.filter(video => videosId.includes(video.id));
+  }
 }
