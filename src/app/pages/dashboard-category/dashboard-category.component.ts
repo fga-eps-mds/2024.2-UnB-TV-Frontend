@@ -16,6 +16,8 @@ export class DashboardCategoryComponent implements OnInit {
   @ViewChild('videoCountChart') videoCountChartRef: ElementRef;
   @ViewChild('totalViewsChart') totalViewsChartRef: ElementRef;
   @ViewChild('viewsPerVideoChart') viewsPerVideoChartRef: ElementRef;
+  @ViewChild('videoCountChartPizza') videoCountChartPizzaRef: ElementRef;
+  @ViewChild('totalViewsChartPizza') totalViewsChartPizzaRef: ElementRef;
   unbTvChannelId = UNB_TV_CHANNEL_ID;
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
@@ -224,6 +226,55 @@ export class DashboardCategoryComponent implements OnInit {
       }
     });
 
+    new Chart(this.videoCountChartPizzaRef.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Quantidade de vídeos',
+          data: videoCounts,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          }
+        }
+      }
+    });
+
+    new Chart(this.totalViewsChartPizzaRef.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Quantidade de visualizações',
+          data: totalViews,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          }
+        }
+      }
+    });
   }
 
   logoutUser() {
