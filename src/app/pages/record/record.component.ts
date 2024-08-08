@@ -23,13 +23,13 @@ export class RecordComponent {
 
   constructor(private videoService: VideoService, private router: Router) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.setUserIdFromToken(localStorage.getItem('token') as string);
-    await this.checkRecord();
-    this.findAll();
+    await this.checkRecord(); 
+    await this.findAll();  
     this.filterVideosByRecord();
   }
-
+  
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
@@ -40,7 +40,6 @@ export class RecordComponent {
       this.videoService.checkRecord(this.userId.toString()).subscribe({
         next: (response) => {
           this.recordVideos = response;
-          // console.log(this.recordVideos);
           resolve();
         },
         error: (err) => {
@@ -51,21 +50,25 @@ export class RecordComponent {
     });
   }
 
-  findAll(): void {
-    this.videoService.findAll().subscribe({
-      next: (data) => {
-        this.videosEduplay = data.body?.videoList ?? [];
-      },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        this.filterVideosByChannel(this.videosEduplay);
-        this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
-      },
+  findAll(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.findAll().subscribe({
+        next: (data) => {
+          this.videosEduplay = data.body?.videoList ?? [];
+        },
+        error: (error) => {
+          console.log(error);
+          reject(error);
+        },
+        complete: () => {
+          this.filterVideosByChannel(this.videosEduplay);
+          this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
+          resolve();
+        },
+      });
     });
   }
-
+  
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
       const channel = video?.channels;
@@ -77,9 +80,6 @@ export class RecordComponent {
 
   filterVideosByRecord(): void {
     const keys = Object.keys(this.recordVideos.videos).map(id => parseInt(id, 10))
-    console.log(keys);
-    console.log(this.unbTvVideos)
     this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
-    console.log(this.filteredVideos);
   }
 }
