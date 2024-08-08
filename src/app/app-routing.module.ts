@@ -25,6 +25,7 @@ import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
+import { RecordComponent } from './pages/record/record.component';
 
 
 
@@ -111,6 +112,11 @@ const routes: Routes = [
     path: 'video-views', 
     component: VideoViewsComponent,
     canActivate: [TokenAdminGuard],
+  },
+  {
+    path: 'record', 
+    component: RecordComponent, 
+    canActivate: [AuthGuard]
   },
 ];
 
