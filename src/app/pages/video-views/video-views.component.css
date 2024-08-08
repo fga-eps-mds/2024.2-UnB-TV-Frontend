@@ -23,7 +23,7 @@ html, body {
 }
 
 aside {
-  width: 11em;
+  width: 13.2em;
   background-color: white;
   padding: 1em 0.75em;
   box-shadow: 0.125em 0 0.3125em rgba(0,0,0,0.1);
@@ -82,7 +82,7 @@ nav ul li a.linkSelecionado {
 
 main {
   flex: 1;
-  margin-left: 12em;
+  margin-left: 14.2em;
   padding: 0.25em;
   display: flex;
   flex-direction: column;
