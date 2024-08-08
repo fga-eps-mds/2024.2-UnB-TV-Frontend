@@ -270,5 +270,10 @@ export class VideoService {
     });
   }
 
-
+  // Historico
+  checkRecord(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record/${userId}`, {
+      params: { user_id: userId }
+    });
+  }
 }
