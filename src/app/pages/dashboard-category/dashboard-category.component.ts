@@ -150,6 +150,8 @@ export class DashboardCategoryComponent implements OnInit {
     const totalViews = Array.from(categoryMap.values()).map(data => data.views);
     const viewsPerVideo = Array.from(categoryMap.values()).map(data => data.count > 0 ? data.views/data.count : 0);
     const colors = Array.from(categoryMap.values()).map(data => data.color);
+    const videoCountsPizza = Array.from(categoryMap.values()).map(data => (data.count / this.videosAllCategories) * 100);
+    const totalViewsPizza = Array.from(categoryMap.values()).map(data => (data.views / this.viewsAllCategories) * 100);
 
     new Chart(this.videoCountChartRef.nativeElement, {
       type: 'bar',
@@ -232,7 +234,7 @@ export class DashboardCategoryComponent implements OnInit {
         labels: categories,
         datasets: [{
           label: 'Quantidade de vídeos',
-          data: videoCounts,
+          data: videoCountsPizza,
           backgroundColor: colors
         }]
       },
@@ -257,7 +259,7 @@ export class DashboardCategoryComponent implements OnInit {
         labels: categories,
         datasets: [{
           label: 'Quantidade de visualizações',
-          data: totalViews,
+          data: totalViewsPizza,
           backgroundColor: colors
         }]
       },
