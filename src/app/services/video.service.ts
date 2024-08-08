@@ -276,4 +276,9 @@ export class VideoService {
       params: { user_id: userId }
     });
   }
+
+  addToRecord(userId: string, videoId: string): Observable<any> {
+    const currentDateTime: string = new Date().toLocaleString();
+    return this.http.post(`${this.videoServiceApiURL}/record/`, { user_id: userId.toString(), videos: { [videoId]: currentDateTime}});
+  }
 }

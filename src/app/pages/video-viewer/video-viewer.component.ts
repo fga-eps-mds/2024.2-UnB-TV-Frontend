@@ -44,6 +44,7 @@ export class VideoViewerComponent implements OnInit {
     if (this.authService.isAuthenticated()){
       this.setUserIdFromToken(localStorage.getItem('token') as string);
       this.getUserDetails();
+      this.addRecord();
     }
 
     this.findVideoById();
@@ -63,6 +64,16 @@ export class VideoViewerComponent implements OnInit {
         this.checkFavoriteStatus();
         // console.log(this.isWatchLater);
         // console.log(this.isFavorite);
+      },
+      error: (err) => {
+        console.error('Error fetching user details', err);
+      }
+    });
+  }
+
+  addRecord() {
+    this.videoService.addToRecord(this.userId, this.idVideo.toString()).subscribe({
+      next: () => {
       },
       error: (err) => {
         console.error('Error fetching user details', err);
