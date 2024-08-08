@@ -150,8 +150,8 @@ export class DashboardCategoryComponent implements OnInit {
     const totalViews = Array.from(categoryMap.values()).map(data => data.views);
     const viewsPerVideo = Array.from(categoryMap.values()).map(data => data.count > 0 ? data.views/data.count : 0);
     const colors = Array.from(categoryMap.values()).map(data => data.color);
-    const videoCountsPizza = Array.from(categoryMap.values()).map(data => (data.count / this.videosAllCategories) * 100);
-    const totalViewsPizza = Array.from(categoryMap.values()).map(data => (data.views / this.viewsAllCategories) * 100);
+    const videoCountsPizza = Array.from(categoryMap.values()).map(data => ((data.count / this.videosAllCategories) * 100).toFixed(2));
+    const totalViewsPizza = Array.from(categoryMap.values()).map(data => ((data.views / this.viewsAllCategories) * 100).toFixed(2));
 
     new Chart(this.videoCountChartRef.nativeElement, {
       type: 'bar',
@@ -227,7 +227,7 @@ export class DashboardCategoryComponent implements OnInit {
         }
       }
     });
-
+    
     new Chart(this.videoCountChartPizzaRef.nativeElement, {
       type: 'pie',
       data: {
@@ -243,6 +243,14 @@ export class DashboardCategoryComponent implements OnInit {
         plugins: {
           legend: {
             display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const value = context.parsed;
+                return `${value}%`;
+              }
+            }
           }
         },
         scales: {
@@ -268,6 +276,14 @@ export class DashboardCategoryComponent implements OnInit {
         plugins: {
           legend: {
             display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const value = context.parsed;
+                return `${value}%`;
+              }
+            }
           }
         },
         scales: {
