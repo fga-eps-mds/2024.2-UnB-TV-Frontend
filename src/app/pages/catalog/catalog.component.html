@@ -1,6 +1,10 @@
 <div class="center flex flex-col justify-center content-start flex-wrap gap-y-8 w-full max-w-3xl">
   <div>
     <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Pesquise um vídeo" class="CampoFiltro"/>
+    <label *ngIf="isAuthenticated" class="checkbox-container">
+    <input type="checkbox" [(ngModel)]="filterWatchLater" (change)="onFilterWatchLaterChange()" class="custom-checkbox"/>
+     Assistir mais tarde
+    </label>
   </div>
   <div *ngIf="filterTitle.length===0">
     <div class="flex flex-col gap-2">
