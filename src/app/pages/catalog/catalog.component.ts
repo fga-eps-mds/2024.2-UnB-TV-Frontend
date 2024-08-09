@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { VideoService } from 'src/app/services/video.service';
@@ -9,12 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import jwt_decode from 'jwt-decode';
 
+
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.css'],
 })
-export class CatalogComponent {
+export class CatalogComponent implements OnInit {
   unbTvChannelId = UNB_TV_CHANNEL_ID;
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
@@ -27,6 +28,7 @@ export class CatalogComponent {
   user: any; // Adicionado para armazenar os detalhes do usuário
   isAuthenticated: boolean = false; // Propriedade pública para o estado de autenticação
 
+
   constructor(
     private videoService: VideoService,
     private router: Router,
@@ -34,19 +36,22 @@ export class CatalogComponent {
     private userService: UserService
   ) {}
 
+
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
-   if (this.isAuthenticated) {
-     this.setUserIdFromToken(localStorage.getItem('token') as string);
-     this.getUserDetails();
-   }
+    if (this.isAuthenticated) {
+      this.setUserIdFromToken(localStorage.getItem('token') as string);
+      this.getUserDetails();
+    }
     this.findAll();
   }
+
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
   }
+
 
   getUserDetails() {
     this.userService.getUser(this.userId).subscribe({
@@ -60,6 +65,7 @@ export class CatalogComponent {
     });
   }
 
+
   findAll(): void {
     this.videoService.findAll().subscribe({
       next: (data) => {
@@ -69,34 +75,36 @@ export class CatalogComponent {
         this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
       },
       error: (error) => {
-        console.log(error);
+        //console.log(error);
       }
     });
   }
+
 
   getFavoriteVideos(): void {
     if (this.isAuthenticated) {
       this.videoService.getFavoriteVideos(this.userId).subscribe({
         next: (data) => {
-          console.log('Resposta completa da API para vídeos de "favoritos":', data);
-           // Verifique se `videoList` existe e é um array
+          //console.log('Resposta completa da API para vídeos de "favoritos":', data);
+          // Verifique se `videoList` existe e é um array
           if (data && Array.isArray(data.videoList)) {
-            console.log('videoList existe e é um array:', data.videoList);
+            //console.log('videoList existe e é um array:', data.videoList);
             const favorite_videos_ids = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
-            console.log('IDs dos vídeos "favoritos":', favorite_videos_ids);
+            //console.log('IDs dos vídeos "favoritos":', favorite_videos_ids);
             this.favoriteVideos = this.unbTvVideos.filter(video => favorite_videos_ids.includes(String(video.id))); // Converta IDs para string
-            console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
+            //console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
           } else {
-            console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
+            //console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
           }
-           this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "favoritos"
+          this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "favoritos"
         },
         error: (error) => {
-          console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
+          //console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
         }
       });
     }
   }
+
 
   onFilterFavoriteVideosChange() {
     if (this.filterFavorite) {
@@ -105,6 +113,7 @@ export class CatalogComponent {
       this.filterVideos();
     }
   }
+
 
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
@@ -117,8 +126,8 @@ export class CatalogComponent {
 
 
   filterVideos() {
-    console.log('Filtrar "assistir mais tarde":', this.filterFavorite);
-    console.log('Lista de vídeos para "assistir mais tarde":', this.favoriteVideos);
+    //console.log('Filtrar "assistir mais tarde":', this.filterFavorite);
+    //console.log('Lista de vídeos para "assistir mais tarde":', this.favoriteVideos);
     this.filteredVideos = this.unbTvVideos.filter(video => {
       const isFavorite = this.filterFavorite? this.favoriteVideos.some(wlVideo => wlVideo.id == video.id) : true;
       const matchesTitle = this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
@@ -130,8 +139,9 @@ export class CatalogComponent {
     });
 
 
-    console.log('Vídeos filtrados:', this.filteredVideos);
+    //console.log('Vídeos filtrados:', this.filteredVideos);
   }
+
 
   onProgramClick(videos: IVideo[]) {
     this.videoService.setVideosCatalog(videos);
