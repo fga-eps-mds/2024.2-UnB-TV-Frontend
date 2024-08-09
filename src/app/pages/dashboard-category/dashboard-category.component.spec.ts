@@ -144,4 +144,35 @@ describe('DashboardCategoryComponent', () => {
     component.createCharts(mockCategoryMap);
     expect(component).toBeTruthy();
   });
+
+  it('should aggregate videos by category and update charts for Dashboard Category', () => {
+    spyOn(component, 'createCharts');
+
+    component.unbTvVideos = [
+      { id: 1, catalog: 'Jornalismo', qtAccess: 10 },
+      { id: 2, catalog: 'Entrevista', qtAccess: 40 },
+      { id: 3, catalog: 'Jornalismo', qtAccess: 30 },
+    ];
+
+    component.aggregateVideosByCategory();
+
+    expect(component.aggregatedVideos.length).toBe(8);
+    expect(component.aggregatedVideos).toContain({
+      category: 'Jornalismo',
+      videoCount: 2,
+      totalViews: 40,
+      viewsPerVideo: 20,
+      color: component.categoryColors['Jornalismo']
+    });
+    expect(component.aggregatedVideos).toContain({
+      category: 'Entrevista',
+      videoCount: 1,
+      totalViews: 40,
+      viewsPerVideo: 40,
+      color: component.categoryColors['Entrevista']
+    });
+    expect(component.viewsAllCategories).toBe(80);
+    expect(component.videosAllCategories).toBe(3);
+    expect(component.createCharts).toHaveBeenCalled();
+  });
 });
