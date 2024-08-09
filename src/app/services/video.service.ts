@@ -264,6 +264,12 @@ export class VideoService {
     });
   }
   
+  getWatchLaterVideos(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/watch-later/`, {
+      params: { user_id: userId }
+    });
+  } 
+
   checkFavorite(videoId: string, userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/favorite/status/${videoId}`, {
       params: { user_id: userId }
