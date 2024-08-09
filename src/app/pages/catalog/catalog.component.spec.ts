@@ -58,7 +58,7 @@ describe('CatalogComponent', () => {
     ];
 
     videoServiceMock.findAll.and.returnValue(of({ body: { videoList: videos } }));
-    
+
     component.findAll();
 
     expect(component.videosEduplay.length).toBe(2);
@@ -92,4 +92,88 @@ describe('CatalogComponent', () => {
     expect(videoServiceMock.setVideosCatalog).toHaveBeenCalledWith(videos);
     expect(routerMock.navigate).toHaveBeenCalledWith(['/videos']);
   });
+
+  it('should populate favoriteVideos on getFavoriteVideos success', () => {
+    const favoriteVideos = [
+      { id: 1, video_id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, video_id: 2, title: 'Favorite 2', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Favorite 2', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    videoServiceMock.getFavoriteVideos.and.returnValue(of({ videoList: favoriteVideos }));
+
+
+    component.getFavoriteVideos();
+
+
+    expect(component.favoriteVideos.length).toBe(2);
+    expect(component.favoriteVideos[0].id).toBe(1);
+    expect(component.favoriteVideos[1].id).toBe(2);
+  });
+
+
+  it('should log warning on getFavoriteVideos with unexpected structure', () => {
+    spyOn(console, 'warn');
+    videoServiceMock.getFavoriteVideos.and.returnValue(of({ incorrectKey: [] }));
+
+
+    component.getFavoriteVideos();
+
+
+    expect(console.warn).toHaveBeenCalledWith('A estrutura da resposta da API não está conforme o esperado:', { incorrectKey: [] });
+  });
+
+
+  it('should filter videos to favorite when checkbox is checked', () => {
+    const favoriteVideos = [
+      { id: 1, video_id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Not Favorite', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    videoServiceMock.getFavoriteVideos.and.returnValue(of({ videoList: favoriteVideos }));
+
+
+    component.filterFavorite = true;
+    component.onFilterFavoriteVideosChange();
+
+
+    expect(component.filteredVideos.length).toBe(1);
+    expect(component.filteredVideos[0].title).toBe('Favorite 1');
+  });
+
+
+  it('should not filter videos to favorite when checkbox is unchecked', () => {
+    const favoriteVideos = [
+      { id: 1, video_id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Favorite 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Not Favorite', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+
+    videoServiceMock.getFavoriteVideos.and.returnValue(of({ videoList: favoriteVideos }));
+
+
+    component.filterFavorite = false;
+    component.onFilterFavoriteVideosChange();
+
+
+    expect(component.filteredVideos.length).toBe(2);
+  });
+
 });
