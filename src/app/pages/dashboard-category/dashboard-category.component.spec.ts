@@ -9,6 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { VideoService } from 'src/app/services/video.service';
 import { DashboardCategoryComponent } from './dashboard-category.component';
+import { ElementRef } from '@angular/core';
 
 class ConfirmationServiceMock {
   confirm() { }
@@ -40,6 +41,11 @@ describe('DashboardCategoryComponent', () => {
     videoService = TestBed.inject(VideoService);
     authService = TestBed.inject(AuthService);
     confirmationService = TestBed.inject(ConfirmationService);
+    component.videoCountChartRef = new ElementRef({});
+    component.totalViewsChartRef = new ElementRef({});
+    component.viewsPerVideoChartRef = new ElementRef({});
+    component.videoCountChartPizzaRef = new ElementRef({});
+    component.totalViewsChartPizzaRef = new ElementRef({});
   });
 
   it('should create for Dashboard Category', () => {
@@ -127,5 +133,15 @@ describe('DashboardCategoryComponent', () => {
     
     submitButton.click();
     expect(mySpy).toHaveBeenCalled();
+  });
+
+  it('should create charts with correct data for Dashboard Category', () => {
+    const mockCategoryMap = new Map<string, { count: number, views: number, color: string }>([
+      ['Jornalismo', { count: 2, views: 40, color: '#FF0000' }],
+      ['Entrevista', { count: 1, views: 20, color: '#00FF00' }],
+    ]);
+  
+    component.createCharts(mockCategoryMap);
+    expect(component).toBeTruthy();
   });
 });
