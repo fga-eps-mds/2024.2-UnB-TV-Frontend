@@ -63,4 +63,11 @@ export class CatalogComponent {
     this.videoService.setVideosCatalog(videos);
     this.router.navigate(['/videos']);
   }
+
+  getWatchLaterVideos(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/watch-later/`, {
+      params: { user_id: userId }
+    });
+  }
+ 
 }
