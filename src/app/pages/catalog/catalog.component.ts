@@ -78,16 +78,16 @@ export class CatalogComponent implements OnInit {
     if (this.isAuthenticated) {
       this.videoService.getWatchLaterVideos(this.userId).subscribe({
         next: (data) => {
-          console.log('Resposta completa da API para vídeos de "assistir mais tarde":', data);
+          // console.log('Resposta completa da API para vídeos de "assistir mais tarde":', data);
   
           // Verifique se `videoList` existe e é um array
           if (data && Array.isArray(data.videoList)) {
-            console.log('videoList existe e é um array:', data.videoList);
+            // console.log('videoList existe e é um array:', data.videoList);
             const watchLaterVideoIds = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
-            console.log('IDs dos vídeos "assistir mais tarde":', watchLaterVideoIds);
+            // console.log('IDs dos vídeos "assistir mais tarde":', watchLaterVideoIds);
   
             this.watchLaterVideos = this.unbTvVideos.filter(video => watchLaterVideoIds.includes(String(video.id))); // Converta IDs para string
-            console.log('Vídeos marcados como "assistir mais tarde" após filtragem:', this.watchLaterVideos);
+            // console.log('Vídeos marcados como "assistir mais tarde" após filtragem:', this.watchLaterVideos);
           } else {
             console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
           }
@@ -101,7 +101,7 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-    onFilterWatchLaterChange() {
+  onFilterWatchLaterChange() {
     if (this.filterWatchLater) {
       this.getWatchLaterVideos();
     } else {
@@ -120,8 +120,8 @@ export class CatalogComponent implements OnInit {
   }
 
 filterVideos() {
-  console.log('Filtrar "assistir mais tarde":', this.filterWatchLater);
-  console.log('Lista de vídeos para "assistir mais tarde":', this.watchLaterVideos);
+  // console.log('Filtrar "assistir mais tarde":', this.filterWatchLater);
+  // console.log('Lista de vídeos para "assistir mais tarde":', this.watchLaterVideos);
   
   this.filteredVideos = this.unbTvVideos.filter(video => {
     const isWatchLater = this.filterWatchLater ? this.watchLaterVideos.some(wlVideo => wlVideo.id == video.id) : true;
@@ -133,7 +133,7 @@ filterVideos() {
     return isWatchLater && (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
   });
 
-  console.log('Vídeos filtrados:', this.filteredVideos);
+  // console.log('Vídeos filtrados:', this.filteredVideos);
 }
 
   onProgramClick(videos: IVideo[]) {
