@@ -5,7 +5,7 @@ import { VideoService } from 'src/app/services/video.service';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-category-table',
@@ -22,6 +22,7 @@ export class CategoryTableComponent {
   sortAscending: boolean = true;
   selectedColumn: string = '';
   categories: string[] = [
+    "Todas",
     "Arte e Cultura",
     "Documentais",
     "Entrevista",
@@ -44,6 +45,7 @@ export class CategoryTableComponent {
   
   ngOnInit(): void{
     this.categories.forEach(category => this.selectedCategories[category] = false);
+    this.selectedCategories["Todas"] = true;
     this.findAll();
   }
   
@@ -141,8 +143,10 @@ export class CategoryTableComponent {
 
   filterCategories(): void {
     const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
-    if(selectedCategories.length === 0){
+    if (selectedCategories.includes("Todas")) {
       this.filteredAggregatedVideos = this.aggregatedVideos;
+    }else if(selectedCategories.length === 0){
+      this.filteredAggregatedVideos = [];
     }
     else{
       this.filteredAggregatedVideos = this.aggregatedVideos.filter(video => selectedCategories.includes(video.category));  
@@ -163,4 +167,3 @@ export class CategoryTableComponent {
     });
   }
 }
-

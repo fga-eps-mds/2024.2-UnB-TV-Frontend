@@ -25,7 +25,7 @@
 
   <div class="flex flex-initial flex-col gap-4 text-[11px] text-blue-brand">
 
-    <button id="acessaAdmin" class="rounded-lg" (click)="acessoAdmin()">
+  <button id="acessaAdmin" class="rounded-lg" (click)="acessoAdmin()" *ngIf="canShowAdminButton">
       Administração
     </button>
 
