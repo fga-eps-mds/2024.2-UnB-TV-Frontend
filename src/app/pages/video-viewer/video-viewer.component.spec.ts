@@ -48,6 +48,11 @@ class VideoServiceMock {
   checkFavorite(videoId: string, userId: string) {
     return of({ statusfavorite: true });
   }
+
+  // Histórico
+  addToRecord(userId: string, videoId: string) {
+    return of({ message: 'Added to record' });
+  }
 }
 
 class UserServiceMock {
@@ -296,4 +301,19 @@ describe('VideoViewerComponent', () => {
     expect(addSpy).toHaveBeenCalledWith('190329', '1');
     expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
   }));
+
+  // Historico
+  it('should call addToRecord service method with the correct parameters', () => {
+    const addToRecordSpy = spyOn(videoService, 'addToRecord').and.callThrough();
+  
+    component.userId = '12345';
+    component.idVideo = 67890;
+
+    component.addRecord();
+  
+    expect(addToRecordSpy).toHaveBeenCalledWith('12345', '67890');
+
+    expect(addToRecordSpy(component.userId, component.idVideo.toString()).subscribe).toBeDefined();
+  });
+  
 });
