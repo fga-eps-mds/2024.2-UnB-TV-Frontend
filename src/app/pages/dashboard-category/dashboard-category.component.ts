@@ -71,7 +71,7 @@ export class DashboardCategoryComponent implements OnInit {
       },
       complete: () => {
         this.filterVideosByChannel(this.videosEduplay);
-        this.videoService.videosCatalog(this.unbTvVideos);
+        this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
         this.aggregateVideosByCategory();
       }
     })
