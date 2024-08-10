@@ -90,113 +90,14 @@ hr.solid2 {
   border-top: 0.125em solid #bbb;
 }
 
-.containerConteudo {
-  margin-top: 1.25em;
-}
-
-.containerFiltro {
-  margin-bottom: 1.25em;
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 1.5em;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.botaoDropdown {
-  background-color: #f8f9fa;
-  color: #1d1d1d;
-  padding: 0.75em;
-  font-size: 1em;
-  border: 0.0625em solid #ddd;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.setinha {
-  margin-left: 0.5em;
-  border: solid #1d1d1d;
-  border-width: 0 0.125em 0.125em 0;
-  display: inline-block;
-  padding: 0.125em;
-  transform: rotate(45deg);
-  margin-bottom: 0.25em;
-}
-
-.conteudoDropdown {
-  display: none;
-  position: absolute;
-  background-color: #ffffff;
-  min-width: 12em;
-  box-shadow: 0.125em 0.125em 0.3125em rgba(0,0,0,0.2);
-  z-index: 1;
-  border: 0.0625em solid #ddd;
-}
-
-.conteudoDropdown label {
-  color: black;
-  padding: 0.5em 0.75em;
-  text-decoration: none;
-  display: block;
-}
-
-.conteudoDropdown label:hover {
-  background-color: #d0d0d0;
-}
-
-.dropdown:hover .conteudoDropdown {
-  display: block;
-}
-
-.dropdown:hover .botaoDropdown {
-  background-color: #d0d0d0;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.25em;
-}
-
-th, td {
-  border: 0.0625em solid #ddd;
-  padding: 0.75em;
-  text-align: left;
-}
-
-th {
-  background-color: #d0d0d0;
-}
-
-th.ordenavel:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: #0056b3;
-}
-
-th.selected {
-  color: #0087c8;
-}
-
-th.ordenavel .setinha.up {
-  transform: rotate(225deg);
-}
-
-thead {
-  font-size: 1.2em;
-}
-.chart-container {
+.containerGraficos {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px; 
 }
 
-.chart {
+.grafico {
   width: 30%;
   min-width: 300px; 
   border: 1px solid #c0c0c0;
@@ -205,40 +106,41 @@ thead {
   text-align: center;
 }
 
-.legend-item {
+.itemLegenda {
   display: flex;
   align-items: center;
   margin-right: 15px;
 }
 
-.legend-container {
+.containerLegenda {
   display: flex;
   justify-content: center;
   margin: 20px 0;
 }
 
 @media (max-width: 1150px) {
-  .legend-container {
+  .containerLegenda {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     justify-items: center;
   }
 }
 
-.legend-color {
+.corLegenda {
   display: inline-block;
   width: 20px;
   height: 20px;
   margin-right: 5px;
 }
-  .card-container {
+
+.containerCard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   justify-items: center;
   gap: 20px;
-  }
+}
 
-  .card {
+.card {
   background-color: #00aaff;
   color: white;
   padding: 20px;
@@ -247,9 +149,9 @@ thead {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 250px;
-  }
+}
 
-  .card p {
+.card p {
   margin: 0;
   font-size: 1.2em;
-  }
+}

@@ -21,7 +21,7 @@
         <h1>Dashboard - Categorias</h1>
         <hr class="solid2">
       </header>
-      <div class="card-container">
+      <div class="containerCard">
         <div class="card">
             <p>{{ viewsAllCategories }}</p>
             <p>Visualizações totais</p>
@@ -32,30 +32,30 @@
         </div>
       </div>
 
-      <div class="legend-container">
-        <div *ngFor="let color of categories" class="legend-item">
-            <span class="legend-color" [ngStyle]="{'background-color': categoryColors[color]}"></span>
+      <div class="containerLegenda">
+        <div *ngFor="let color of categories" class="itemLegenda">
+            <span class="corLegenda" [ngStyle]="{'background-color': categoryColors[color]}"></span>
             <span>{{ color }}</span>
         </div>
       </div>
-      <div class="chart-container">
-        <div class="chart">
+      <div class="containerGraficos">
+        <div class="grafico">
             <canvas #videoCountChart></canvas>
             <h2>Quantidade de videos por categorias</h2>
         </div>
-        <div class="chart">
+        <div class="grafico">
             <canvas #totalViewsChart></canvas>
             <h2>Quantidade de visualizações por categorias</h2>
         </div>
-        <div class="chart">
+        <div class="grafico">
             <canvas #viewsPerVideoChart></canvas>
             <h2>Quantidade de visualizações por vídeo</h2>
         </div>
-        <div class="chart">
+        <div class="grafico">
           <canvas #videoCountChartPizza></canvas>
           <h2>Porcentagem de videos por categorias</h2>
         </div>
-        <div class="chart">
+        <div class="grafico">
           <canvas #totalViewsChartPizza></canvas>
           <h2>Porcentagem de visualizações por categorias</h2>
         </div>
