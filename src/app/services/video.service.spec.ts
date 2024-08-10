@@ -650,6 +650,33 @@ describe('VideoService', () => {
     });
   });
 
+  describe('getWatchLaterVideos', () => {
+    it('should get all videos in the watch later list for a user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        videoList: [
+          { video_id: '12345', status: true },
+          { video_id: '67890', status: true },
+        ],
+      };
+
+
+      service.getWatchLaterVideos(mockUserId).subscribe((response) => {
+        expect(response.videoList.length).toBe(2);
+        expect(response.videoList).toEqual(mockResponse.videoList);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/watch-later/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
   describe('getFavoriteVideos', () => {
     it('should get all videos in favorite list for a user', () => {
       const mockUserId = 'user123';

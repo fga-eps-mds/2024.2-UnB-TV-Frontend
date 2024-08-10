@@ -21,7 +21,8 @@ describe('CatalogComponent', () => {
       findAll: jasmine.createSpy('findAll').and.returnValue(of({ body: { videoList: [] } })),
       videosCatalog: jasmine.createSpy('videosCatalog'),
       setVideosCatalog: jasmine.createSpy('setVideosCatalog'),
-      getFavoriteVideos: jasmine.createSpy('getFavoriteVideos').and.returnValue(of({ videoList: [] }))
+      getFavoriteVideos: jasmine.createSpy('getFavoriteVideos').and.returnValue(of({ videoList: [] })),
+      getWatchLaterVideos: jasmine.createSpy('getWatchLaterVideos').and.returnValue(of({ videoList: [] }))
     };
 
     authServiceMock = {
@@ -47,6 +48,7 @@ describe('CatalogComponent', () => {
       ]
     }).compileComponents();
   });
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CatalogComponent);
@@ -174,5 +176,73 @@ describe('CatalogComponent', () => {
 
     expect(component.filteredVideos.length).toBe(2);
   });
-});
 
+  it('should populate watchLaterVideos on getWatchLaterVideos success', () => {
+    const watchLaterVideos = [
+      { id: 1, video_id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, video_id: 2, title: 'Watch Later 2', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Watch Later 2', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
+
+    component.getWatchLaterVideos();
+
+    expect(component.watchLaterVideos.length).toBe(2);
+    expect(component.watchLaterVideos[0].id).toBe(1);
+    expect(component.watchLaterVideos[1].id).toBe(2);
+  });
+
+
+  it('should log warning on getWatchLaterVideos with unexpected structure', () => {
+    spyOn(console, 'warn');
+    videoServiceMock.getWatchLaterVideos.and.returnValue(of({ incorrectKey: [] }));
+
+    component.getWatchLaterVideos();
+
+    expect(console.warn).toHaveBeenCalledWith('A estrutura da resposta da API não está conforme o esperado:', { incorrectKey: [] });
+  });
+
+
+  it('should filter videos to watch later when checkbox is checked', () => {
+    const watchLaterVideos = [
+      { id: 1, video_id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Not Watch Later', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
+
+    component.filterWatchLater = true;
+    component.onFilterWatchLaterChange();
+
+    expect(component.filteredVideos.length).toBe(1);
+    expect(component.filteredVideos[0].title).toBe('Watch Later 1');
+  });
+
+
+  it('should not filter videos to watch later when checkbox is unchecked', () => {
+    const watchLaterVideos = [
+      { id: 1, video_id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    component.unbTvVideos = [
+      { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Not Watch Later', channels: [{ id: 1, name: 'unbtv' }] }
+    ];
+
+    videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
+
+    component.filterWatchLater = false;
+    component.onFilterWatchLaterChange();
+
+    expect(component.filteredVideos.length).toBe(2);
+  });
+});

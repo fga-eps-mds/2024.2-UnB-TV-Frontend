@@ -2,10 +2,14 @@
   <div>
     <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Pesquise um vídeo" class="CampoFiltro"/>
     <label *ngIf="isAuthenticated" class="checkbox-container">
+    <input type="checkbox" [(ngModel)]="filterWatchLater" (change)="onFilterWatchLaterChange()" class="custom-checkbox"/>
+     Assistir mais tarde
+    </label>
+    <label *ngIf="isAuthenticated" class="checkbox-container">
       <input type="checkbox" [(ngModel)]="filterFavorite" (change)="onFilterFavoriteVideosChange()" class="custom-checkbox"/> Listar Favoritos
     </label>
   </div>
-  <div *ngIf="filterTitle.length===0 && !filterFavorite">
+  <div *ngIf="filterTitle.length===0 && !filterFavorite && !filterWatchLater">
     <div class="flex flex-col gap-2">
       <h4 class="text-start font-bold text-[13px] text-blue-brand">Jornalismo</h4>
       <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
@@ -199,7 +203,7 @@
       </div>
     </div>
   </div>
-  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl" *ngIf="filterTitle || filterFavorite">
+  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl" *ngIf="filterTitle || filterFavorite || filterWatchLater">
     <div *ngFor="let video of filteredVideos" class="flex">
       <div>
         <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
