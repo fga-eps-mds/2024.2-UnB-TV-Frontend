@@ -23,9 +23,6 @@ export class DashboardCategoryComponent implements OnInit {
   unbTvVideos: IVideo[] = [];
   aggregatedVideos: any[] = [];
   catalog: Catalog = new Catalog();
-  sortColumn: string = '';
-  sortAscending: boolean = true;
-  selectedColumn: string = '';
   categories: string[] = [
     "Arte e Cultura",
     "Documentais",
@@ -37,7 +34,6 @@ export class DashboardCategoryComponent implements OnInit {
     "Variedades"
   ];
 
-  selectedCategories: { [key: string]: boolean } = {};
   viewsAllCategories: number = 0;
   videosAllCategories: number = 0;
 
@@ -62,7 +58,6 @@ export class DashboardCategoryComponent implements OnInit {
   ) {};
   
   ngOnInit(): void{
-    this.categories.forEach(category => this.selectedCategories[category] = false);
     this.findAll();
   }
   

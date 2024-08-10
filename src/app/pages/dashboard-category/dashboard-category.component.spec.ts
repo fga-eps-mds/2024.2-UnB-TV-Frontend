@@ -68,7 +68,6 @@ describe('DashboardCategoryComponent', () => {
       "UnBTV",
       "Variedades"
     ]);
-    expect(component.selectedCategories).toEqual({});
     expect(component.viewsAllCategories).toBe(0);
     expect(component.videosAllCategories).toBe(0);
   });
@@ -77,7 +76,6 @@ describe('DashboardCategoryComponent', () => {
     spyOn(component, 'findAll');
     component.ngOnInit();
     expect(component.findAll).toHaveBeenCalled();
-    component.categories.forEach(category => expect(component.selectedCategories[category]).toBeFalse());
   });
 
   it('should fetch and process videos in findAll for Dashboard Category', () => {
