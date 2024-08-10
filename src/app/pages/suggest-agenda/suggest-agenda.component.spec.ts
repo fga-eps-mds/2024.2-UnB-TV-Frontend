@@ -121,6 +121,6 @@ describe('SuggestAgendaComponent', () => {
       urlVideo: 'invalid-url'
     });
     component.sendSuggestAgenda();
-    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'ERRO - A URL (endereço do vídeo) não é válida. Favor corrigir ou deletar.');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.');
   });
 });

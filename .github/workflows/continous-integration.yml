@@ -20,11 +20,21 @@ jobs:
       - name: Install ⚙️
         run: npm install
 
+      - name: Install Junit
+        run: npm install --save-dev karma-junit-reporter
+
       - name: Build 🛠
         run: npm run build
 
       - name: Test 📋
         run: npm run test:prod
+
+      - name: Generate JUnit report
+        run: |
+          cp test-report-example.xml test-report.xml
+
+      - name: Test Printing Test Report
+        run: cat test-report.xml
 
       - name: Remove src/app/app.constant.ts from lcov.info
         run: |
