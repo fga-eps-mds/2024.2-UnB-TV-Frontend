@@ -4,7 +4,7 @@ import { VideoService } from 'src/app/services/video.service';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-video-views',
@@ -22,7 +22,17 @@ export class VideoViewsComponent {
   filterTitle: string = '';
   filterDescription: string = '';
   selectedCategories: { [key: string]: boolean } = {};
-  categories: string[] = ['Jornalismo', 'Entrevista', 'Pesquisa e Ciência', 'Arte e Cultura', 'Séries Especiais', 'Documentais', 'UnBTV'];
+  categories: string[] = [
+    "Todas",
+    "Arte e Cultura",
+    "Documentais",
+    "Entrevista",
+    "Jornalismo",
+    "Pesquisa e Ciência",
+    "Séries Especiais",
+    "UnBTV",
+    "Variedades"
+  ];
   
   sortAscending: boolean = true;
   isSorted: boolean = false;
@@ -37,6 +47,7 @@ export class VideoViewsComponent {
     this.findAll();
     this.filteredVideos = this.unbTvVideos;
     this.categories.forEach(category => this.selectedCategories[category] = false);
+    this.selectedCategories["Todas"] = true;
   }
 
   findAll(): void {
@@ -49,7 +60,7 @@ export class VideoViewsComponent {
       },
       complete: () => {
         this.filterVideosByChannel(this.videosEduplay);
-        this.videoService.videosCatalog(this.unbTvVideos, this.catalog); // Chamando a função do serviço
+        this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
         this.cleanDescriptions();
         this.filterVideos();
       },
@@ -82,12 +93,18 @@ export class VideoViewsComponent {
   filterVideos() {
     const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
     
-    this.filteredVideos = this.unbTvVideos.filter(video => 
+    if (selectedCategories.includes("Todas")){
+      this.filteredVideos = this.unbTvVideos;
+    }else if (selectedCategories.length === 0){
+      this.filteredVideos = [];
+    }else{
+      this.filteredVideos = this.unbTvVideos.filter(video => 
         (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
         (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
         (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
         (selectedCategories.length === 0 || selectedCategories.includes(video.catalog))
     );
+    }
     this.sortVideos();
   }
 
