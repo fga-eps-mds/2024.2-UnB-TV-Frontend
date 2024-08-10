@@ -6,6 +6,7 @@ import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmationService } from 'primeng/api';
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-category-table',
@@ -35,6 +36,7 @@ export class CategoryTableComponent {
   filteredAggregatedVideos: any[] = [];
   selectedCategories: { [key: string]: boolean } = {};
 
+  fileName = "DadosCategoriasUnBTV.xlsx";
 
   constructor(
     private videoService: VideoService,
@@ -165,5 +167,22 @@ export class CategoryTableComponent {
       },
       reject: () => {},
     });
+  }
+
+  exportExcel() {
+    let data = document.getElementById("tabela-categoria");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    const columnWidths = [
+      { wch:20 },
+      { wch:10 },
+      { wch:15 },
+      { wch:20 },
+    ];
+
+    ws['!cols'] = columnWidths;
+    XLSX.utils.book_append_sheet(wb, ws,'Sheet1'); 
+    XLSX.writeFile(wb, this.fileName);
   }
 }

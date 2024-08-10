@@ -1,0 +1,64 @@
+<div class="containerPrincipal">
+    <aside>
+      <div class="informacoesUsuario">
+        <p>Olá, Admin!</p>
+        <div class="linksBarraLateral">
+          <a class="linkLogout" (click)="logoutUser()">Sair</a>
+          <a href="/homeAdmin" class="linkVoltar">Voltar</a>
+        </div>
+      </div>
+      <hr class="solid">
+      <nav>
+        <ul>
+          <li><a href="/video-views">Dados - Vídeos</a></li>
+          <li><a href="/category-views">Dados - Categorias</a></li>
+          <li><a href="/dashboard" class="linkSelecionado">Dashboard - Categorias</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <header>
+        <h1>Dashboard - Categorias</h1>
+        <hr class="solid2">
+      </header>
+      <div class="containerCard">
+        <div class="card">
+            <p>{{ viewsAllCategories }}</p>
+            <p>Visualizações totais</p>
+        </div>
+        <div class="card">
+            <p>{{ videosAllCategories }}</p>
+            <p>Vídeos totais</p>
+        </div>
+      </div>
+
+      <div class="containerLegenda">
+        <div *ngFor="let color of categories" class="itemLegenda">
+            <span class="corLegenda" [ngStyle]="{'background-color': categoryColors[color]}"></span>
+            <span>{{ color }}</span>
+        </div>
+      </div>
+      <div class="containerGraficos">
+        <div class="grafico">
+            <canvas #videoCountChart></canvas>
+            <h2>Quantidade de videos por categorias</h2>
+        </div>
+        <div class="grafico">
+            <canvas #totalViewsChart></canvas>
+            <h2>Quantidade de visualizações por categorias</h2>
+        </div>
+        <div class="grafico">
+            <canvas #viewsPerVideoChart></canvas>
+            <h2>Quantidade de visualizações por vídeo</h2>
+        </div>
+        <div class="grafico">
+          <canvas #videoCountChartPizza></canvas>
+          <h2>Porcentagem de videos por categorias</h2>
+        </div>
+        <div class="grafico">
+          <canvas #totalViewsChartPizza></canvas>
+          <h2>Porcentagem de visualizações por categorias</h2>
+        </div>
+      </div>
+    </main>
+  </div>

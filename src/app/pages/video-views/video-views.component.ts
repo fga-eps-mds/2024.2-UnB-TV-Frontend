@@ -5,6 +5,7 @@ import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmationService } from 'primeng/api';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-video-views',
@@ -36,6 +37,8 @@ export class VideoViewsComponent {
   
   sortAscending: boolean = true;
   isSorted: boolean = false;
+
+  fileName = "DadosVideosUnBTV.xlsx";
 
   constructor(
     private videoService: VideoService,
@@ -140,5 +143,23 @@ export class VideoViewsComponent {
       },
       reject: () => {},
     });
+  }
+  
+  exportExcel() {
+    let data = document.getElementById("tabela-videos");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    const columnWidths = [
+      { wch:15 },
+      { wch:120 },
+      { wch:1200 },
+      { wch:20 },
+      { wch:20 }
+    ];
+
+    ws['!cols'] = columnWidths;
+    XLSX.utils.book_append_sheet(wb, ws,'Sheet1'); 
+    XLSX.writeFile(wb, this.fileName);
   }
 }
