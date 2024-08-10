@@ -6,7 +6,7 @@ import { CategoryTableComponent } from './category-table.component';
 import { IVideo } from 'src/shared/model/video.model';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConfirmationService, Confirmation } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms' 
 
@@ -55,6 +55,7 @@ describe('CategoryTableComponent', () => {
     expect(component.sortAscending).toBeTrue();
     expect(component.selectedColumn).toBe('');
     expect(component.categories).toEqual([
+      "Todas",
       "Arte e Cultura",
       "Documentais",
       "Entrevista",
@@ -72,7 +73,13 @@ describe('CategoryTableComponent', () => {
     spyOn(component, 'findAll');
     component.ngOnInit();
     expect(component.findAll).toHaveBeenCalled();
-    component.categories.forEach(category => expect(component.selectedCategories[category]).toBeFalse());
+    component.categories.forEach(category => {
+      if (category === "Todas"){
+        expect(component.selectedCategories[category]).toBeTrue()
+      }else{
+        expect(component.selectedCategories[category]).toBeFalse()
+      }
+    });
   });
 
   it('should fetch and process videos in findAll', () => {
@@ -149,7 +156,7 @@ describe('CategoryTableComponent', () => {
       { category: 'Entrevista', videoCount: 1, totalViews: 20, viewsPerVideo: 20 },
     ];
 
-    component.selectedCategories = { 'Jornalismo': true, 'Entrevista': false };
+    component.selectedCategories = { 'Todas': false, 'Jornalismo': true, 'Entrevista': false };
 
     component.filterCategories();
 
@@ -163,7 +170,11 @@ describe('CategoryTableComponent', () => {
       { category: 'Entrevista', videoCount: 1, totalViews: 20, viewsPerVideo: 20 },
     ];
 
-    component.filterCategories(); // Certifique-se de que filteredAggregatedVideos seja preenchido
+    component.selectedCategories["Jornalismo"] = true;
+    component.selectedCategories["Entrevista"] = true;
+    component.selectedCategories["Todas"] = false;
+
+    component.filterCategories();
 
     component.sortColumn = 'totalViews';
     component.sortAscending = true;

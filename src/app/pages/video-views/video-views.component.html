@@ -12,14 +12,16 @@
       <ul>
         <li><a href="/video-views" class="linkSelecionado">Dados - Vídeos</a></li>
         <li><a href="/category-views">Dados - Categorias</a></li>
+        <li><a href="/dashboard">Dashboard - Categorias</a></li>
       </ul>
     </nav>
   </aside>  
   <main>
     <header>
       <h1>Dados - Vídeos</h1>
-      <hr class="solid2">
+      <button class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white" (click)="exportExcel()">Exportar para Excel</button>
     </header>
+    <hr class="solid2">
     <div class="containerConteudo">
       <div class="containerFiltro">
         <div class="filtroItem">
@@ -44,7 +46,7 @@
           </div>
         </div>
       </div>
-      <table>
+      <table id="tabela-videos">
         <thead>
           <tr>
             <th>ID</th>

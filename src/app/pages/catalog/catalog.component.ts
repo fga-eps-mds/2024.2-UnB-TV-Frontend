@@ -26,6 +26,8 @@ export class CatalogComponent implements OnInit {
   userId: string = ''; // Adicionado para armazenar o ID do usuário
   user: any; // Adicionado para armazenar os detalhes do usuário
   isAuthenticated: boolean = false; // Propriedade pública para o estado de autenticação
+  filterFavorite: boolean = false;
+  favoriteVideos: IVideo[] = [];
 
   constructor(
     private videoService: VideoService,
@@ -52,6 +54,7 @@ export class CatalogComponent implements OnInit {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
         this.user = user;
+        this.getFavoriteVideos();
         this.getWatchLaterVideos(); // Carregue os vídeos de "assistir mais tarde" após obter os detalhes do usuário
       },
       error: (err) => {
@@ -74,7 +77,42 @@ export class CatalogComponent implements OnInit {
     });
   }
 
- getWatchLaterVideos(): void {
+  getFavoriteVideos(): void {
+    if (this.isAuthenticated) {
+      this.videoService.getFavoriteVideos(this.userId).subscribe({
+        next: (data) => {
+          console.log('Resposta completa da API para vídeos de "favoritos":', data);
+  
+          // Verifique se `videoList` existe e é um array
+          if (data && Array.isArray(data.videoList)) {
+            console.log('videoList existe e é um array:', data.videoList);
+            const favorite_videos_ids = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
+            console.log('IDs dos vídeos "favoritos":', favorite_videos_ids);
+  
+            this.favoriteVideos = this.unbTvVideos.filter(video => favorite_videos_ids.includes(String(video.id))); // Converta IDs para string
+            console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
+          } else {
+            console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
+          }
+  
+          this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "favoritos"
+        },
+        error: (error) => {
+          console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
+        }
+      });
+    }
+  }
+
+  onFilterFavoriteVideosChange() {
+    if (this.filterFavorite) {
+      this.getFavoriteVideos();
+    } else {
+      this.filterVideos();
+    }
+  }
+
+  getWatchLaterVideos(): void {
     if (this.isAuthenticated) {
       this.videoService.getWatchLaterVideos(this.userId).subscribe({
         next: (data) => {
@@ -119,22 +157,18 @@ export class CatalogComponent implements OnInit {
     });
   }
 
-filterVideos() {
-  // console.log('Filtrar "assistir mais tarde":', this.filterWatchLater);
-  // console.log('Lista de vídeos para "assistir mais tarde":', this.watchLaterVideos);
-  
-  this.filteredVideos = this.unbTvVideos.filter(video => {
-    const isWatchLater = this.filterWatchLater ? this.watchLaterVideos.some(wlVideo => wlVideo.id == video.id) : true;
-    const matchesTitle = this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
-    const matchesDescription = this.filterTitle ? video.description?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
-    const matchesKeywords = this.filterTitle ? video.keywords?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
-    const matchesCatalog = this.filterTitle ? video.catalog?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
-    
-    return isWatchLater && (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
-  });
-
-  // console.log('Vídeos filtrados:', this.filteredVideos);
-}
+  filterVideos() {
+    this.filteredVideos = this.unbTvVideos.filter(video => {
+      const isWatchLater = this.filterWatchLater ? this.watchLaterVideos.some(wlVideo => wlVideo.id == video.id) : true;
+      const isFavorite = this.filterFavorite? this.favoriteVideos.some(wlVideo => wlVideo.id == video.id) : true;
+      const matchesTitle = this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
+      const matchesDescription = this.filterTitle ? video.description?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
+      const matchesKeywords = this.filterTitle ? video.keywords?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
+      const matchesCatalog = this.filterTitle ? video.catalog?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
+      
+      return isWatchLater && isFavorite && (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
+    });
+  }
 
   onProgramClick(videos: IVideo[]) {
     this.videoService.setVideosCatalog(videos);

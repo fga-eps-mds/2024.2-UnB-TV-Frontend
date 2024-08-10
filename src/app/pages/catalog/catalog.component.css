@@ -28,7 +28,6 @@
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -72,3 +71,4 @@
   font-size: 1em;
   color: #333;
 }
+

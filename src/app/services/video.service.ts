@@ -277,5 +277,10 @@ export class VideoService {
     });
   }
 
-
+  getFavoriteVideos(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/favorite/`, {
+      params: { user_id: userId }
+    });
+  } 
+ 
 }

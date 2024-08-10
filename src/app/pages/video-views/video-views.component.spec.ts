@@ -50,7 +50,17 @@ describe('VideoViewsComponent', () => {
     expect(component.filterTitle).toBe('');
     expect(component.filterDescription).toBe('');
     expect(component.selectedCategories).toEqual({});
-    expect(component.categories).toEqual(['Jornalismo', 'Entrevista', 'Pesquisa e Ciência', 'Arte e Cultura', 'Séries Especiais', 'Documentais', 'UnBTV']);
+    expect(component.categories).toEqual([
+      "Todas",
+      "Arte e Cultura",
+      "Documentais",
+      "Entrevista",
+      "Jornalismo",
+      "Pesquisa e Ciência",
+      "Séries Especiais",
+      "UnBTV",
+      "Variedades"
+    ]);
     expect(component.sortAscending).toBeTrue();
     expect(component.isSorted).toBeFalse();
   });
@@ -60,7 +70,13 @@ describe('VideoViewsComponent', () => {
     component.ngOnInit();
     expect(component.findAll).toHaveBeenCalled();
     expect(component.filteredVideos).toEqual(component.unbTvVideos);
-    component.categories.forEach(category => expect(component.selectedCategories[category]).toBeFalse());
+    component.categories.forEach(category => {
+      if (category === "Todas"){
+        expect(component.selectedCategories[category]).toBeTrue()
+      }else{
+        expect(component.selectedCategories[category]).toBeFalse()
+      }
+    });
   });
 
   it('should fetch and process videos in findAll', () => {
@@ -128,7 +144,7 @@ describe('VideoViewsComponent', () => {
     component.filterId = '1';
     component.filterTitle = 'Video';
     component.filterDescription = 'Description';
-    component.selectedCategories = { 'Jornalismo': true, 'Entrevista': false };
+    component.selectedCategories = { 'Todas': false, 'Jornalismo': true, 'Entrevista': false };
 
     component.filterVideos();
 
