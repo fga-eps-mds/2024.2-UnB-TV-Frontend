@@ -134,10 +134,11 @@ export class VideoViewsComponent {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
     const columnWidths = [
-      { wch:20 },
-      { wch:10 },
       { wch:15 },
+      { wch:120 },
+      { wch:1200 },
       { wch:20 },
+      { wch:20 }
     ];
 
     ws['!cols'] = columnWidths;
