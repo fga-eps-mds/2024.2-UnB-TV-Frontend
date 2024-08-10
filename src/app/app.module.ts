@@ -53,6 +53,7 @@ import { AdminActivateComponent } from './pages/admin-activate/admin-activate.co
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
+import { RecordComponent } from './pages/record/record.component';
 
 @NgModule({
   imports: [
@@ -109,6 +110,7 @@ import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard
     CategoryTableComponent,
     VideoViewsComponent,
     DashboardCategoryComponent,
+    RecordComponent,
   ],
 
   providers: [

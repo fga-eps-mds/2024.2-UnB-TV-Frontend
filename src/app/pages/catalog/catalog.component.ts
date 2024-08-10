@@ -81,16 +81,16 @@ export class CatalogComponent implements OnInit {
     if (this.isAuthenticated) {
       this.videoService.getFavoriteVideos(this.userId).subscribe({
         next: (data) => {
-          console.log('Resposta completa da API para vídeos de "favoritos":', data);
+          //console.log('Resposta completa da API para vídeos de "favoritos":', data);
   
           // Verifique se `videoList` existe e é um array
           if (data && Array.isArray(data.videoList)) {
-            console.log('videoList existe e é um array:', data.videoList);
+            //console.log('videoList existe e é um array:', data.videoList);
             const favorite_videos_ids = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
-            console.log('IDs dos vídeos "favoritos":', favorite_videos_ids);
+            //console.log('IDs dos vídeos "favoritos":', favorite_videos_ids);
   
             this.favoriteVideos = this.unbTvVideos.filter(video => favorite_videos_ids.includes(String(video.id))); // Converta IDs para string
-            console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
+            //console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
           } else {
             console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
           }

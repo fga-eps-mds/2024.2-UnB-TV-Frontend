@@ -282,5 +282,15 @@ export class VideoService {
       params: { user_id: userId }
     });
   } 
- 
+   // Historico
+  checkRecord(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record/`, {
+      params: { user_id: userId }
+    });
+  }
+
+  addToRecord(userId: string, videoId: string): Observable<any> {
+    const currentDateTime: string = new Date().toLocaleString();
+    return this.http.post(`${this.videoServiceApiURL}/record/`, { user_id: userId.toString(), videos: { [videoId]: currentDateTime}});
+  }
 }

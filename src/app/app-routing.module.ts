@@ -25,6 +25,7 @@ import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
+import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
@@ -115,6 +116,11 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardCategoryComponent,
     canActivate: [TokenAdminGuard],
+  },
+  {
+    path: 'record', 
+    component: RecordComponent, 
+    canActivate: [AuthGuard]
   },
 ];
 
