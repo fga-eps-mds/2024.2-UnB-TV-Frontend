@@ -2,9 +2,11 @@
   margin: 0 auto;
 }
 
+
 .thumbnail:hover {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
+
 
 .CampoFiltro {
   border: 1px solid #0087c8;
@@ -14,13 +16,59 @@
   font-size: 12px;
   width: 45%;
   box-sizing: border-box;
-  outline: none; 
+  outline: none;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+
 .CampoFiltro:focus {
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0.625em; /* Adiciona algum espaço entre o campo de pesquisa e a checkbox */
+}
+
+
+.custom-checkbox {
+  appearance: none;
+  width: 1.25em;
+  height: 1.25em;
+  background-color: #fff;
+  border: 0.125em solid #ccc;
+  border-radius: 0.3125em;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  margin-right: 0.625em;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+.custom-checkbox:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+
+.custom-checkbox:checked::before {
+  content: '✔';
+  color: #fff;
+  font-size: 0.875em;
+  position: absolute;
+  top: 0.0001em; /* Ajuste para centralizar o check */
+  left: 0.01em; /* Ajuste para centralizar o check */
+}
+
+
+.checkbox-container label {
+  cursor: pointer;
+  font-size: 1em;
+  color: #333;
+}
+
