@@ -92,7 +92,7 @@ export class CatalogComponent implements OnInit {
             this.favoriteVideos = this.unbTvVideos.filter(video => favorite_videos_ids.includes(String(video.id))); // Converta IDs para string
             //console.log('Vídeos marcados como "favoritos" após filtragem:', this.favoriteVideos);
           } else {
-            //console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
+            console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
           }
   
           this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "favoritos"
