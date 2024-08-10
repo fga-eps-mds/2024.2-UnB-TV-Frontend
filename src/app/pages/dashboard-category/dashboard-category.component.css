@@ -1,0 +1,157 @@
+@font-face {
+  font-family: 'Helvetic';
+  src: url('../../../assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: Helvetic, sans-serif;
+}
+
+.containerPrincipal {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+aside {
+  width: 13.2em;
+  background-color: white;
+  padding: 1em 0.75em;
+  box-shadow: 0.125em 0 0.3125em rgba(0,0,0,0.1);
+  text-align: left;
+  position: fixed;
+  height: 100%;
+  margin: 0;
+}
+
+.informacoesUsuario p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.linksBarraLateral {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.75em 0;
+}
+
+.linkLogout, .linkVoltar {
+  color: #0087c8;
+  text-decoration: none;
+}
+
+.linkLogout:hover, .linkVoltar:hover {
+  text-decoration: underline;
+  color: #0056b3;
+  cursor: pointer;
+}
+
+hr.solid {
+  border-top: 0.0625em solid #bbb;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0.9375em 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #1d1d1d;
+  font-size: 1.1em;
+}
+
+nav ul li a:hover,
+nav ul li a.linkSelecionado {
+  color: #00a550;
+}
+
+main {
+  flex: 1;
+  padding: 0.25em;
+  margin-left: 14.2em;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1 {
+  font-size: 2.4em;
+  color: #00a550;
+}
+
+hr.solid2 {
+  border-top: 0.125em solid #bbb;
+}
+
+.containerGraficos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px; 
+}
+
+.grafico {
+  width: 30%;
+  min-width: 300px; 
+  border: 1px solid #c0c0c0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  text-align: center;
+}
+
+.itemLegenda {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.containerLegenda {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+@media (max-width: 1150px) {
+  .containerLegenda {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-items: center;
+  }
+}
+
+.corLegenda {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.containerCard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #00aaff;
+  color: white;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 250px;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.2em;
+}
