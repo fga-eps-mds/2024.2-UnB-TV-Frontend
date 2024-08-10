@@ -11,8 +11,8 @@
   
   .containerPrincipal {
     display: flex;
-    min-height: 10vh;
-    max-height: 200vh;
+    min-height: 100vh;
+    flex-direction: column;
   }
   
   aside {
@@ -23,6 +23,7 @@
     text-align: left;
     position: fixed;
     height: 100%;
+    margin: 0;
   }
   
   .informacoesUsuario p {
@@ -34,7 +35,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0.75em 0 0.75em 0;
+    margin: 0.75em 0;
   }
   
   .linkLogout, .linkVoltar {
@@ -76,6 +77,8 @@
     flex: 1;
     padding: 0.25em;
     margin-left: 14.2em;
+    display: flex;
+    flex-direction: column;
   }
   
   header h1 {
@@ -212,6 +215,14 @@
     display: flex;
     justify-content: center;
     margin: 20px 0;
+  }
+
+  @media (max-width: 1150px) {
+    .legend-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      justify-items: center;
+    }
   }
 
   .legend-color {
