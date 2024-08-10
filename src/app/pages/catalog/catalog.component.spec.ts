@@ -8,7 +8,6 @@ import { of, throwError } from 'rxjs';
 import { IVideo } from 'src/shared/model/video.model';
 import { FormsModule } from '@angular/forms';
 
-
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
   let fixture: ComponentFixture<CatalogComponent>;
@@ -16,7 +15,6 @@ describe('CatalogComponent', () => {
   let authServiceMock: any;
   let userServiceMock: any;
   let routerMock: any;
-
 
   beforeEach(async () => {
     videoServiceMock = {
@@ -39,7 +37,6 @@ describe('CatalogComponent', () => {
       navigate: jasmine.createSpy('navigate')
     };
 
-
     await TestBed.configureTestingModule({
       declarations: [CatalogComponent],
       imports: [FormsModule],
@@ -59,11 +56,9 @@ describe('CatalogComponent', () => {
     fixture.detectChanges();
   });
 
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should call findAll and getUserDetails on init if authenticated', () => {
     spyOn(component, 'findAll').and.callThrough();
@@ -74,36 +69,28 @@ describe('CatalogComponent', () => {
     expect(component.findAll).toHaveBeenCalled();
   });
 
-
   it('should populate videosEduplay and unbTvVideos on findAll success', () => {
     const videos: IVideo[] = [
       { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
       { id: 2, title: 'Video 2', channels: [{ id: 2, name: 'other' }] }
     ];
 
-
     videoServiceMock.findAll.and.returnValue(of({ body: { videoList: videos } }));
 
-
     component.findAll();
-
 
     expect(component.videosEduplay.length).toBe(2);
     expect(component.videosEduplay[0].id).toBe(1);
   });
 
-
   it('should log error on findAll error', () => {
     spyOn(console, 'log');
     videoServiceMock.findAll.and.returnValue(throwError('Error'));
 
-
     component.findAll();
-
 
     expect(console.log).toHaveBeenCalledWith('Error');
   });
-
 
   it('should filter videos based on filterTitle', () => {
     component.unbTvVideos = [
@@ -111,14 +98,11 @@ describe('CatalogComponent', () => {
       { id: 2, title: 'React', description: '', keywords: '', catalog: '' }
     ];
 
-
     component.filterTitle = 'Angular';
     component.filterVideos();
 
-
     expect(component.filteredVideos).toEqual([component.unbTvVideos[0]]);
   });
-
 
   it('should navigate to /videos on program click', () => {
     const videos: IVideo[] = [{ id: 1, title: 'Video 1', channels: [] }];
@@ -192,7 +176,6 @@ describe('CatalogComponent', () => {
 
     expect(component.filteredVideos.length).toBe(2);
   });
-});
 
   it('should populate watchLaterVideos on getWatchLaterVideos success', () => {
     const watchLaterVideos = [
@@ -200,18 +183,14 @@ describe('CatalogComponent', () => {
       { id: 2, video_id: 2, title: 'Watch Later 2', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     component.unbTvVideos = [
       { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
       { id: 2, title: 'Watch Later 2', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
 
-
     component.getWatchLaterVideos();
-
 
     expect(component.watchLaterVideos.length).toBe(2);
     expect(component.watchLaterVideos[0].id).toBe(1);
@@ -223,9 +202,7 @@ describe('CatalogComponent', () => {
     spyOn(console, 'warn');
     videoServiceMock.getWatchLaterVideos.and.returnValue(of({ incorrectKey: [] }));
 
-
     component.getWatchLaterVideos();
-
 
     expect(console.warn).toHaveBeenCalledWith('A estrutura da resposta da API não está conforme o esperado:', { incorrectKey: [] });
   });
@@ -236,19 +213,15 @@ describe('CatalogComponent', () => {
       { id: 1, video_id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     component.unbTvVideos = [
       { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
       { id: 2, title: 'Not Watch Later', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
-
 
     component.filterWatchLater = true;
     component.onFilterWatchLaterChange();
-
 
     expect(component.filteredVideos.length).toBe(1);
     expect(component.filteredVideos[0].title).toBe('Watch Later 1');
@@ -260,19 +233,15 @@ describe('CatalogComponent', () => {
       { id: 1, video_id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     component.unbTvVideos = [
       { id: 1, title: 'Watch Later 1', channels: [{ id: 1, name: 'unbtv' }] },
       { id: 2, title: 'Not Watch Later', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
-
     videoServiceMock.getWatchLaterVideos.and.returnValue(of({ videoList: watchLaterVideos }));
-
 
     component.filterWatchLater = false;
     component.onFilterWatchLaterChange();
-
 
     expect(component.filteredVideos.length).toBe(2);
   });
