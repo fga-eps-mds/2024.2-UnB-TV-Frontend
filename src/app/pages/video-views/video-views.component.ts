@@ -73,7 +73,7 @@ export class VideoViewsComponent {
   cleanDescriptions() {
     const cleanHtml = (html:string) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
-      return doc.body.textContent || "";
+      return doc.body.textContent ?? "";
     };
   
     this.unbTvVideos.forEach((video) => {
@@ -113,8 +113,8 @@ export class VideoViewsComponent {
 
   sortVideos(): void {
     this.filteredVideos.sort((videoA, videoB) => {
-        const accessA = videoA.qtAccess  || 0;
-        const accessB = videoB.qtAccess  || 0;
+        const accessA = videoA.qtAccess ?? 0;
+        const accessB = videoB.qtAccess ?? 0;
 
         if (this.sortAscending) {
             // Ordenação crescente
