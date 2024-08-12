@@ -3,7 +3,7 @@ import { SocialAuthService, SocialUser, FacebookLoginProvider } from '@abacritt/
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-declare var gapi: any;
+declare let gapi: any;
 
 interface ServerResponse {
   access_token: string;
@@ -91,7 +91,7 @@ export class LoginSocialComponent implements OnInit {
       (response) => {
         console.log('Resposta do servidor:', response);
 
-        if (response && response.access_token) {
+        if (response?.access_token) {
           localStorage.setItem('token', response.access_token);
 
           if (response.is_new_user) {

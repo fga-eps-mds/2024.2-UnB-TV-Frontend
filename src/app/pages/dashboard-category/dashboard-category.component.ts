@@ -117,7 +117,7 @@ export class DashboardCategoryComponent implements OnInit {
 
     this.unbTvVideos.forEach((video) => {
       const category = video['catalog'];
-      const views = video.qtAccess || 0;
+      const views = video.qtAccess ?? 0;
 
       const categoryData = categoryMap.get(category);
 

@@ -26,7 +26,7 @@ export class CheckCodeRestPasswordComponent {
 
     this.userForm = this.fb.group({
         email: [[], [Validators.required]],
-        code: [, [Validators.required]],
+        code: [undefined, [Validators.required]],
       },
     );
   }
