@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-background',

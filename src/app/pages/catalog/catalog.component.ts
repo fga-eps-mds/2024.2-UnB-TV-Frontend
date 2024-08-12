@@ -4,7 +4,6 @@ import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { VideoService } from 'src/app/services/video.service';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { IVideo } from 'src/shared/model/video.model';
-import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import jwt_decode from 'jwt-decode';
