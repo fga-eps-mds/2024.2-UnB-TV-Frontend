@@ -1,259 +1,259 @@
 <?xml version="1.0"?>
-<testsuite name="Chrome Headless 127.0.6533.99 (Linux x86_64)" package="" timestamp="2024-08-10T22:07:38" id="0" hostname="2be830ccc0d0" tests="251" errors="0" failures="0" time="1.196">
+<testsuite name="Chrome Headless 127.0.6533.99 (Linux x86_64)" package="" timestamp="2024-08-12T02:25:14" id="0" hostname="6eb3f9b45d71" tests="251" errors="0" failures="0" time="1.202">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/127.0.6533.99 Safari/537.36"/>
   </properties>
-  <testcase name="AppComponent should create the app" time="0.089" classname="AppComponent"/>
-  <testcase name="TokenAdminGuard should be created" time="0.005" classname="TokenAdminGuard"/>
-  <testcase name="TokenAdminGuard should allow activation for authenticated admin user" time="0.002" classname="TokenAdminGuard"/>
-  <testcase name="TokenAdminGuard should navigate to /loginsocial for authenticated non-admin user" time="0.002" classname="TokenAdminGuard"/>
+  <testcase name="AppComponent should create the app" time="0.101" classname="AppComponent"/>
+  <testcase name="TokenAdminGuard should be created" time="0.004" classname="TokenAdminGuard"/>
+  <testcase name="TokenAdminGuard should allow activation for authenticated admin user" time="0.003" classname="TokenAdminGuard"/>
+  <testcase name="TokenAdminGuard should navigate to /loginsocial for authenticated non-admin user" time="0.003" classname="TokenAdminGuard"/>
   <testcase name="TokenAdminGuard should navigate to /loginsocial with returnUrl for unauthenticated user" time="0.002" classname="TokenAdminGuard"/>
-  <testcase name="AuthGuard should be created" time="0.007" classname="AuthGuard"/>
+  <testcase name="AuthGuard should be created" time="0.008" classname="AuthGuard"/>
   <testcase name="AuthGuard should return true for a logged in user" time="0.003" classname="AuthGuard"/>
-  <testcase name="AuthGuard should navigate to loginsocial for a logged out user" time="0.002" classname="AuthGuard"/>
+  <testcase name="AuthGuard should navigate to loginsocial for a logged out user" time="0.003" classname="AuthGuard"/>
   <testcase name="WithTokenGuard should be created" time="0.006" classname="WithTokenGuard"/>
   <testcase name="WithTokenGuard should return false for a logged in user" time="0.004" classname="WithTokenGuard"/>
-  <testcase name="WithTokenGuard should return true for a logged out user" time="0.003" classname="WithTokenGuard"/>
-  <testcase name="TokenInterceptorService should be created" time="0.003" classname="TokenInterceptorService"/>
+  <testcase name="WithTokenGuard should return true for a logged out user" time="0.002" classname="WithTokenGuard"/>
+  <testcase name="TokenInterceptorService should be created" time="0.002" classname="TokenInterceptorService"/>
   <testcase name="TokenInterceptorService should add header Authorization to request" time="0.003" classname="TokenInterceptorService"/>
   <testcase name="AdminGuard should be created" time="0.002" classname="AdminGuard"/>
-  <testcase name="AdminGuard should return false for a user with role ADMIN" time="0.002" classname="AdminGuard"/>
-  <testcase name="AdminGuard should return false for a user with role USER" time="0.003" classname="AdminGuard"/>
+  <testcase name="AdminGuard should return false for a user with role ADMIN" time="0.001" classname="AdminGuard"/>
+  <testcase name="AdminGuard should return false for a user with role USER" time="0.002" classname="AdminGuard"/>
   <testcase name="AlertService should be created" time="0.002" classname="AlertService"/>
   <testcase name="AlertService should call errorMessage" time="0.001" classname="AlertService"/>
   <testcase name="AuthService should be created" time="0.001" classname="AuthService"/>
   <testcase name="AuthService should register a user" time="0.002" classname="AuthService"/>
-  <testcase name="AuthService should login a user" time="0.002" classname="AuthService"/>
-  <testcase name="AuthService should activate a user account" time="0.001" classname="AuthService"/>
-  <testcase name="AuthService should resend a code" time="0.001" classname="AuthService"/>
-  <testcase name="AuthService should send an email to reset password" time="0.002" classname="AuthService"/>
-  <testcase name="AuthService should verify code to reset password" time="0.002" classname="AuthService"/>
+  <testcase name="AuthService should login a user" time="0.001" classname="AuthService"/>
+  <testcase name="AuthService should activate a user account" time="0.002" classname="AuthService"/>
+  <testcase name="AuthService should resend a code" time="0.002" classname="AuthService"/>
+  <testcase name="AuthService should send an email to reset password" time="0.001" classname="AuthService"/>
+  <testcase name="AuthService should verify code to reset password" time="0.001" classname="AuthService"/>
   <testcase name="AuthService should update password" time="0.002" classname="AuthService"/>
-  <testcase name="AuthService should refresh token" time="0.002" classname="AuthService"/>
-  <testcase name="AuthService should logout" time="0.001" classname="AuthService"/>
+  <testcase name="AuthService should refresh token" time="0.001" classname="AuthService"/>
+  <testcase name="AuthService should logout" time="0.002" classname="AuthService"/>
   <testcase name="AuthService deve configurar o administrador" time="0.001" classname="AuthService"/>
   <testcase name="DateService should be created" time="0.001" classname="DateService"/>
-  <testcase name="DateService Getting the current date should return a valid current date" time="0" classname="DateService Getting the current date"/>
+  <testcase name="DateService Getting the current date should return a valid current date" time="0.001" classname="DateService Getting the current date"/>
   <testcase name="DateService Getting the current time should return a valid current time in &quot;HH:mm&quot; format" time="0.001" classname="DateService Getting the current time"/>
   <testcase name="DateService Formatting the time string should pad zero for single-digit hours" time="0.001" classname="DateService Formatting the time string"/>
   <testcase name="DateService Formatting the time string should not pad zero for double-digit hours" time="0.001" classname="DateService Formatting the time string"/>
   <testcase name="DateService Converting a time string to Date should convert time string to a valid Date object" time="0.001" classname="DateService Converting a time string to Date"/>
-  <testcase name="EmailService should be created" time="0.002" classname="EmailService"/>
-  <testcase name="EmailService should call sendEmail" time="0.001" classname="EmailService"/>
+  <testcase name="EmailService should be created" time="0.001" classname="EmailService"/>
+  <testcase name="EmailService should call sendEmail" time="0.003" classname="EmailService"/>
   <testcase name="GridService should be created" time="0.002" classname="GridService"/>
-  <testcase name="Profile should be created" time="0.002" classname="Profile"/>
-  <testcase name="Profile should return true for a user with role ADMIN" time="0.002" classname="Profile"/>
+  <testcase name="Profile should be created" time="0.001" classname="Profile"/>
+  <testcase name="Profile should return true for a user with role ADMIN" time="0.001" classname="Profile"/>
   <testcase name="Profile should return false for a user with role USER" time="0.001" classname="Profile"/>
   <testcase name="Profile should return false if no token is provided" time="0.001" classname="Profile"/>
   <testcase name="UserService should be created" time="0.001" classname="UserService"/>
-  <testcase name="UserService should return a single user" time="0.002" classname="UserService"/>
+  <testcase name="UserService should return a single user" time="0.001" classname="UserService"/>
   <testcase name="UserService should return a list of users" time="0.001" classname="UserService"/>
-  <testcase name="UserService should update a user" time="0.002" classname="UserService"/>
+  <testcase name="UserService should update a user" time="0.001" classname="UserService"/>
   <testcase name="UserService should delete a user" time="0.001" classname="UserService"/>
-  <testcase name="UserService should update user role" time="0.002" classname="UserService"/>
-  <testcase name="VideoCommentService should be created" time="0.002" classname="VideoCommentService"/>
+  <testcase name="UserService should update user role" time="0.001" classname="UserService"/>
+  <testcase name="VideoCommentService should be created" time="0.001" classname="VideoCommentService"/>
   <testcase name="VideoCommentService should get User data" time="0.001" classname="VideoCommentService"/>
-  <testcase name="VideoCommentService should get Comments data" time="0.002" classname="VideoCommentService"/>
-  <testcase name="VideoCommentService should post Comment" time="0.002" classname="VideoCommentService"/>
+  <testcase name="VideoCommentService should get Comments data" time="0.001" classname="VideoCommentService"/>
+  <testcase name="VideoCommentService should post Comment" time="0.001" classname="VideoCommentService"/>
   <testcase name="VideoCommentService should update Comment" time="0.001" classname="VideoCommentService"/>
   <testcase name="VideoCommentService should delete Comment" time="0.001" classname="VideoCommentService"/>
-  <testcase name="VideoService should be created" time="0.001" classname="VideoService"/>
+  <testcase name="VideoService should be created" time="0.002" classname="VideoService"/>
   <testcase name="VideoService findAll should return all videos by institution" time="0.001" classname="VideoService findAll"/>
   <testcase name="VideoService findVideoById should return a video" time="0.001" classname="VideoService findVideoById"/>
   <testcase name="VideoService setVideosCatalog should set videos catalog" time="0.001" classname="VideoService setVideosCatalog"/>
-  <testcase name="VideoService getVideosCatalog should get videos catalog" time="0.002" classname="VideoService getVideosCatalog"/>
+  <testcase name="VideoService getVideosCatalog should get videos catalog" time="0.001" classname="VideoService getVideosCatalog"/>
   <testcase name="VideoService videosCatalog should categorize videos correctly" time="0.001" classname="VideoService videosCatalog"/>
   <testcase name="VideoService addToWatchLater should add a video to the watch later list" time="0.001" classname="VideoService addToWatchLater"/>
-  <testcase name="VideoService removeFromWatchLater should remove a video from the watch later list" time="0.002" classname="VideoService removeFromWatchLater"/>
-  <testcase name="VideoService checkWatchLater should check if a video is in the watch later list" time="0.002" classname="VideoService checkWatchLater"/>
-  <testcase name="VideoService getWatchLaterVideos should get all videos in the watch later list for a user" time="0.002" classname="VideoService getWatchLaterVideos"/>
+  <testcase name="VideoService removeFromWatchLater should remove a video from the watch later list" time="0.001" classname="VideoService removeFromWatchLater"/>
+  <testcase name="VideoService checkWatchLater should check if a video is in the watch later list" time="0.001" classname="VideoService checkWatchLater"/>
+  <testcase name="VideoService getWatchLaterVideos should get all videos in the watch later list for a user" time="0.001" classname="VideoService getWatchLaterVideos"/>
   <testcase name="VideoService getFavoriteVideos should get all videos in favorite list for a user" time="0.001" classname="VideoService getFavoriteVideos"/>
   <testcase name="VideoService addToFavorite should add a video to the favorite list" time="0.001" classname="VideoService addToFavorite"/>
-  <testcase name="VideoService removeFromFavorite should remove a video from the favorite list" time="0.001" classname="VideoService removeFromFavorite"/>
+  <testcase name="VideoService removeFromFavorite should remove a video from the favorite list" time="0.002" classname="VideoService removeFromFavorite"/>
   <testcase name="VideoService checkFavorite should check if a video is in the favorite list" time="0.001" classname="VideoService checkFavorite"/>
-  <testcase name="VideoCommentComponent should create" time="0.018" classname="VideoCommentComponent"/>
-  <testcase name="VideoCommentComponent should have a valid form on initialization" time="0.004" classname="VideoCommentComponent"/>
+  <testcase name="BackgroundComponent should create" time="0.006" classname="BackgroundComponent"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - Android" time="0.006" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPhone" time="0.006" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPad" time="0.006" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPod" time="0.005" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - Windows Phone" time="0.004" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - BlackBerry" time="0.004" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="BackgroundComponent Identifies User Device should identify a non-mobile device" time="0.005" classname="BackgroundComponent Identifies User Device"/>
+  <testcase name="VideoCommentComponent should create" time="0.014" classname="VideoCommentComponent"/>
+  <testcase name="VideoCommentComponent should have a valid form on initialization" time="0.006" classname="VideoCommentComponent"/>
   <testcase name="VideoCommentComponent should call addComment method when the form is submitted" time="0.006" classname="VideoCommentComponent"/>
   <testcase name="VideoCommentComponent should call alert when form is not valid for required field" time="0.005" classname="VideoCommentComponent"/>
   <testcase name="VideoCommentComponent should call alert when form is not valid for lenght of field" time="0.004" classname="VideoCommentComponent"/>
-  <testcase name="VideoCommentComponent should call toggleComments method when &quot;Comentarios&quot; is clicked" time="0.004" classname="VideoCommentComponent"/>
+  <testcase name="VideoCommentComponent should call toggleComments method when &quot;Comentarios&quot; is clicked" time="0.005" classname="VideoCommentComponent"/>
   <testcase name="VideoCommentComponent should call set userId to 0 when not authenticated" time="0.003" classname="VideoCommentComponent"/>
-  <testcase name="VideoCommentComponent shoud call getComments" time="0.003" classname="VideoCommentComponent"/>
-  <testcase name="VideoCommentComponent should call getComments and return an error" time="0.217" classname="VideoCommentComponent"/>
+  <testcase name="VideoCommentComponent shoud call getComments" time="0.004" classname="VideoCommentComponent"/>
+  <testcase name="VideoCommentComponent should call getComments and return an error" time="0.211" classname="VideoCommentComponent"/>
   <testcase name="VideoCommentComponent should call addComment and return an error" time="0.005" classname="VideoCommentComponent"/>
-  <testcase name="VideoCommentComponent should call getUserName and return an error" time="0.003" classname="VideoCommentComponent"/>
-  <testcase name="BackgroundComponent should create" time="0.006" classname="BackgroundComponent"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - Android" time="0.005" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPhone" time="0.004" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPad" time="0.005" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - iPod" time="0.005" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - Windows Phone" time="0.004" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a mobile device - BlackBerry" time="0.006" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="BackgroundComponent Identifies User Device should identify a non-mobile device" time="0.004" classname="BackgroundComponent Identifies User Device"/>
-  <testcase name="AdminActivateComponent deve criar o componente" time="0.003" classname="AdminActivateComponent"/>
-  <testcase name="AdminActivateComponent deve chamar setupAdmin se o email for fornecido em queryParams" time="0.002" classname="AdminActivateComponent"/>
-  <testcase name="AdminActivateComponent deve mostrar mensagem de sucesso e navegar para /homeAdmin ao configurar admin com sucesso" time="0.002" classname="AdminActivateComponent"/>
-  <testcase name="AdminActivateComponent deve mostrar mensagem de erro e navegar para /loginsocial em caso de erro ao configurar admin" time="0.001" classname="AdminActivateComponent"/>
+  <testcase name="VideoCommentComponent should call getUserName and return an error" time="0.002" classname="VideoCommentComponent"/>
   <testcase name="ActiveAccountComponent should create" time="0.006" classname="ActiveAccountComponent"/>
   <testcase name="ActiveAccountComponent should call activeAccount method when the form is submitted" time="0.004" classname="ActiveAccountComponent"/>
   <testcase name="ActiveAccountComponent should call AlertServiceShowMessage when form is  valid" time="0.004" classname="ActiveAccountComponent"/>
-  <testcase name="ActiveAccountComponent should call AlertServiceShowMessage when form is not valid" time="0.004" classname="ActiveAccountComponent"/>
+  <testcase name="ActiveAccountComponent should call AlertServiceShowMessage when form is not valid" time="0.003" classname="ActiveAccountComponent"/>
   <testcase name="ActiveAccountComponent should call activeAccount and return an error" time="0.004" classname="ActiveAccountComponent"/>
-  <testcase name="ActiveAccountComponent should call resendCode" time="0.004" classname="ActiveAccountComponent"/>
-  <testcase name="ActiveAccountComponent should call resendCode with invalid form" time="0.004" classname="ActiveAccountComponent"/>
-  <testcase name="ActiveAccountComponent should call resendCode and return an error" time="0.004" classname="ActiveAccountComponent"/>
+  <testcase name="ActiveAccountComponent should call resendCode" time="0.003" classname="ActiveAccountComponent"/>
+  <testcase name="ActiveAccountComponent should call resendCode with invalid form" time="0.003" classname="ActiveAccountComponent"/>
+  <testcase name="ActiveAccountComponent should call resendCode and return an error" time="0.003" classname="ActiveAccountComponent"/>
   <testcase name="ActiveAccountComponent should resend code on clicking &quot;Reenviar Código&quot;" time="0.003" classname="ActiveAccountComponent"/>
-  <testcase name="AgoraComponent should create" time="0.002" classname="AgoraComponent"/>
+  <testcase name="AdminActivateComponent deve criar o componente" time="0.003" classname="AdminActivateComponent"/>
+  <testcase name="AdminActivateComponent deve chamar setupAdmin se o email for fornecido em queryParams" time="0.003" classname="AdminActivateComponent"/>
+  <testcase name="AdminActivateComponent deve mostrar mensagem de sucesso e navegar para /homeAdmin ao configurar admin com sucesso" time="0.001" classname="AdminActivateComponent"/>
+  <testcase name="AdminActivateComponent deve mostrar mensagem de erro e navegar para /loginsocial em caso de erro ao configurar admin" time="0.002" classname="AdminActivateComponent"/>
+  <testcase name="AgoraComponent should create" time="0.003" classname="AgoraComponent"/>
   <testcase name="CatalogComponent should create" time="0.026" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should call findAll and getUserDetails on init if authenticated" time="0.009" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should call findAll and getUserDetails on init if authenticated" time="0.008" classname="CatalogComponent"/>
   <testcase name="CatalogComponent should populate videosEduplay and unbTvVideos on findAll success" time="0.008" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should log error on findAll error" time="0.008" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should filter videos based on filterTitle" time="0.007" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should navigate to /videos on program click" time="0.007" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should populate favoriteVideos on getFavoriteVideos success" time="0.007" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should log warning on getFavoriteVideos with unexpected structure" time="0.006" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should filter videos to favorite when checkbox is checked" time="0.006" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should not filter videos to favorite when checkbox is unchecked" time="0.005" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should populate watchLaterVideos on getWatchLaterVideos success" time="0.005" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should log warning on getWatchLaterVideos with unexpected structure" time="0.005" classname="CatalogComponent"/>
-  <testcase name="CatalogComponent should filter videos to watch later when checkbox is checked" time="0.005" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should log error on findAll error" time="0.009" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should filter videos based on filterTitle" time="0.008" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should navigate to /videos on program click" time="0.009" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should populate favoriteVideos on getFavoriteVideos success" time="0.008" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should log warning on getFavoriteVideos with unexpected structure" time="0.008" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should filter videos to favorite when checkbox is checked" time="0.008" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should not filter videos to favorite when checkbox is unchecked" time="0.013" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should populate watchLaterVideos on getWatchLaterVideos success" time="0.008" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should log warning on getWatchLaterVideos with unexpected structure" time="0.006" classname="CatalogComponent"/>
+  <testcase name="CatalogComponent should filter videos to watch later when checkbox is checked" time="0.006" classname="CatalogComponent"/>
   <testcase name="CatalogComponent should not filter videos to watch later when checkbox is unchecked" time="0.006" classname="CatalogComponent"/>
   <testcase name="CategoryTableComponent should create" time="0.01" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should initialize with default values" time="0.003" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should call findAll on ngOnInit" time="0.002" classname="CategoryTableComponent"/>
-  <testcase name="CategoryTableComponent should fetch and process videos in findAll" time="0.003" classname="CategoryTableComponent"/>
+  <testcase name="CategoryTableComponent should fetch and process videos in findAll" time="0.002" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should handle errors in findAll" time="0.002" classname="CategoryTableComponent"/>
-  <testcase name="CategoryTableComponent should filter videos by channel" time="0.001" classname="CategoryTableComponent"/>
+  <testcase name="CategoryTableComponent should filter videos by channel" time="0.002" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should aggregate videos by category" time="0.003" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should filter aggregated videos by selected categories" time="0.002" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should sort aggregated videos by selected column" time="0.002" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should set sort column and order" time="0.002" classname="CategoryTableComponent"/>
   <testcase name="CategoryTableComponent should call confirm of confirmationService when logout is clicked" time="0.005" classname="CategoryTableComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should create" time="0.005" classname="CheckCodeRestPasswordComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should call sendEmail method when the form is submitted" time="0.003" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should create" time="0.004" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should call sendEmail method when the form is submitted" time="0.002" classname="CheckCodeRestPasswordComponent"/>
   <testcase name="CheckCodeRestPasswordComponent should call showMessage when form is not valid" time="0.002" classname="CheckCodeRestPasswordComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should call sendEmail and return an error" time="0.003" classname="CheckCodeRestPasswordComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should call checkCode method when the form is submitted" time="0.004" classname="CheckCodeRestPasswordComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should call showMessage when form is not valid" time="0.004" classname="CheckCodeRestPasswordComponent"/>
-  <testcase name="CheckCodeRestPasswordComponent should call checkCode and return an error" time="0.003" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should call sendEmail and return an error" time="0.002" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should call checkCode method when the form is submitted" time="0.003" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should call showMessage when form is not valid" time="0.003" classname="CheckCodeRestPasswordComponent"/>
+  <testcase name="CheckCodeRestPasswordComponent should call checkCode and return an error" time="0.002" classname="CheckCodeRestPasswordComponent"/>
   <testcase name="DashboardCategoryComponent should create for Dashboard Category" time="0.007" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should initialize with default values for Dashboard Category" time="0.003" classname="DashboardCategoryComponent"/>
+  <testcase name="DashboardCategoryComponent should initialize with default values for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
   <testcase name="DashboardCategoryComponent should call findAll on ngOnInit for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should fetch and process videos in findAll for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should handle errors in findAll for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
+  <testcase name="DashboardCategoryComponent should fetch and process videos in findAll for Dashboard Category" time="0.001" classname="DashboardCategoryComponent"/>
+  <testcase name="DashboardCategoryComponent should handle errors in findAll for Dashboard Category" time="0.001" classname="DashboardCategoryComponent"/>
   <testcase name="DashboardCategoryComponent should filter videos by channel for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should call confirm of confirmationService when logout is clicked for Dashboard Category" time="0.003" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should create charts with correct data for Dashboard Category" time="0.004" classname="DashboardCategoryComponent"/>
-  <testcase name="DashboardCategoryComponent should aggregate videos by category and update charts for Dashboard Category" time="0.002" classname="DashboardCategoryComponent"/>
-  <testcase name="EditUserComponent should create" time="0.014" classname="EditUserComponent"/>
+  <testcase name="DashboardCategoryComponent should call confirm of confirmationService when logout is clicked for Dashboard Category" time="0.004" classname="DashboardCategoryComponent"/>
+  <testcase name="DashboardCategoryComponent should create charts with correct data for Dashboard Category" time="0.005" classname="DashboardCategoryComponent"/>
+  <testcase name="DashboardCategoryComponent should aggregate videos by category and update charts for Dashboard Category" time="0.003" classname="DashboardCategoryComponent"/>
+  <testcase name="EditUserComponent should create" time="0.017" classname="EditUserComponent"/>
   <testcase name="EditUserComponent should call getUser and handle success response" time="0.007" classname="EditUserComponent"/>
-  <testcase name="EditUserComponent should call getVinculo and handle success response" time="0.006" classname="EditUserComponent"/>
+  <testcase name="EditUserComponent should call getVinculo and handle success response" time="0.005" classname="EditUserComponent"/>
   <testcase name="EditUserComponent should call updateUser method when the form is valid and submitted" time="0.007" classname="EditUserComponent"/>
-  <testcase name="GridDaysComponent should create" time="0.004" classname="GridDaysComponent"/>
-  <testcase name="GridDaysComponent should call redirect when redirect is clicked" time="0.002" classname="GridDaysComponent"/>
   <testcase name="GridComponent should create" time="0.006" classname="GridComponent"/>
   <testcase name="GridComponent shoud call getGridByDay" time="0.002" classname="GridComponent"/>
   <testcase name="GridComponent should call getSchedule" time="0.002" classname="GridComponent"/>
   <testcase name="GridComponent should call getSchedule and return an error" time="0.002" classname="GridComponent"/>
-  <testcase name="GridComponent should call redirect when redirect is clicked" time="0.002" classname="GridComponent"/>
+  <testcase name="GridComponent should call redirect when redirect is clicked" time="0.003" classname="GridComponent"/>
   <testcase name="HomeAdminComponent should create" time="0.005" classname="HomeAdminComponent"/>
   <testcase name="HomeAdminComponent should call confirm of confirmationService when logout is clicked" time="0.002" classname="HomeAdminComponent"/>
+  <testcase name="GridDaysComponent should create" time="0.003" classname="GridDaysComponent"/>
+  <testcase name="GridDaysComponent should call redirect when redirect is clicked" time="0.001" classname="GridDaysComponent"/>
   <testcase name="LoginComponent should create" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should have a valid form on initialization" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should call login method when the form is submitted with valid data" time="0.005" classname="LoginComponent"/>
   <testcase name="LoginComponent should call alert when form is submitted with invalid data" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should call navigator method when &quot;Esqueceu a senha?&quot; is clicked" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should call navigator method when &quot;Cadastre-se&quot; is clicked" time="0.003" classname="LoginComponent"/>
-  <testcase name="LoginComponent should call navigator method when &quot;Login com redes sociais&quot; is clicked" time="0.002" classname="LoginComponent"/>
+  <testcase name="LoginComponent should call navigator method when &quot;Login com redes sociais&quot; is clicked" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should call login and return an error" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginSocialComponent should create" time="0.004" classname="LoginSocialComponent"/>
   <testcase name="LoginSocialComponent should call signIn when signing in with Facebook" time="0.003" classname="LoginSocialComponent"/>
   <testcase name="LoginSocialComponent should process JWT response correctly" time="0.002" classname="LoginSocialComponent"/>
   <testcase name="LoginSocialComponent should handle Facebook login and send user data to server" time="0.002" classname="LoginSocialComponent"/>
   <testcase name="ParticipateComponent should create" time="0.002" classname="ParticipateComponent"/>
-  <testcase name="ProfileComponent should create" time="0.004" classname="ProfileComponent"/>
-  <testcase name="ProfileComponent should call getUser" time="0.001" classname="ProfileComponent"/>
+  <testcase name="PrivacyPolicyComponent should create" time="0.003" classname="PrivacyPolicyComponent"/>
+  <testcase name="ProfileComponent should create" time="0.005" classname="ProfileComponent"/>
+  <testcase name="ProfileComponent should call getUser" time="0.002" classname="ProfileComponent"/>
   <testcase name="ProfileComponent should call getUser and return an error" time="0.002" classname="ProfileComponent"/>
   <testcase name="ProfileComponent should call confirm of confirmationService when logout is clicked" time="0.002" classname="ProfileComponent"/>
   <testcase name="ProfileComponent should call confirm of confirmationService when deleteUser is clicked" time="0.002" classname="ProfileComponent"/>
-  <testcase name="ProfileComponent should call refreshToken and set token in localStorage" time="0.002" classname="ProfileComponent"/>
+  <testcase name="ProfileComponent should call refreshToken and set token in localStorage" time="0.003" classname="ProfileComponent"/>
   <testcase name="ProfileComponent should handle error when renewing token" time="0.002" classname="ProfileComponent"/>
-  <testcase name="ProfileComponent should show renew token dialog" time="0.001" classname="ProfileComponent"/>
+  <testcase name="ProfileComponent should show renew token dialog" time="0.002" classname="ProfileComponent"/>
   <testcase name="ProfileComponent should call navigatorEdit when editUser is clicked" time="0.002" classname="ProfileComponent"/>
-  <testcase name="ProgramacaoComponent should create" time="0.003" classname="ProgramacaoComponent"/>
-  <testcase name="PrivacyPolicyComponent should create" time="0.002" classname="PrivacyPolicyComponent"/>
-  <testcase name="RecordComponent should create" time="0.003" classname="RecordComponent"/>
+  <testcase name="RecordComponent should create" time="0.004" classname="RecordComponent"/>
   <testcase name="RecordComponent should filter videos by record and set filteredVideos correctly" time="0.002" classname="RecordComponent"/>
-  <testcase name="RecordComponent should filter videos by channel and populate unbTvVideos" time="0.001" classname="RecordComponent"/>
-  <testcase name="RecordComponent should call checkRecord service method and set recordVideos" time="0.002" classname="RecordComponent"/>
+  <testcase name="RecordComponent should filter videos by channel and populate unbTvVideos" time="0.002" classname="RecordComponent"/>
+  <testcase name="RecordComponent should call checkRecord service method and set recordVideos" time="0.001" classname="RecordComponent"/>
   <testcase name="RecordComponent should call findAll service method and set videosEduplay" time="0.001" classname="RecordComponent"/>
-  <testcase name="RegisterComponent should create" time="0.008" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should have a valid form on initialization" time="0.005" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should call register method when the form is submitted" time="0.006" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should call register and return message when form is invalid" time="0.005" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should call register and return an error" time="0.006" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should call getVinculo and return an error" time="0.005" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should get vinculo from userService" time="0.006" classname="RegisterComponent"/>
+  <testcase name="ProgramacaoComponent should create" time="0.002" classname="ProgramacaoComponent"/>
   <testcase name="ResetPasswordComponent should create" time="0.005" classname="ResetPasswordComponent"/>
   <testcase name="ResetPasswordComponent should create the userForm correctly" time="0.004" classname="ResetPasswordComponent"/>
   <testcase name="ResetPasswordComponent should call changePassword" time="0.003" classname="ResetPasswordComponent"/>
   <testcase name="ResetPasswordComponent should show an alert on error" time="0.003" classname="ResetPasswordComponent"/>
-  <testcase name="ResetPasswordComponent should call changePassword and return an error" time="0.004" classname="ResetPasswordComponent"/>
-  <testcase name="StreamViewComponent should create" time="0.017" classname="StreamViewComponent"/>
-  <testcase name="StreamViewComponent Capitalizing the first letter should capitalize the first letter" time="0.004" classname="StreamViewComponent Capitalizing the first letter"/>
-  <testcase name="StreamViewComponent Capitalizing the first letter should keep the first letter capitalized" time="0.003" classname="StreamViewComponent Capitalizing the first letter"/>
-  <testcase name="StreamViewComponent Capitalizing the first letter should return an empty string given an empty input" time="0.003" classname="StreamViewComponent Capitalizing the first letter"/>
-  <testcase name="StreamViewComponent Getting date and time information  should get the day and weekday" time="0.003" classname="StreamViewComponent Getting date and time information "/>
-  <testcase name="StreamViewComponent Formatting weekday should remove &quot;-feira&quot; and convert to uppercase" time="0.003" classname="StreamViewComponent Formatting weekday"/>
-  <testcase name="StreamViewComponent Formatting weekday should remain unchanged when there is no &quot;-feira&quot;" time="0.004" classname="StreamViewComponent Formatting weekday"/>
-  <testcase name="StreamViewComponent Formatting weekday should remain unchanged when the string is empty" time="0.004" classname="StreamViewComponent Formatting weekday"/>
-  <testcase name="StreamViewComponent Getting today's schedules should call getTodaysSchedule and return today's schedule" time="0.003" classname="StreamViewComponent Getting today's schedules"/>
-  <testcase name="StreamViewComponent Getting today's schedules should call getTodaysSchedule and return an error" time="0.003" classname="StreamViewComponent Getting today's schedules"/>
-  <testcase name="StreamViewComponent checkCurrentProgram should check current program" time="0.004" classname="StreamViewComponent checkCurrentProgram"/>
-  <testcase name="StreamViewComponent checkCurrentProgram should set currentProgram to false and highlightedIndex to null if no current program" time="0.004" classname="StreamViewComponent checkCurrentProgram"/>
-  <testcase name="SuggestAgendaComponent should create" time="0.008" classname="SuggestAgendaComponent"/>
-  <testcase name="SuggestAgendaComponent should have a valid form on initialization" time="0.004" classname="SuggestAgendaComponent"/>
+  <testcase name="ResetPasswordComponent should call changePassword and return an error" time="0.003" classname="ResetPasswordComponent"/>
+  <testcase name="RegisterComponent should create" time="0.009" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should have a valid form on initialization" time="0.006" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should call register method when the form is submitted" time="0.006" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should call register and return message when form is invalid" time="0.005" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should call register and return an error" time="0.006" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should call getVinculo and return an error" time="0.006" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should get vinculo from userService" time="0.006" classname="RegisterComponent"/>
+  <testcase name="SuggestAgendaComponent should create" time="0.006" classname="SuggestAgendaComponent"/>
+  <testcase name="SuggestAgendaComponent should have a valid form on initialization" time="0.003" classname="SuggestAgendaComponent"/>
   <testcase name="SuggestAgendaComponent should call sendSuggestAgenda method when the form is submitted" time="0.004" classname="SuggestAgendaComponent"/>
   <testcase name="SuggestAgendaComponent should call sendSuggestAgenda with invalid form" time="0.003" classname="SuggestAgendaComponent"/>
   <testcase name="SuggestAgendaComponent should handle invalid URL error" time="0.004" classname="SuggestAgendaComponent"/>
-  <testcase name="UpdateRoleComponent should create" time="0.012" classname="UpdateRoleComponent"/>
-  <testcase name="UpdateRoleComponent should get all users" time="0.004" classname="UpdateRoleComponent"/>
-  <testcase name="UpdateRoleComponent should get all users and data headers is null" time="0.003" classname="UpdateRoleComponent"/>
+  <testcase name="UpdateRoleComponent should create" time="0.011" classname="UpdateRoleComponent"/>
+  <testcase name="UpdateRoleComponent should get all users" time="0.005" classname="UpdateRoleComponent"/>
+  <testcase name="UpdateRoleComponent should get all users and data headers is null" time="0.004" classname="UpdateRoleComponent"/>
   <testcase name="UpdateRoleComponent should get all users and return error" time="0.003" classname="UpdateRoleComponent"/>
   <testcase name="UpdateRoleComponent should update pageSize and pageIndex onPaginateChange" time="0.004" classname="UpdateRoleComponent"/>
-  <testcase name="UpdateRoleComponent should filter users from get users" time="0.004" classname="UpdateRoleComponent"/>
-  <testcase name="UpdateRoleComponent should update user role" time="0.004" classname="UpdateRoleComponent"/>
-  <testcase name="UpdateRoleComponent should update user role and return error" time="0.005" classname="UpdateRoleComponent"/>
-  <testcase name="VideoViewsComponent should create" time="0.012" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should initialize with default values" time="0.006" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should call findAll on ngOnInit" time="0.004" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should fetch and process videos in findAll" time="0.003" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should handle errors in findAll" time="0.003" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should clean HTML descriptions" time="0.005" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should filter videos by channel" time="0.003" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should filter videos based on filters and selected categories" time="0.003" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should sort videos based on access count" time="0.002" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should change sort order and sort videos" time="0.003" classname="VideoViewsComponent"/>
-  <testcase name="VideoViewsComponent should call confirm of confirmationService when logout is clicked" time="0.005" classname="VideoViewsComponent"/>
+  <testcase name="UpdateRoleComponent should filter users from get users" time="0.003" classname="UpdateRoleComponent"/>
+  <testcase name="UpdateRoleComponent should update user role" time="0.003" classname="UpdateRoleComponent"/>
+  <testcase name="UpdateRoleComponent should update user role and return error" time="0.004" classname="UpdateRoleComponent"/>
+  <testcase name="StreamViewComponent should create" time="0.017" classname="StreamViewComponent"/>
+  <testcase name="StreamViewComponent Capitalizing the first letter should capitalize the first letter" time="0.003" classname="StreamViewComponent Capitalizing the first letter"/>
+  <testcase name="StreamViewComponent Capitalizing the first letter should keep the first letter capitalized" time="0.002" classname="StreamViewComponent Capitalizing the first letter"/>
+  <testcase name="StreamViewComponent Capitalizing the first letter should return an empty string given an empty input" time="0.003" classname="StreamViewComponent Capitalizing the first letter"/>
+  <testcase name="StreamViewComponent Getting date and time information  should get the day and weekday" time="0.003" classname="StreamViewComponent Getting date and time information "/>
+  <testcase name="StreamViewComponent Formatting weekday should remove &quot;-feira&quot; and convert to uppercase" time="0.003" classname="StreamViewComponent Formatting weekday"/>
+  <testcase name="StreamViewComponent Formatting weekday should remain unchanged when there is no &quot;-feira&quot;" time="0.003" classname="StreamViewComponent Formatting weekday"/>
+  <testcase name="StreamViewComponent Formatting weekday should remain unchanged when the string is empty" time="0.003" classname="StreamViewComponent Formatting weekday"/>
+  <testcase name="StreamViewComponent Getting today's schedules should call getTodaysSchedule and return today's schedule" time="0.003" classname="StreamViewComponent Getting today's schedules"/>
+  <testcase name="StreamViewComponent Getting today's schedules should call getTodaysSchedule and return an error" time="0.003" classname="StreamViewComponent Getting today's schedules"/>
+  <testcase name="StreamViewComponent checkCurrentProgram should check current program" time="0.003" classname="StreamViewComponent checkCurrentProgram"/>
+  <testcase name="StreamViewComponent checkCurrentProgram should set currentProgram to false and highlightedIndex to null if no current program" time="0.004" classname="StreamViewComponent checkCurrentProgram"/>
   <testcase name="VideoComponent should create" time="0.002" classname="VideoComponent"/>
   <testcase name="VideoComponent should call getVideos " time="0.002" classname="VideoComponent"/>
-  <testcase name="VideoComponent should call getVideos and return a list of videos" time="0.001" classname="VideoComponent"/>
-  <testcase name="VideoComponent should call getVideos and return an error" time="0.002" classname="VideoComponent"/>
-  <testcase name="VideoComponent should call returnToCatalog when the button is clicked" time="0.001" classname="VideoComponent"/>
-  <testcase name="VideoViewerComponent should create" time="0.009" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should call findVideoById and set video description" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoComponent should call getVideos and return a list of videos" time="0.002" classname="VideoComponent"/>
+  <testcase name="VideoComponent should call getVideos and return an error" time="0.001" classname="VideoComponent"/>
+  <testcase name="VideoComponent should call returnToCatalog when the button is clicked" time="0.002" classname="VideoComponent"/>
+  <testcase name="VideoViewerComponent should create" time="0.011" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should call findVideoById and set video description" time="0.006" classname="VideoViewerComponent"/>
   <testcase name="VideoViewerComponent should toggle showDescription when expandDescription is called" time="0.005" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should return the correct video URL" time="0.005" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should share video with native share API on mobile" time="0.004" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should return the correct video URL" time="0.004" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should share video with native share API on mobile" time="0.005" classname="VideoViewerComponent"/>
   <testcase name="VideoViewerComponent should handle unsupported share options gracefully" time="0.005" classname="VideoViewerComponent"/>
   <testcase name="VideoViewerComponent should copy video URL to clipboard if native share is not supported" time="0.005" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should handle clipboard errors gracefully" time="0.004" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should fetch user details and set user object" time="0.004" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should toggle watch later status and call appropriate service method" time="0.004" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should check watch later status and set isWatchLater correctly" time="0.003" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should toggle favorite status and call appropriate service method" time="0.004" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should handle clipboard errors gracefully" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should fetch user details and set user object" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should toggle watch later status and call appropriate service method" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should check watch later status and set isWatchLater correctly" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should toggle favorite status and call appropriate service method" time="0.005" classname="VideoViewerComponent"/>
   <testcase name="VideoViewerComponent should handle favorite toggle errors gracefully" time="0.005" classname="VideoViewerComponent"/>
-  <testcase name="VideoViewerComponent should call addToRecord service method with the correct parameters" time="0.005" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewerComponent should call addToRecord service method with the correct parameters" time="0.004" classname="VideoViewerComponent"/>
+  <testcase name="VideoViewsComponent should create" time="0.007" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should initialize with default values" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should call findAll on ngOnInit" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should fetch and process videos in findAll" time="0.002" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should handle errors in findAll" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should clean HTML descriptions" time="0.002" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should filter videos by channel" time="0.002" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should filter videos based on filters and selected categories" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should sort videos based on access count" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should change sort order and sort videos" time="0.003" classname="VideoViewsComponent"/>
+  <testcase name="VideoViewsComponent should call confirm of confirmationService when logout is clicked" time="0.005" classname="VideoViewsComponent"/>
   <system-out>
     <![CDATA[Chrome Headless 127.0.6533.99 (Linux x86_64) WARN: 'Spec 'VideoService videosCatalog should categorize videos correctly' has no expectations.'
 ,Chrome Headless 127.0.6533.99 (Linux x86_64) LOG: '12345', 'user123'
@@ -287,7 +287,7 @@ Error: Erro
     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
-    at VideoCommentComponent.addComment (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.ts:89:10)
+    at VideoCommentComponent.addComment (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.ts:88:10)
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.spec.ts:141:15)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
@@ -299,7 +299,7 @@ Error: Erro
     at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
     at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
-    at VideoCommentComponent.getUserName (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.ts:71:38)
+    at VideoCommentComponent.getUserName (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.ts:70:38)
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/components/video-comment/video-comment.component.spec.ts:147:15)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
@@ -372,18 +372,6 @@ Error: Erro
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
 ,Chrome Headless 127.0.6533.99 (Linux x86_64) LOG: undefined
-,Chrome Headless 127.0.6533.99 (Linux x86_64) ERROR: Error: Erro
-Error: Erro
-    at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:161:26)
-    at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
-    at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
-    at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
-    at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-    at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
-    at StreamViewComponent.getTodaysSchedule (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.ts:51:36)
-    at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:163:17)
-    at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
-    at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
 ,Chrome Headless 127.0.6533.99 (Linux x86_64) ERROR: 'Erro', Error: Erro
 Error: Erro
     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/update-role/update-role.component.spec.ts:96:86)
@@ -407,6 +395,18 @@ Error: Erro
     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
     at UpdateRoleComponent.updateUserRole (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/update-role/update-role.component.ts:31:41)
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/update-role/update-role.component.spec.ts:129:15)
+    at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
+    at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
+,Chrome Headless 127.0.6533.99 (Linux x86_64) ERROR: Error: Erro
+Error: Erro
+    at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:161:26)
+    at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+    at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+    at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+    at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+    at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+    at StreamViewComponent.getTodaysSchedule (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.ts:51:36)
+    at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:163:17)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
 ,Chrome Headless 127.0.6533.99 (Linux x86_64) ERROR: Error: Erro

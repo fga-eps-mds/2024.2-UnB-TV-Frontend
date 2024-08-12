@@ -62,24 +62,6 @@ export class StreamViewComponent {
     });
   }
 
-  // checkCurrentProgram(currentTime: string, schedules: Schedule[]): void {
-  //   const currentTimeObj =
-  //     this.dateService.convertTimeStringToDate(currentTime);
-
-  //   for (let i = 1; i < schedules.length; i++) {
-  //     const previousTimeObj = this.dateService.convertTimeStringToDate(
-  //       schedules[i - 1].time as string
-  //     );
-  //     const nextTimeObj = this.dateService.convertTimeStringToDate(
-  //       schedules[i].time as string
-  //     );
-
-  //     if (currentTimeObj >= previousTimeObj && currentTimeObj < nextTimeObj) {
-  //       this.highlightedIndex = i - 1;
-  //       this.currentProgram = true;
-  //     }
-  //   }
-  // }
   checkCurrentProgram(currentTime: string, schedules: Schedule[]): void {
     const currentTimeObj =
       this.dateService.convertTimeStringToDate(currentTime);
