@@ -76,3 +76,30 @@
 button.favorited span {
   color: rgb(255, 255, 255);
 }
+
+.next-video-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.next-video-btn {
+  background-color: #00a651;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.next-video-btn:hover {
+  background-color: #008c4a;
+}
+
+.arrow {
+  padding-left: 0.9375rem;
+}
