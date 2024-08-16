@@ -304,6 +304,31 @@ export class VideoService {
     return { catalogMap, programMap };
   }
 
+  // encontra o nome do programa com o getCatalogAndProgramMaps
+  findProgramName(catalog: Catalog, category: string, currentVideoId: number): string {
+    const { catalogMap, programMap } = this.getCatalogAndProgramMaps(catalog);
+    const catalogCategory = catalogMap[category];
+
+    if (catalogCategory) {
+      const programs = programMap[category];
+      if (programs) {
+        for (const [key, programName] of Object.entries(programs)) {
+          const section = catalogCategory[key];        
+          if (section) {
+            for (const video of section) {
+              if (video.id == currentVideoId) {
+                //console.log(`o programa é ${programName}`);
+                return programName;
+              }
+            }
+          }
+        }
+      }
+    }
+    //console.log("o programa é unb tv");
+    return "unbtv";
+  }
+
   //Assistir Mais Tarde 
   addToWatchLater(videoId: string, userId: string): Observable<any> {
     console.log(videoId,userId)
