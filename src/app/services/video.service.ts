@@ -234,6 +234,17 @@ export class VideoService {
     });
   }
 
+  // filtrar por categoria
+  filterVideosByCategory(videos: IVideo[], category: string): IVideo[]{
+    const filteredVideos: IVideo[] = [];
+    videos.forEach((video) => {
+      if(video.catalog === category){
+        filteredVideos.push(video);
+      }
+    })
+    return filteredVideos;
+  }
+
   //Assistir Mais Tarde 
   addToWatchLater(videoId: string, userId: string): Observable<any> {
     console.log(videoId,userId)
