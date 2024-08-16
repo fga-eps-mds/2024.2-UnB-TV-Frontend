@@ -245,6 +245,65 @@ export class VideoService {
     return filteredVideos;
   }
 
+  // mapear por categorias e por programas
+  getCatalogAndProgramMaps(catalog: Catalog): { catalogMap: { [key: string]: any }, programMap: { [key: string]: { [key: string]: string } } } {
+    const catalogMap = {
+      "Jornalismo": catalog.journalism,
+      "Entrevista": catalog.interviews,
+      "Pesquisa e Ciência": catalog.researchAndScience,
+      "Arte e Cultura": catalog.artAndCulture,
+      "Séries Especiais": catalog.specialSeries,
+      "Documentais": catalog.documentaries,
+      "Variedades": catalog.varieties
+    };
+
+    const programMap = {
+      "Jornalismo": {
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      },
+      "Entrevista": {
+        brasilEmQuestao: "brasilEmQuestao",
+        dialogos: "dialogos",
+        entrevistas: "entrevistas",
+        tirandoDeLetra: "tirandoDeLetra",
+        vastoMundo: "vastoMundo",
+        vozesDiplomaticas: "vozesDiplomaticas"
+      },
+      "Pesquisa e Ciência": {
+        expliqueSuaTese: "expliqueSuaTese",
+        fazendoCiencia: "fazendoCiencia",
+        radarDaExtencao: "radarDaExtencao",
+        seLigaNoPAS: "seLigaNoPAS",
+        unbTvCiencia: "unbTvCiencia",
+        universidadeParaQue: "universidadeParaQue"
+      },
+      "Arte e Cultura": {
+        casaDoSom: "casaDoSom",
+        emCantos: "emCantos",
+        esbocos: "esbocos",
+        exclusiva: "exclusiva"
+      },
+      "Séries Especiais": {
+        arquiteturaICC: "arquiteturaICC",
+        desafiosDasEleicoes: "desafiosDasEleicoes",
+        florestaDeGente: "florestaDeGente",
+        guiaDoCalouro: "guiaDoCalouro",
+        memoriasPauloFreire: "memoriasPauloFreire",
+        vidaDeEstudante: "vidaDeEstudante"
+      },
+      "Documentais": {
+        documentaries: "documentaries",
+        miniDoc: "miniDoc"
+      },
+      "Variedades": {
+        pitadasDoCerrado: "pitadasDoCerrado"
+      }
+    };
+    return { catalogMap, programMap };
+  }
+
   //Assistir Mais Tarde 
   addToWatchLater(videoId: string, userId: string): Observable<any> {
     console.log(videoId,userId)
