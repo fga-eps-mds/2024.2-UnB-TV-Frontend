@@ -53,6 +53,10 @@ class VideoServiceMock {
   addToRecord(userId: string, videoId: string) {
     return of({ message: 'Added to record' });
   }
+
+  checkTrackingStatus(userId: string) {
+    return of({ track_enabled: true });
+  }
 }
 
 class UserServiceMock {
@@ -302,7 +306,7 @@ describe('VideoViewerComponent', () => {
     expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
   }));
 
-  // Historico
+  // Histórico
   it('should call addToRecord service method with the correct parameters', () => {
     const addToRecordSpy = spyOn(videoService, 'addToRecord').and.callThrough();
   
@@ -315,5 +319,14 @@ describe('VideoViewerComponent', () => {
 
     expect(addToRecordSpy(component.userId, component.idVideo.toString()).subscribe).toBeDefined();
   });
-  
+
+  it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
+    const mySpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of({ track_enabled: true }));
+    component.userId = '1';
+    tick(); // Simulate passage of time for the async call
+    component.checkTrackingStatus().then(() => {
+      expect(mySpy).toHaveBeenCalledWith('1');
+      expect(component.trackingEnabled).toBe(true);
+    });
+  }));
 });

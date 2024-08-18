@@ -23,7 +23,8 @@ export class VideoViewerComponent implements OnInit {
   isFavorite = true;
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   userId: string = '';
-  user : any;
+  user: any;
+  trackingEnabled: boolean = true; // Estado do rastreamento
 
   expandDescription() {
     this.showDescription = !this.showDescription;
@@ -37,39 +38,34 @@ export class VideoViewerComponent implements OnInit {
     private alertService: AlertService
   ) { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
     const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
     this.idVideo = this.route.snapshot.params['idVideo'];
 
-    if (this.authService.isAuthenticated()){
-      this.setUserIdFromToken(localStorage.getItem('token') as string);
-      this.getUserDetails();
-      this.addRecord();
+    if (this.authService.isAuthenticated()) {
+        this.setUserIdFromToken(localStorage.getItem('token') as string);
+        this.getUserDetails();
+        this.checkTrackingStatus().then(() => {
+            if (this.trackingEnabled) {
+                this.addRecord();
+            }
+        });
     }
 
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
-  }
+}
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
   }
 
-  getUserDetails() {
-    this.userService.getUser(this.userId).subscribe({
-      next: (user) => {
-        this.user = user;
-        this.checkWatchLaterStatus();
-        this.checkFavoriteStatus();
-        // console.log(this.isWatchLater);
-        // console.log(this.isFavorite);
-      },
-      error: (err) => {
-        console.error('Error fetching user details', err);
-      }
-    });
-  }
+async checkTrackingStatus(): Promise<void> {
+    const status = await this.videoService.checkTrackingStatus(this.userId).toPromise();
+    this.trackingEnabled = status.track_enabled;
+    console.log('Tracking status:', this.trackingEnabled);
+}
 
   addRecord() {
     this.videoService.addToRecord(this.userId, this.idVideo.toString()).subscribe({
@@ -81,19 +77,30 @@ export class VideoViewerComponent implements OnInit {
     });
   }
 
-  findVideoById = () => {
+   getUserDetails() {
+    this.userService.getUser(this.userId).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.checkWatchLaterStatus();
+        this.checkFavoriteStatus();
+      },
+      error: (err) => {
+        console.error('Error fetching user details', err);
+      }
+    });
+  }
+
+  findVideoById() {
     this.videoService.findVideoById(this.idVideo).subscribe({
       next: (data: HttpResponse<IVideo>) => {
         this.video = data.body ? data.body : this.video;
-        this.videoDescription = this.video.description
-          ? this.video.description
-          : '';
+        this.videoDescription = this.video.description ? this.video.description : '';
       },
       error: (err) => {
         console.error('Error fetching video details', err);
       }
     });
-  };
+  }
 
   // Assistir mais tarde
   toggleWatchLater() {
@@ -122,11 +129,9 @@ export class VideoViewerComponent implements OnInit {
   }
 
   checkWatchLaterStatus() {
-    //console.log(`Checking watch later status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
     this.videoService.checkWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
         this.isWatchLater = response.status; // Acessa a propriedade status do objeto response
-        //console.log('Watch later status:', this.isWatchLater);
       },
       error: (err) => {
         console.error('Error checking watch later status', err);
@@ -137,12 +142,10 @@ export class VideoViewerComponent implements OnInit {
 
   // Favoritar
   toggleFavorite() {
-    //console.log('User ID when toggling favorite:', this.userId);
     this.isFavorite = !this.isFavorite;
     if (this.isFavorite) {
       this.videoService.addToFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          //console.log('Video added to favorites list');
           this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
         },
         error: (err) => {
@@ -153,7 +156,6 @@ export class VideoViewerComponent implements OnInit {
     } else {
       this.videoService.removeFromFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
         next: () => {
-          //console.log('Video removed from favorite list');
           this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
         },
         error: (err) => {
@@ -165,12 +167,9 @@ export class VideoViewerComponent implements OnInit {
   }
 
   checkFavoriteStatus() {
-    //console.log(`Checking favorite status for video ID: ${this.idVideo}, User ID: ${this.userId}`);
     this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
-        //console.log(response); // Exibe a resposta completa
         this.isFavorite = response.statusfavorite; // Verifique se a resposta tem a estrutura correta
-        //console.log('Favorite status:', this.isFavorite);
       },
       error: (err) => {
         console.error('Error checking favorite status', err);
