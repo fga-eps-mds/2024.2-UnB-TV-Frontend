@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
-import { IError } from 'src/shared/model/http-error.model';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { VideoService } from 'src/app/services/video.service';
 
 type ErrorResponseType = HttpErrorResponse;

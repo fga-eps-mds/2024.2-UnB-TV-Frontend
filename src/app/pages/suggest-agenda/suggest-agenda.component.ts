@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { EmailService } from 'src/app/services/email.service';
 import { EmailData } from 'src/shared/model/email.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from 'src/app/services/alert.service';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-suggest-agenda',

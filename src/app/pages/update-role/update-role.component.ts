@@ -68,7 +68,7 @@ export class UpdateRoleComponent implements OnInit {
         this.users = data.body;
         if (data && data.headers && data.headers.has("x-total-count")) {
           const totalCountHeader = data.headers.get("x-total-count");
-          this.total = Number.parseInt(totalCountHeader || '0', 10); 
+          this.total = Number.parseInt(totalCountHeader ?? '0', 10); 
         }
       },
       error: (erro) => {

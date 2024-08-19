@@ -11,9 +11,7 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
-
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
 
 // Declaration
 import { NgModule, isDevMode } from '@angular/core';
@@ -48,7 +46,6 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
-import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';

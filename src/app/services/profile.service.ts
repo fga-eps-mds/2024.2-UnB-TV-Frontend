@@ -42,7 +42,4 @@ export class Profile {
 
 function isTestEnvironment(): boolean {
   return true;
-  //return typeof jasmine !== 'undefined';
 }
-
-

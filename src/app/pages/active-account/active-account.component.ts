@@ -25,7 +25,7 @@ export class ActiveAccountComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = this.fb.group({
       email: ["", [Validators.required]],
-      code: [, [Validators.required]],
+      code: [undefined, [Validators.required]],
     });
   }
 
