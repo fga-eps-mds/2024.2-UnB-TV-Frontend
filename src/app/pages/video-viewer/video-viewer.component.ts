@@ -66,6 +66,22 @@ export class VideoViewerComponent implements OnInit {
 
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
+    this.checkRecord();
+  }
+  
+  checkRecord(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.checkRecord(this.userId.toString()).subscribe({
+        next: (response) => {
+          this.recordVideos = response;
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error checking record', err);
+          reject(err);
+        }
+      });
+    });
   }
 
   setUserIdFromToken(token: string) {
