@@ -84,6 +84,12 @@ export class VideoViewerComponent implements OnInit {
     });
   }
 
+  //Função responsável por trazer todos os vídeos já assistidos pelo usuário
+  filterVideosByRecord(): void {
+    const keys = Object.keys(this.recordVideos.videos).map(id => parseInt(id, 10))
+    this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
+  }
+
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
