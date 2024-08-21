@@ -90,6 +90,15 @@ export class VideoViewerComponent implements OnInit {
     this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
   }
 
+  filterVideosByChannel(videos: IVideo[]): void {
+    videos.forEach((video) => {
+      const channel = video?.channels;
+      if (channel && channel[0].id === this.unbTvChannelId) {
+        this.unbTvVideos.push(video);
+      }
+    });
+  }
+
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
