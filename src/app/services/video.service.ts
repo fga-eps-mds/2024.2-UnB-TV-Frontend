@@ -329,6 +329,34 @@ export class VideoService {
     return "unbtv";
   }
 
+  //recomenda os videos do mesmo programa e depois videos da mesma categoria
+  recommendVideo(videos: IVideo[], catalog: Catalog, currentVideoCategory: string, watchedVideos: IVideo[], program: string): any {
+    const { catalogMap } = this.getCatalogAndProgramMaps(catalog);
+
+    const programMap = catalogMap[currentVideoCategory];
+
+    if (!programMap) {
+      return -1;
+    }
+
+    const currentProgram = programMap[program];
+    //console.log("currentProgram: ", currentProgram)
+
+    if (currentProgram) {
+      const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+      if (videoNaoAssistido) {
+        return videoNaoAssistido.id;
+      }
+    }
+
+    // Se já assistiu todos os vídeos do programa atual, procurar em outros programas da mesma categoria
+    const videoNaoAssistidoDeOutraCategoria = videos.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+    if (videoNaoAssistidoDeOutraCategoria) {
+      return videoNaoAssistidoDeOutraCategoria.id;
+    }
+    return -1;
+  }
+
   //Assistir Mais Tarde 
   addToWatchLater(videoId: string, userId: string): Observable<any> {
     console.log(videoId,userId)
