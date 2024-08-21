@@ -143,6 +143,18 @@ export class VideoViewerComponent implements OnInit {
     });
   }
 
+  nextVideo(): void {
+    if(this.idNextVideo != -1){
+      this.router.navigate([`/video/${this.idNextVideo}`]).then(() => {
+        window.location.reload();
+      });
+    }else{
+      this.router.navigate([`/catalog`]).then(() => {
+        window.location.reload();
+      });
+    }
+  }  
+
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
