@@ -28,10 +28,11 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
+import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
-import {TokenSuperAdminGuard} from './guard/super-admin.guard'
+import { TokenSuperAdminGuard } from './guard/super-admin.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
@@ -126,6 +127,11 @@ const routes: Routes = [
     path: 'record',
     component: RecordComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'controleSuperAdmin',
+    component: ControleSuperAdminComponent,
+    canActivate: [TokenSuperAdminGuard],
   },
 ];
 
