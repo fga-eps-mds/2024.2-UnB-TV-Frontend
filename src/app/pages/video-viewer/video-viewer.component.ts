@@ -67,6 +67,7 @@ export class VideoViewerComponent implements OnInit {
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
     this.checkRecord();
+    this.findAll();
   }
   
   checkRecord(): Promise<void> {
@@ -95,6 +96,49 @@ export class VideoViewerComponent implements OnInit {
       const channel = video?.channels;
       if (channel && channel[0].id === this.unbTvChannelId) {
         this.unbTvVideos.push(video);
+      }
+    });
+  }
+
+  findAll(): void {
+    this.videoService.findAll().subscribe({
+      next: (data) => {
+        this.videosEduplay = data.body?.videoList ?? [];
+        this.filterVideosByChannel(this.videosEduplay);
+        this.videoService.videosCatalog(this.unbTvVideos, this.catalog)
+
+        //Loop para encontrar a categoria do vídeo atual
+        this.unbTvVideos.forEach((video) => {
+          if(video.id == this.idVideo){
+            this.categoryVideo = video.catalog
+            return;
+          }
+        })
+        //Chamada de função para encontrar o programa do vídeo atual
+        this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
+
+        this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
+        console.log("vídeos da categoria do atual: ", this.videosByCategory)
+        this.filterVideosByRecord();
+        console.log("videos assistidos: ", this.filteredVideos)
+        this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program);
+        //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
+        if(this.idNextVideo != -1){
+          //Loop para encontrar o título do próximo vídeo
+          this.unbTvVideos.forEach((video) => {
+            if(video.id == this.idNextVideo){
+              this.titleNextVideo = video.title;
+              return;
+            }
+          })
+        }else{
+          this.titleNextVideo = "Não há vídeo para ser recomendado"
+        }
+        console.log("id do próximo vídeo: ", this.idNextVideo)
+        console.log("título do próximo vídeo: ", this.titleNextVideo)
+      },
+      error: (error) => {
+        console.log(error);
       }
     });
   }
