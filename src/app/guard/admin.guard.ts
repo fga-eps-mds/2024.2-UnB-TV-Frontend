@@ -13,7 +13,7 @@ export class TokenAdminGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       const userRole = this.userService.getRoles();
 
-      if (userRole === 'ADMIN') {
+      if (userRole === 'ADMIN' || userRole === 'COADMIN') {
         return true;
       } else {
         this.router.navigate(['/loginsocial']);

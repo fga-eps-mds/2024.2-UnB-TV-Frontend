@@ -31,6 +31,7 @@ import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
+import {TokenSuperAdminGuard} from './guard/super-admin.guard'
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
