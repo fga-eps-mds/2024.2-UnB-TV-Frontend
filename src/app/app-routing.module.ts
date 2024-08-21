@@ -23,6 +23,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
+import { SuperAdminActivateComponent } from './pages/super-admin-activate/super-admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
@@ -30,7 +31,6 @@ import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
-
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
@@ -93,22 +93,26 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
-
-  { path: 'homeAdmin',
+  {
+    path: 'homeAdmin',
     component: HomeAdminComponent,
     canActivate: [TokenAdminGuard],
   },
   {
     path: 'adminActivate',
-    component: AdminActivateComponent
+    component: AdminActivateComponent,
   },
-  { 
+  {
+    path: 'superAdminActivate',
+    component: SuperAdminActivateComponent,
+  },
+  {
     path: 'category-views',
     component: CategoryTableComponent,
     canActivate: [TokenAdminGuard],
   },
-  { 
-    path: 'video-views', 
+  {
+    path: 'video-views',
     component: VideoViewsComponent,
     canActivate: [TokenAdminGuard],
   },
@@ -118,9 +122,9 @@ const routes: Routes = [
     canActivate: [TokenAdminGuard],
   },
   {
-    path: 'record', 
-    component: RecordComponent, 
-    canActivate: [AuthGuard]
+    path: 'record',
+    component: RecordComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
@@ -128,4 +132,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
