@@ -7,6 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import jwt_decode from 'jwt-decode';
+import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
+import { Catalog } from 'src/shared/model/catalog.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-viewer',
@@ -24,12 +27,26 @@ export class VideoViewerComponent implements OnInit {
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   userId: string = '';
   user : any;
+  unbTvChannelId = UNB_TV_CHANNEL_ID;
+  videosEduplay: IVideo[] = [];
+  unbTvVideos: IVideo[] = [];
+  catalog: Catalog = new Catalog();
+  categoryVideo: any;
+  videosAssistidos: IVideo[] = [];
+  recordVideos: any;
+  filteredVideos: IVideo[] = [];
+  program: any;
+  videosByCategory: IVideo[] = [];
+  idNextVideo: number;
+  titleNextVideo: any;
+  showTitleNextVideo: boolean = false;
 
   expandDescription() {
     this.showDescription = !this.showDescription;
   }
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
     private videoService: VideoService,
