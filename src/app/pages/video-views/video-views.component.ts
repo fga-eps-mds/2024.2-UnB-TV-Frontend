@@ -34,7 +34,7 @@ export class VideoViewsComponent {
     "UnBTV",
     "Variedades"
   ];
-  
+
   sortAscending: boolean = true;
   isSorted: boolean = false;
 
@@ -50,7 +50,9 @@ export class VideoViewsComponent {
     this.findAll();
     this.filteredVideos = this.unbTvVideos;
     this.categories.forEach(category => this.selectedCategories[category] = false);
-    this.selectedCategories["Todas"] = true;
+    this.categories.forEach(category => {
+      this.selectedCategories[category] = true;
+    });
   }
 
   findAll(): void {
@@ -68,21 +70,21 @@ export class VideoViewsComponent {
         this.filterVideos();
       },
     });
-  } 
+  }
 
   cleanDescriptions() {
     const cleanHtml = (html:string) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent ?? "";
     };
-  
+
     this.unbTvVideos.forEach((video) => {
       if (video.description) {
         video.description = cleanHtml(video.description);
       }
     });
-  } 
-  
+  }
+
 
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
@@ -95,13 +97,24 @@ export class VideoViewsComponent {
 
   filterVideos() {
     const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
-    
+
     if (selectedCategories.includes("Todas")){
+      this.categories.forEach(category => {
+        this.selectedCategories[category] = true;
+      });
       this.filteredVideos = this.unbTvVideos;
+    }else if(
+              !selectedCategories.includes("Todas") &&
+              selectedCategories.length === 8
+             ){
+      this.categories.forEach(category => {
+        this.selectedCategories[category] = false;
+      });
+
     }else if (selectedCategories.length === 0){
       this.filteredVideos = [];
     }else{
-      this.filteredVideos = this.unbTvVideos.filter(video => 
+      this.filteredVideos = this.unbTvVideos.filter(video =>
         (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
         (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
         (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
@@ -130,8 +143,8 @@ export class VideoViewsComponent {
       this.sortAscending = !this.sortAscending;
       this.sortVideos();
       this.isSorted = true;
-  } 
-   
+  }
+
   logoutUser() {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja sair?',
@@ -144,7 +157,7 @@ export class VideoViewsComponent {
       reject: () => {},
     });
   }
-  
+
   exportExcel() {
     let data = document.getElementById("tabela-videos");
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
@@ -159,7 +172,7 @@ export class VideoViewsComponent {
     ];
 
     ws['!cols'] = columnWidths;
-    XLSX.utils.book_append_sheet(wb, ws,'Sheet1'); 
+    XLSX.utils.book_append_sheet(wb, ws,'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
 }
