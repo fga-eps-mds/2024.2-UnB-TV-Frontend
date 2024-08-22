@@ -28,10 +28,15 @@
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+.first-checkbox {
+  margin-left: 5.625cm; /* Margem aplicada apenas ao primeiro checkbox */
+}
+
 .checkbox-container {
-  display: flex;
-  align-items: center;
-  margin-left: 0.625em; /* Adiciona algum espaço entre o campo de pesquisa e a checkbox */
+  display: inline-flex;
+  justify-content: center;
+  /* align-items: center; */
+  /* margin-left: 9.625em; /* Adiciona algum espaço entre o campo de pesquisa e a checkbox */
 }
 
 
