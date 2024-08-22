@@ -15,7 +15,7 @@
       <h4 class="font-custom font-bold text-gray-800">
         {{ video.title }}
       </h4>
-      <div class="flex gap-2" *ngIf="userId!==''">
+      <div class="button-container" *ngIf="userId!==''">
         <button class="favorite-button" (click)="toggleFavorite()" [class.favorited]="isFavorite">
           <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon"/> 
           <span *ngIf="isFavorite"> Favoritado</span>
@@ -24,13 +24,11 @@
         <button class="watch-later-button" (click)="toggleWatchLater()" [ngClass]="{'watch-later-active': isWatchLater}">
           {{ isWatchLater ? 'Remover da lista': 'Assistir Mais Tarde'}}
         </button>
+        <button class="next-video-button" [title]="titleNextVideo" (click)="nextVideo()">
+          Próximo Vídeo
+          <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
+        </button>
       </div>
-    </div>
-    <div class="next-video-container">
-      <button class="next-video-btn" [title]="titleNextVideo" (click)="nextVideo()">
-        Próximo Vídeo
-        <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
-      </button>
     </div>
     <div
       class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800"
