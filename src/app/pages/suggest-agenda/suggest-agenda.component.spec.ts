@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { EmailService } from 'src/app/services/email.service';
 import { SuggestAgendaComponent } from './suggest-agenda.component';
@@ -62,6 +62,38 @@ describe('SuggestAgendaComponent', () => {
   it('should have a valid form on initialization', () => {
     fixture.detectChanges();
     expect(component.suggestAgendaForm).toBeTruthy();
+  });
+
+  it('should return null for valid phone numbers', () => {
+    const validPhoneNumbers = [
+      '(11) 91234-5678',
+      '(41) 912345678',
+      '(51)987654321',
+      '21 98765-4321',
+      '31923456789'
+    ];
+
+    validPhoneNumbers.forEach(phone => {
+      const control = new FormControl(phone);
+      const result = component.validacaoTelefone()(control);
+      expect(result).toBeNull();
+    });
+  });
+
+  it('should return an error object for invalid phone numbers', () => {
+    const invalidPhoneNumbers = [
+      '129567890',
+      '(11) 1234-5678',
+      '(21) 087654321',
+      '98765-4321',
+      'laskdjflkjas'
+    ];
+
+    invalidPhoneNumbers.forEach(phone => {
+      const control = new FormControl(phone);
+      const result = component.validacaoTelefone()(control);
+      expect(result).toEqual({ telefone_invalido: { value: phone } });
+    });
   });
 
   it('should call sendSuggestAgenda method when the form is submitted', () => {
