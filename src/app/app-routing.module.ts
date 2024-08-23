@@ -27,6 +27,7 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
@@ -120,6 +121,11 @@ const routes: Routes = [
   {
     path: 'record', 
     component: RecordComponent, 
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notifications', 
+    component: NotificationsComponent, 
     canActivate: [AuthGuard]
   },
 ];

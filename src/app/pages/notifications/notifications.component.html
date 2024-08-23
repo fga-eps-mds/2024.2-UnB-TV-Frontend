@@ -1,0 +1,11 @@
+<div class="center flex flex-col items-center content-start gap-2 w-full h-full max-w-3xl">
+    <div *ngFor="let video of favoriteVideos; trackBy: trackByVideoId" class="flex items-center gap-4 w-full max-w-md">
+      <div class="flex-shrink-0">
+        <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="thumbnail-wrapper cursor-pointer">
+            <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px]" />
+      </div>
+      <div class="flex-grow">
+        <p class="video-title">{{ video.title }}</p>
+      </div>
+    </div>
+  </div>
