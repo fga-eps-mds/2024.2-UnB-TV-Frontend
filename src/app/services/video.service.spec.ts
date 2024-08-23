@@ -767,4 +767,38 @@ describe('VideoService', () => {
       req.flush(mockResponse);
     });
   });
+
+  //testes proximo video
+
+  //filtragem por categoria
+  function filterVideosByCategory(videos: IVideo[], category: string): IVideo[] {
+    return videos.filter(video => video.catalog === category);
+  }
+
+  describe('filterVideosByCategory', () => {
+    it('should return videos that match the specified category', () => {
+      const videos = [
+        { id: 1, title: 'Video 1', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Video 2', catalog: 'Documentais' } as IVideo,
+        { id: 3, title: 'Video 3', catalog: 'Jornalismo' } as IVideo
+      ];
+
+      const result = filterVideosByCategory(videos, 'Jornalismo');
+
+      expect(result.length).toBe(2);
+      expect(result).toEqual([videos[0], videos[2]]);
+    });
+
+    it('should return an empty array if no videos match the category', () => {
+      const videos = [
+        { id: 1, title: 'Video 1', catalog: 'Documentais' } as IVideo,
+        { id: 2, title: 'Video 2', catalog: 'Variedades' } as IVideo
+      ];
+
+      const result = filterVideosByCategory(videos, 'Jornalismo');
+
+      expect(result.length).toBe(0);
+    });
+  });
+  
 });
