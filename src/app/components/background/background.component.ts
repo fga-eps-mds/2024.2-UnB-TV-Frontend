@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-background',
@@ -10,8 +11,9 @@ import { MenuItem, MessageService } from 'primeng/api';
 export class BackgroundComponent implements OnInit {
   items: MenuItem[] = [];
   mobileDevide: boolean = true;
+  newNotificationsCount: number = 0; 
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.items = [
@@ -22,8 +24,26 @@ export class BackgroundComponent implements OnInit {
       {
         label: 'Histórico de Vídeos',
         routerLink: '/record',
-      }
+      },
+      {
+        label: `Notificações <span class="notification-badge">
+            ${this.newNotificationsCount}</span>`,
+        routerLink: '/notifications',
+        escape: false,
+      }      
     ];
+      this.notificationService.fetchFavoriteVideosCount();
+
+      setInterval(() => {
+        this.notificationService.fetchFavoriteVideosCount();
+        
+        this.notificationService.favoriteVideosCount$.subscribe(count => {
+          this.newNotificationsCount = count; 
+          this.updateNotificationLabel();
+        });
+      }, 5000); // Atualiza a cada 5 segundos
+      
+
     this.identifiesUserDevice();
   }
 
@@ -41,7 +61,22 @@ export class BackgroundComponent implements OnInit {
       this.mobileDevide = false;
     }
   }
+  
   getActualRoute(): string {
     return window.location.pathname;
   }
+
+  updateNotificationLabel(): void {
+    this.items = this.items.map(item => {
+      if (item.routerLink === '/notifications') {
+        return {
+          ...item,
+          label: `Notificações <span class="notification-badge">${this.newNotificationsCount}</span>`,
+          escape: false,
+        };
+      }
+      return item;
+    });
+  }
+
 }
