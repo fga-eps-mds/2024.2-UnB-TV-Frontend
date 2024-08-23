@@ -801,4 +801,124 @@ describe('VideoService', () => {
     });
   });
   
+  //mapear catalog e program
+  function getCatalogAndProgramMaps(catalog: Catalog): { catalogMap: any; programMap: any } {
+    const catalogMap: any = {
+      Jornalismo: catalog.journalism,
+      Entrevistas: catalog.interviews,
+      PesquisaECiencia: catalog.researchAndScience,
+      ArteECultura: catalog.artAndCulture,
+      SeriesEspeciais: catalog.specialSeries,
+      Documentarios: catalog.documentaries,
+      Variedades: catalog.varieties,
+      UnBTV: catalog.unbtv
+    };
+  
+    const programMap: any = {
+      Jornalismo: {
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      },
+      Entrevistas: {
+        brasilEmQuestao: "brasilEmQuestao",
+        dialogos: "dialogos",
+        entrevistas: "entrevistas",
+        tirandoDeLetra: "tirandoDeLetra",
+        vastoMundo: "vastoMundo",
+        vozesDiplomaticas: "vozesDiplomaticas"
+      },
+      PesquisaECiencia: {
+        expliqueSuaTese: "expliqueSuaTese",
+        fazendoCiencia: "fazendoCiencia",
+        radarDaExtencao: "radarDaExtencao",
+        seLigaNoPAS: "seLigaNoPAS",
+        unbTvCiencia: "unbTvCiencia",
+        universidadeParaQue: "universidadeParaQue"
+      },
+      ArteECultura: {
+        casaDoSom: "casaDoSom",
+        emCantos: "emCantos",
+        esbocos: "esbocos",
+        exclusiva: "exclusiva"
+      },
+      SeriesEspeciais: {
+        arquiteturaICC: "arquiteturaICC",
+        desafiosDasEleicoes: "desafiosDasEleicoes",
+        florestaDeGente: "florestaDeGente",
+        guiaDoCalouro: "guiaDoCalouro",
+        memoriasPauloFreire: "memoriasPauloFreire",
+        vidaDeEstudante: "vidaDeEstudante"
+      },
+      Documentarios: {
+        documentaries: "documentaries",
+        miniDoc: "miniDoc"
+      },
+      Variedades: {
+        pitadasDoCerrado: "pitadasDoCerrado"
+      },
+      UnBTV: []
+    };
+  
+    return { catalogMap, programMap };
+  }
+
+  describe('getCatalogAndProgramMaps', () => {
+    it('should return correct catalog and program maps', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const { catalogMap, programMap } = getCatalogAndProgramMaps(catalog);
+  
+      expect(catalogMap.Jornalismo).toEqual(catalog.journalism);
+      expect(programMap.Jornalismo).toEqual({
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      });
+    });
+  });
 });
