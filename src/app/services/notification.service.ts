@@ -9,10 +9,10 @@ import jwt_decode from 'jwt-decode';
   providedIn: 'root'
 })
 export class NotificationService {
-  private favoriteVideosCountSource = new BehaviorSubject<number>(0);
-  favoriteVideosCount$ = this.favoriteVideosCountSource.asObservable();
-  private userId: string = '';
-  private favoriteVideos: IVideo[] = [];
+  public favoriteVideosCountSource = new BehaviorSubject<number>(0);
+  public favoriteVideosCount$ = this.favoriteVideosCountSource.asObservable();
+  public userId: string = '';
+  public favoriteVideos: IVideo[] = [];
 
   constructor(
     private videoService: VideoService,
@@ -53,7 +53,7 @@ export class NotificationService {
     });
   }
 
-  private setUserIdFromToken(token: string) {
+  setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
   }
