@@ -4,6 +4,7 @@ import { VideoService } from 'src/app/services/video.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { IVideo } from 'src/shared/model/video.model';
 import jwt_decode from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

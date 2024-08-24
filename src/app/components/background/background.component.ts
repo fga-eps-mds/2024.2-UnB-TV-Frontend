@@ -13,7 +13,7 @@ export class BackgroundComponent implements OnInit {
   mobileDevide: boolean = true;
   newNotificationsCount: number = 0; 
 
-  constructor(private notificationService: NotificationService) {}
+ //constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.items = [
@@ -32,7 +32,7 @@ export class BackgroundComponent implements OnInit {
         escape: false,
       }      
     ];
-      this.notificationService.fetchFavoriteVideosCount();
+      /*this.notificationService.fetchFavoriteVideosCount();
 
       setInterval(() => {
         this.notificationService.fetchFavoriteVideosCount();
@@ -41,7 +41,7 @@ export class BackgroundComponent implements OnInit {
           this.newNotificationsCount = count; 
           this.updateNotificationLabel();
         });
-      }, 5000); // Atualiza a cada 5 segundos
+      }, 5000); */// Atualiza a cada 5 segundos
       
 
     this.identifiesUserDevice();

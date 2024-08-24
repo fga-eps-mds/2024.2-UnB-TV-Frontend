@@ -61,11 +61,11 @@
         <div class="card flex justify-content-center mx-2">
           <p-menu #menu [model]="items" [popup]="true"></p-menu>
           <button
-            pButton
-            type="button"
-            (click)="menu.toggle($event)"
-            label="&#9776;"
-            class="menu-button"
+          pButton
+          type="button"
+          (click)="menu.toggle($event)"
+          label="&#9776;"
+          class="menu-button"
           ></button>
           <div class="notification-badge-wrapper" *ngIf="newNotificationsCount > 0">
             <div class="notification-badge">{{ newNotificationsCount }}</div>
