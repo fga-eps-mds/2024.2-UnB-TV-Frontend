@@ -7,6 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import jwt_decode from 'jwt-decode';
+import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
+import { Catalog } from 'src/shared/model/catalog.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-viewer',
@@ -25,12 +28,26 @@ export class VideoViewerComponent implements OnInit {
   userId: string = '';
   user: any;
   trackingEnabled: boolean = true; // Estado do rastreamento
+  unbTvChannelId = UNB_TV_CHANNEL_ID;
+  videosEduplay: IVideo[] = [];
+  unbTvVideos: IVideo[] = [];
+  catalog: Catalog = new Catalog();
+  categoryVideo: any;
+  videosAssistidos: IVideo[] = [];
+  recordVideos: any;
+  filteredVideos: IVideo[] = [];
+  program: any;
+  videosByCategory: IVideo[] = [];
+  idNextVideo: number;
+  titleNextVideo: any;
+  showTitleNextVideo: boolean = false;
 
   expandDescription() {
     this.showDescription = !this.showDescription;
   }
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
     private videoService: VideoService,
@@ -54,7 +71,94 @@ ngOnInit(): void {
 
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
-}
+    this.checkRecord();
+    this.findAll();
+  }
+  
+  checkRecord(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.checkRecord(this.userId.toString()).subscribe({
+        next: (response) => {
+          this.recordVideos = response;
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error checking record', err);
+          reject(err);
+        }
+      });
+    });
+  }
+
+  //Função responsável por trazer todos os vídeos já assistidos pelo usuário
+  filterVideosByRecord(): void {
+    const keys = Object.keys(this.recordVideos.videos).map(id => parseInt(id, 10))
+    this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
+  }
+
+  filterVideosByChannel(videos: IVideo[]): void {
+    videos.forEach((video) => {
+      const channel = video?.channels;
+      if (channel && channel[0].id === this.unbTvChannelId) {
+        this.unbTvVideos.push(video);
+      }
+    });
+  }
+
+  findAll(): void {
+    this.videoService.findAll().subscribe({
+      next: (data) => {
+        this.videosEduplay = data.body?.videoList ?? [];
+        this.filterVideosByChannel(this.videosEduplay);
+        this.videoService.videosCatalog(this.unbTvVideos, this.catalog)
+
+        //Loop para encontrar a categoria do vídeo atual
+        this.unbTvVideos.forEach((video) => {
+          if(video.id == this.idVideo){
+            this.categoryVideo = video.catalog
+            return;
+          }
+        })
+        //Chamada de função para encontrar o programa do vídeo atual
+        this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
+
+        this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
+        //console.log("vídeos da categoria do atual: ", this.videosByCategory)
+        this.filterVideosByRecord();
+        //console.log("videos assistidos: ", this.filteredVideos)
+        this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program);
+        //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
+        if(this.idNextVideo != -1){
+          //Loop para encontrar o título do próximo vídeo
+          this.unbTvVideos.forEach((video) => {
+            if(video.id == this.idNextVideo){
+              this.titleNextVideo = video.title;
+              return;
+            }
+          })
+        }else{
+          this.titleNextVideo = "Não há vídeo para ser recomendado"
+        }
+        //console.log("id do próximo vídeo: ", this.idNextVideo)
+        //console.log("título do próximo vídeo: ", this.titleNextVideo)
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  nextVideo(): void {
+    if(this.idNextVideo != -1){
+      this.router.navigate([`/video/${this.idNextVideo}`]).then(() => {
+        window.location.reload();
+      });
+    }else{
+      this.router.navigate([`/catalog`]).then(() => {
+        window.location.reload();
+      });
+    }
+  }  
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);

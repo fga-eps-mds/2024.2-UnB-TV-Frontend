@@ -10,6 +10,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { IVideo } from 'src/shared/model/video.model';
 import * as jwt_decode from 'jwt-decode';
 
 // Mocks
@@ -21,6 +22,29 @@ class VideoServiceMock {
       description: 'Mock Video Description',
     };
     return of(new HttpResponse({ body: mockVideo }));
+  }
+
+  //Procurar próximo vídeo
+  findAll() {
+    const mockResponse = {
+      body: {
+        videoList: [
+          { id: 1, title: 'Video 1', description: 'Description 1' },
+          { id: 2, title: 'Video 2', description: 'Description 2' },
+        ]
+      }
+    };
+    return of(new HttpResponse({ body: mockResponse.body }));
+  }
+
+  checkRecord(userId: string) {
+    const mockRecord = {
+      videos: {
+        1: '2024-01-01T00:00:00Z',
+        2: '2024-01-02T00:00:00Z',
+      },
+    };
+    return of(mockRecord);
   }
 
   // Assistir mais tarde
@@ -318,6 +342,61 @@ describe('VideoViewerComponent', () => {
     expect(addToRecordSpy).toHaveBeenCalledWith('12345', '67890');
 
     expect(addToRecordSpy(component.userId, component.idVideo.toString()).subscribe).toBeDefined();
+  });
+
+  it('should filter videos by record and set filteredVideos correctly video-viewer', () => {
+    const recordVideos = {
+      videos: {
+        190329: true,
+        190330: true,
+      },
+    };
+
+    const unbTvVideos = [
+      { id: 190329, title: 'Video Title 1' },
+      { id: 190330, title: 'Video Title 2' },
+      { id: 190331, title: 'Video Title 3' },
+    ];
+
+    component.recordVideos = recordVideos;
+    component.unbTvVideos = unbTvVideos;
+
+    component.filterVideosByRecord();
+    fixture.detectChanges();
+
+    const expectedFilteredVideos = [
+      { id: 190329, title: 'Video Title 1' },
+      { id: 190330, title: 'Video Title 2' },
+    ];
+
+    expect(component.filteredVideos).toEqual(expectedFilteredVideos);
+  });
+
+  it('should filter videos by channel and populate unbTvVideos video-viewer', () => {
+    const mockVideos: IVideo[] = [
+      { id: 1, title: 'Video 1', channels: [{ id: 12, name: "unbtvchannel" }] },
+      { id: 2, title: 'Video 2', channels: [{ id: 13, name: "otherchannel" }] }
+    ];
+  
+    component.unbTvChannelId = 12;
+    component.unbTvVideos = [];
+  
+    component.filterVideosByChannel(mockVideos);
+  
+    expect(component.unbTvVideos.length).toBe(1);
+    expect(component.unbTvVideos[0].id).toBe(1);
+  });
+  
+  it('should call checkRecord service method and set recordVideos video-viewer', async () => {
+    const expectedResponse = [{ id: 1, title: 'Video 1' }];
+    const checkRecordSpy = spyOn(videoService, 'checkRecord').and.returnValue(of(expectedResponse));
+  
+    component.userId = '12345';
+    
+    await component.checkRecord();
+    
+    expect(checkRecordSpy).toHaveBeenCalledWith('12345');
+    expect(component.recordVideos).toEqual(expectedResponse);
   });
 
   it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
