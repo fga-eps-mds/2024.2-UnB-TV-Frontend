@@ -1,0 +1,57 @@
+<div class="home-container">
+  <aside>
+    <div class="user-info">
+      <p>Olá, Admin!</p>
+      <div class="linksBarraLateral">
+        <a class="linkLogout" (click)="logoutUser()">Sair</a>
+        <a href="/homeAdmin" class="linkVoltar">Voltar</a>
+      </div>
+    </div>
+    <hr class="solid" />
+    <nav>
+      <ul>
+        <li><a href="/video-views">Dados - Vídeos</a></li>
+        <li><a href="/category-views">Dados - Categorias</a></li>
+        <li><a href="/dashboard">Dashboard - Categorias</a></li>
+        <li>
+          <a href="/controleSuperAdmin" class="linkSelecionado"
+            >Administração de Usuários</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <header>
+      <h1>Lista de usuários cadastrados:</h1>
+      <hr class="solid2" />
+    </header>
+
+    <table *ngIf="!loading; else loadingTemplate">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Vínculo</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.connection }}</td>
+          <td>{{ user.email }}</td>
+          <th>{{ user.role }}</th>
+          <td>
+            <button (click)="deleteUser(user.id)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #loadingTemplate>
+      <p>Carregando usuários...</p>
+    </ng-template>
+  </main>
+</div>

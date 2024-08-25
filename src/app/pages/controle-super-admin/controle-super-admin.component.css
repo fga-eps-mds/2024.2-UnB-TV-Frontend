@@ -1,0 +1,123 @@
+/* Estilos gerais */
+.home-container {
+  display: flex;
+}
+
+aside {
+  width: 13.2em;
+  background-color: white;
+  padding: 1em 0.75em;
+  box-shadow: 0.125em 0 0.3125em rgba(0, 0, 0, 0.1);
+  text-align: left;
+  position: fixed;
+  height: 100%;
+  margin: 0;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.linksBarraLateral {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.75em 0;
+}
+
+.linkLogout,
+.linkVoltar {
+  color: #0087c8;
+  text-decoration: none;
+}
+
+.linkLogout:hover,
+.linkVoltar:hover {
+  text-decoration: underline;
+  color: #0056b3;
+  cursor: pointer;
+}
+
+hr.solid {
+  border-top: 0.0625em solid #bbb;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0.9375em 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #1d1d1d;
+  font-size: 1.1em;
+}
+
+nav ul li a:hover,
+nav ul li a.linkSelecionado {
+  color: #00a550;
+}
+
+main {
+  flex: 1;
+  padding: 1em;
+  margin-left: 14.2em;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1 {
+  font-size: 2.4em;
+  color: #00a550;
+  margin-top: 1em;
+}
+
+hr.solid2 {
+  border-top: 0.125em solid #bbb;
+}
+
+/* Estilos da tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+thead {
+  background-color: #00a550;
+  color: white;
+}
+
+th,
+td {
+  padding: 0.75em;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+button {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 0.5em;
+}
+
+.btn-setRole {
+  background-color: #0087c8;
+}
+
+button:hover {
+  background-color: #7ad0eb;
+}

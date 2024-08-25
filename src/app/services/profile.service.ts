@@ -21,21 +21,23 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Profile {
   constructor(private userService: UserService) {}
 
   canShowAdministracaoBtn(): boolean {
+    const requiredRoles = ['ADMIN', 'COADMIN'];
+
     if (isTestEnvironment()) {
       const token = localStorage.getItem('token');
       if (!token) return false;
 
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      return decodedToken.role === "ADMIN";
+      return requiredRoles.includes(decodedToken.role);
     } else {
       const roles = this.userService.getRoles();
-      return roles === "ADMIN";
+      return requiredRoles.includes(roles);
     }
   }
 }
