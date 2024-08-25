@@ -12,9 +12,11 @@ import { IEduplayVideosByInstitution } from 'src/shared/model/eduplay-by-institu
 import { environment } from '../environment/environment';
 import { Catalog } from 'src/shared/model/catalog.model';
 
+
 type VideoResponseType = HttpResponse<IVideo>;
 type EduplayByInstitutionResponseType =
   HttpResponse<IEduplayVideosByInstitution>;
+
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +31,9 @@ export class VideoService {
   private selectedCatalogProgram = new BehaviorSubject<IVideo[]>([]);
   //catalog: Catalog = new Catalog();
 
+
   constructor(private http: HttpClient) { }
+
 
   findAll(): Observable<EduplayByInstitutionResponseType> {
     let headers = new HttpHeaders({ clientkey: this.eduplayClientKey });
@@ -39,8 +43,10 @@ export class VideoService {
     );
   }
 
+
   findVideoById(idVideo: number): Observable<VideoResponseType> {
     let headers = new HttpHeaders({ clientkey: this.eduplayClientKey });
+
 
     return this.http.get<IVideo>(`${this.resourceUrl}/${idVideo}`, {
       headers: headers,
@@ -48,13 +54,16 @@ export class VideoService {
     });
   }
 
+
   setVideosCatalog(videos: IVideo[]) {
     this.selectedCatalogProgram.next(videos);
   }
 
+
   getVideosCatalog(): Observable<IVideo[]> {
     return this.selectedCatalogProgram.asObservable();
   }
+
 
   //atribui categoria aos videos
   videosCatalog(videos: IVideo[], catalog: Catalog): void {
@@ -69,7 +78,7 @@ export class VideoService {
         category: catalog.journalism.informeUnB,
         categoria: "Jornalismo",
       },
-      { 
+      {
         keywords: ['zapping'],
         category: catalog.journalism.zapping,
         categoria: "Jornalismo",
@@ -79,8 +88,8 @@ export class VideoService {
         category: catalog.interviews.brasilEmQuestao,
         categoria: "Entrevista",
       },
-      {   
-        keywords: ['diálogos'], 
+      {  
+        keywords: ['diálogos'],
         category: catalog.interviews.dialogos,
         categoria: "Entrevista",
       },
@@ -144,8 +153,8 @@ export class VideoService {
         category: catalog.artAndCulture.casaDoSom,
         categoria: "Arte e Cultura",
       },
-      { 
-        keywords: ['esboços'], 
+      {
+        keywords: ['esboços'],
         category: catalog.artAndCulture.esbocos,
         categoria: "Arte e Cultura",
       },
@@ -215,13 +224,16 @@ export class VideoService {
       },
     ];
 
+
     videos.forEach((video) => {
       const keywordsTitle = video?.title?.toLowerCase() ?? '';
+
 
       if (keywordsTitle) {
         const category = keywordsCategories.find((config) =>
           config.keywords.some((keyword) => keywordsTitle.includes(keyword))
         );
+
 
         if (category) {
           video['catalog'] = category?.categoria;
@@ -234,11 +246,135 @@ export class VideoService {
     });
   }
 
-  //Assistir Mais Tarde 
+  // filtrar por categoria
+  filterVideosByCategory(videos: IVideo[], category: string): IVideo[]{
+    const filteredVideos: IVideo[] = [];
+    videos.forEach((video) => {
+      if(video.catalog === category){
+        filteredVideos.push(video);
+      }
+    })
+    return filteredVideos;
+  }
+
+  // mapear por categorias e por programas
+  getCatalogAndProgramMaps(catalog: Catalog): { catalogMap: { [key: string]: any }, programMap: { [key: string]: { [key: string]: string } } } {
+    const catalogMap = {
+      "Jornalismo": catalog.journalism,
+      "Entrevista": catalog.interviews,
+      "Pesquisa e Ciência": catalog.researchAndScience,
+      "Arte e Cultura": catalog.artAndCulture,
+      "Séries Especiais": catalog.specialSeries,
+      "Documentais": catalog.documentaries,
+      "Variedades": catalog.varieties
+    };
+
+    const programMap = {
+      "Jornalismo": {
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      },
+      "Entrevista": {
+        brasilEmQuestao: "brasilEmQuestao",
+        dialogos: "dialogos",
+        entrevistas: "entrevistas",
+        tirandoDeLetra: "tirandoDeLetra",
+        vastoMundo: "vastoMundo",
+        vozesDiplomaticas: "vozesDiplomaticas"
+      },
+      "Pesquisa e Ciência": {
+        expliqueSuaTese: "expliqueSuaTese",
+        fazendoCiencia: "fazendoCiencia",
+        radarDaExtencao: "radarDaExtencao",
+        seLigaNoPAS: "seLigaNoPAS",
+        unbTvCiencia: "unbTvCiencia",
+        universidadeParaQue: "universidadeParaQue"
+      },
+      "Arte e Cultura": {
+        casaDoSom: "casaDoSom",
+        emCantos: "emCantos",
+        esbocos: "esbocos",
+        exclusiva: "exclusiva"
+      },
+      "Séries Especiais": {
+        arquiteturaICC: "arquiteturaICC",
+        desafiosDasEleicoes: "desafiosDasEleicoes",
+        florestaDeGente: "florestaDeGente",
+        guiaDoCalouro: "guiaDoCalouro",
+        memoriasPauloFreire: "memoriasPauloFreire",
+        vidaDeEstudante: "vidaDeEstudante"
+      },
+      "Documentais": {
+        documentaries: "documentaries",
+        miniDoc: "miniDoc"
+      },
+      "Variedades": {
+        pitadasDoCerrado: "pitadasDoCerrado"
+      }
+    };
+    return { catalogMap, programMap };
+  }
+
+  // encontra o nome do programa com o getCatalogAndProgramMaps
+  findProgramName(catalog: Catalog, category: string, currentVideoId: number): string {
+    const { catalogMap, programMap } = this.getCatalogAndProgramMaps(catalog);
+    const catalogCategory = catalogMap[category];
+
+    if (catalogCategory) {
+      const programs = programMap[category];
+      if (programs) {
+        for (const [key, programName] of Object.entries(programs)) {
+          const section = catalogCategory[key];        
+          if (section) {
+            for (const video of section) {
+              if (video.id == currentVideoId) {
+                //console.log(`o programa é ${programName}`);
+                return programName;
+              }
+            }
+          }
+        }
+      }
+    }
+    //console.log("o programa é unb tv");
+    return "unbtv";
+  }
+
+  //recomenda os videos do mesmo programa e depois videos da mesma categoria
+  recommendVideo(videos: IVideo[], catalog: Catalog, currentVideoCategory: string, watchedVideos: IVideo[], program: string): any {
+    const { catalogMap } = this.getCatalogAndProgramMaps(catalog);
+
+    const programMap = catalogMap[currentVideoCategory];
+
+    if (!programMap) {
+      return -1;
+    }
+
+    const currentProgram = programMap[program];
+    //console.log("currentProgram: ", currentProgram)
+
+    if (currentProgram) {
+      const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+      if (videoNaoAssistido) {
+        return videoNaoAssistido.id;
+      }
+    }
+
+    // Se já assistiu todos os vídeos do programa atual, procurar em outros programas da mesma categoria
+    const videoNaoAssistidoDeOutraCategoria = videos.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+    if (videoNaoAssistidoDeOutraCategoria) {
+      return videoNaoAssistidoDeOutraCategoria.id;
+    }
+    return -1;
+  }
+
+  //Assistir Mais Tarde
   addToWatchLater(videoId: string, userId: string): Observable<any> {
-    console.log(videoId,userId)
+    //console.log(videoId,userId)
     return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
   }
+
 
   removeFromWatchLater(videoId: string, userId: string): Observable<any> {
     return this.http.delete(`${this.videoServiceApiURL}/watch-later/${videoId}`, {
@@ -252,24 +388,28 @@ export class VideoService {
     });
   }
 
+
   getWatchLaterVideos(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/watch-later/`, {
       params: { user_id: userId }
     });
-  } 
+  }
+
 
   // Favoritar
   addToFavorite(videoId: string, userId: string): Observable<any> {
-    console.log('Adding to favorite:', videoId, userId)
+    //console.log('Adding to favorite:', videoId, userId)
     return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
   }
+
 
   removeFromFavorite(videoId: string, userId: string): Observable<any> {
     return this.http.delete(`${this.videoServiceApiURL}/favorite/${videoId}`, {
       params: { user_id: userId }
     });
   }
-  
+ 
+
 
   checkFavorite(videoId: string, userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/favorite/status/${videoId}`, {
@@ -277,11 +417,12 @@ export class VideoService {
     });
   }
 
+
   getFavoriteVideos(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/favorite/`, {
       params: { user_id: userId }
     });
-  } 
+  }
    // Historico
   checkRecord(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record/`, {
@@ -289,8 +430,34 @@ export class VideoService {
     });
   }
 
-  addToRecord(userId: string, videoId: string): Observable<any> {
+
+ addToRecord(userId: string, videoId: string): Observable<any> {
     const currentDateTime: string = new Date().toLocaleString();
     return this.http.post(`${this.videoServiceApiURL}/record/`, { user_id: userId.toString(), videos: { [videoId]: currentDateTime}});
   }
+
+
+  toggleTracking(userId: string, track: boolean): Observable<any> {
+  return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
+    params: { user_id: userId, track: track.toString() }
+  });
+}
+
+
+getRecordSorted(userId: string, ascending: boolean): Observable<any> {
+  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {
+    params: { user_id: userId, ascending: ascending.toString() }
+  });
+}
+
+
+checkTrackingStatus(userId: string): Observable<any> {
+  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_tracking_status/`, {
+    params: { user_id: userId }
+  });
+}
+
+
+
+
 }

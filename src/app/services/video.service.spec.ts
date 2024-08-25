@@ -763,8 +763,559 @@ describe('VideoService', () => {
       );
       expect(req.request.method).toBe('GET');
 
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('getFavoriteVideos', () => {
+    it('should get all videos in favorite list for a user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        videoList: [
+          { video_id: '12345', status: true },
+          { video_id: '67890', status: true },
+        ],
+      };
+
+
+      service.getFavoriteVideos(mockUserId).subscribe((response) => {
+        expect(response.videoList.length).toBe(2);
+        expect(response.videoList).toEqual(mockResponse.videoList);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/favorite/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
 
       req.flush(mockResponse);
     });
   });
+
+
+  describe('checkRecord', () => {
+    it('should check the user record history', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        videos: {
+          "12345": "2024-08-14 12:00:00",
+          "67890": "2024-08-14 12:10:00",
+        },
+      };
+
+
+      service.checkRecord(mockUserId).subscribe((response) => {
+        expect(response.videos).toEqual(mockResponse.videos);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_record/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('addToRecord', () => {
+    it('should add a video to the record history', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const currentDateTime = new Date().toLocaleString();
+      const mockResponse = { message: 'Video added to record' };
+
+
+      service.addToRecord(mockUserId, mockVideoId).subscribe((response) => {
+        expect(response.message).toEqual(mockResponse.message);
+      });
+
+
+      const req = httpMock.expectOne(`${environment.videoAPIURL}/record/`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({
+        user_id: mockUserId,
+        videos: { [mockVideoId]: currentDateTime },
+      });
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+describe('toggleTracking', () => {
+  it('should toggle tracking on or off', () => {
+    const mockUserId = 'user123';
+    const mockTrack = true;
+    const mockResponse = { message: 'Rastreamento habilitado' };
+
+
+    service.toggleTracking(mockUserId, mockTrack).subscribe((response) => {
+      expect(response.message).toEqual(mockResponse.message);
+    });
+
+
+    // Ajuste na verificação da URL
+    const req = httpMock.expectOne(
+      (request) =>
+        request.url === `${environment.videoAPIURL}/record/toggle_tracking/` &&
+        request.params.get('user_id') === mockUserId &&
+        request.params.get('track') === mockTrack.toString()
+    );
+
+
+    expect(req.request.method).toBe('POST');
+    req.flush(mockResponse);
+  });
+});
+
+
+
+
+  describe('getRecordSorted', () => {
+    it('should get the sorted record videos', () => {
+      const mockUserId = 'user123';
+      const mockAscending = true;
+      const mockResponse = {
+        videos: {
+          "12345": "2024-08-14 12:00:00",
+          "67890": "2024-08-14 12:10:00",
+        },
+      };
+
+
+      service.getRecordSorted(mockUserId, mockAscending).subscribe((response) => {
+        expect(response.videos).toEqual(mockResponse.videos);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_record_sorted/?user_id=${mockUserId}&ascending=${mockAscending}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('checkTrackingStatus', () => {
+    it('should check the tracking status for the user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = { track_enabled: true };
+
+
+      service.checkTrackingStatus(mockUserId).subscribe((response) => {
+        expect(response.track_enabled).toBe(mockResponse.track_enabled);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_tracking_status/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+  //testes proximo video
+
+  //filtragem por categoria
+  function filterVideosByCategory(videos: IVideo[], category: string): IVideo[] {
+    return videos.filter(video => video.catalog === category);
+  }
+
+  describe('filterVideosByCategory', () => {
+    it('should return videos that match the specified category', () => {
+      const videos = [
+        { id: 1, title: 'Video 1', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Video 2', catalog: 'Documentais' } as IVideo,
+        { id: 3, title: 'Video 3', catalog: 'Jornalismo' } as IVideo
+      ];
+
+      const result = filterVideosByCategory(videos, 'Jornalismo');
+
+      expect(result.length).toBe(2);
+      expect(result).toEqual([videos[0], videos[2]]);
+    });
+
+    it('should return an empty array if no videos match the category', () => {
+      const videos = [
+        { id: 1, title: 'Video 1', catalog: 'Documentais' } as IVideo,
+        { id: 2, title: 'Video 2', catalog: 'Variedades' } as IVideo
+      ];
+
+      const result = filterVideosByCategory(videos, 'Jornalismo');
+
+      expect(result.length).toBe(0);
+    });
+  });
+  
+  //mapear catalog e program
+  function getCatalogAndProgramMaps(catalog: Catalog): { catalogMap: any; programMap: any } {
+    const catalogMap: any = {
+      Jornalismo: catalog.journalism,
+      Entrevistas: catalog.interviews,
+      PesquisaECiencia: catalog.researchAndScience,
+      ArteECultura: catalog.artAndCulture,
+      SeriesEspeciais: catalog.specialSeries,
+      Documentarios: catalog.documentaries,
+      Variedades: catalog.varieties,
+      UnBTV: catalog.unbtv
+    };
+  
+    const programMap: any = {
+      Jornalismo: {
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      },
+      Entrevistas: {
+        brasilEmQuestao: "brasilEmQuestao",
+        dialogos: "dialogos",
+        entrevistas: "entrevistas",
+        tirandoDeLetra: "tirandoDeLetra",
+        vastoMundo: "vastoMundo",
+        vozesDiplomaticas: "vozesDiplomaticas"
+      },
+      PesquisaECiencia: {
+        expliqueSuaTese: "expliqueSuaTese",
+        fazendoCiencia: "fazendoCiencia",
+        radarDaExtencao: "radarDaExtencao",
+        seLigaNoPAS: "seLigaNoPAS",
+        unbTvCiencia: "unbTvCiencia",
+        universidadeParaQue: "universidadeParaQue"
+      },
+      ArteECultura: {
+        casaDoSom: "casaDoSom",
+        emCantos: "emCantos",
+        esbocos: "esbocos",
+        exclusiva: "exclusiva"
+      },
+      SeriesEspeciais: {
+        arquiteturaICC: "arquiteturaICC",
+        desafiosDasEleicoes: "desafiosDasEleicoes",
+        florestaDeGente: "florestaDeGente",
+        guiaDoCalouro: "guiaDoCalouro",
+        memoriasPauloFreire: "memoriasPauloFreire",
+        vidaDeEstudante: "vidaDeEstudante"
+      },
+      Documentarios: {
+        documentaries: "documentaries",
+        miniDoc: "miniDoc"
+      },
+      Variedades: {
+        pitadasDoCerrado: "pitadasDoCerrado"
+      },
+      UnBTV: []
+    };
+  
+    return { catalogMap, programMap };
+  }
+
+  describe('getCatalogAndProgramMaps', () => {
+    it('should return correct catalog and program maps', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const { catalogMap, programMap } = getCatalogAndProgramMaps(catalog);
+  
+      expect(catalogMap.Jornalismo).toEqual(catalog.journalism);
+      expect(programMap.Jornalismo).toEqual({
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      });
+    });
+  });
+
+  describe('findProgramName', () => {
+    it('should return the correct program name for the current video', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [
+            { id: 1, title: 'Fala, jovem' },
+            { id: 2, title: 'Informe UnB' },
+          ],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const videoService = TestBed.inject(VideoService);
+  
+      const programName = videoService.findProgramName(catalog, 'Jornalismo', 1);
+      expect(programName).toBe('falaJovem');
+    });
+  
+    it('should return "unbtv" if the video is not found in any program', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const videoService = TestBed.inject(VideoService);
+  
+      const programName = videoService.findProgramName(catalog, 'Jornalismo', 999);
+      expect(programName).toBe('unbtv');
+    });
+  });
+
+  describe('recommendVideo', () => {
+    let catalog: Catalog;
+    let videos: IVideo[];
+    let watchedVideos: IVideo[];
+    let videoService: VideoService;
+  
+    beforeEach(() => {
+      videoService = TestBed.inject(VideoService);
+  
+      catalog = {
+        journalism: {
+          falaJovem: [
+            { id: 1, title: 'Fala, jovem' },
+            { id: 2, title: 'Informe UnB' },
+          ],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      videos = [
+        { id: 1, title: 'Fala, jovem', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Informe UnB', catalog: 'Jornalismo' } as IVideo,
+        { id: 3, title: 'Esboços: Artista', catalog: 'Arte e Cultura' } as IVideo,
+        { id: 4, title: 'Vídeo sem categoria específica', catalog: 'UnBTV' } as IVideo,
+      ];
+  
+      watchedVideos = [{ id: 1, title: 'Fala, jovem' } as IVideo];
+    });
+  
+    it('should recommend the next video in the same program if not watched', () => {
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Jornalismo',
+        watchedVideos,
+        'falaJovem'
+      );
+  
+      expect(nextVideoId).toBe(2); // Informe UnB should be recommended next
+    });
+  
+    it('should recommend a video from the same category if all videos in the program are watched', () => {
+      watchedVideos = [{ id: 1, title: 'Fala, jovem' } as IVideo, { id: 2, title: 'Informe UnB' } as IVideo];
+  
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Arte e Cultura',
+        watchedVideos,
+        'esbocos'
+      );
+  
+      expect(nextVideoId).toBe(3); // Esboços: Artista should be recommended
+    });
+  
+    it('should return -1 if all videos in the category are watched', () => {
+      watchedVideos = [
+        { id: 1, title: 'Fala, jovem', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Informe UnB', catalog: 'Jornalismo' } as IVideo,
+        { id: 3, title: 'Esboços: Artista', catalog: 'Arte e Cultura' } as IVideo,
+        { id: 4, title: 'Vídeo sem categoria específica', catalog: 'UnBTV' } as IVideo, // Todos os vídeos foram assistidos
+      ];
+    
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Jornalismo',
+        watchedVideos,
+        'falaJovem'
+      );
+    
+      expect(nextVideoId).toBe(-1); // No video left to recommend
+    });
+  
+    it('should return -1 if the program or category does not exist', () => {
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Nonexistent Category',
+        watchedVideos,
+        'nonexistentProgram'
+      );
+  
+      expect(nextVideoId).toBe(-1); // Invalid category and program
+    });
+  });  
+  
 });
