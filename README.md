@@ -24,6 +24,10 @@ docker compose up
 
 Acessar o localhost em: http://localhost:4200
 
+## Licença
+
+Este projeto está licenciado sob a GNU Affero General Public License v3.0 (AGPL-3.0) com termos adicionais que restringem o uso deste software para fins comerciais. Para mais detalhes, consulte o arquivo [LICENSE](./LICENSE).
+
 ## Equipe EPS
 
 | Foto | Nome | Github | Discord | Email | Matrícula |

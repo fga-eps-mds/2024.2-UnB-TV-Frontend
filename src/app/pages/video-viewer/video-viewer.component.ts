@@ -26,7 +26,8 @@ export class VideoViewerComponent implements OnInit {
   isFavorite = true;
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   userId: string = '';
-  user : any;
+  user: any;
+  trackingEnabled: boolean = true; // Estado do rastreamento
   unbTvChannelId = UNB_TV_CHANNEL_ID;
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
@@ -54,14 +55,18 @@ export class VideoViewerComponent implements OnInit {
     private alertService: AlertService
   ) { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
     const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
     this.idVideo = this.route.snapshot.params['idVideo'];
 
-    if (this.authService.isAuthenticated()){
-      this.setUserIdFromToken(localStorage.getItem('token') as string);
-      this.getUserDetails();
-      this.addRecord();
+    if (this.authService.isAuthenticated()) {
+        this.setUserIdFromToken(localStorage.getItem('token') as string);
+        this.getUserDetails();
+        this.checkTrackingStatus().then(() => {
+            if (this.trackingEnabled) {
+                this.addRecord();
+            }
+        });
     }
 
     this.findVideoById();
@@ -160,7 +165,23 @@ export class VideoViewerComponent implements OnInit {
     this.userId = decodedToken.id;
   }
 
-  getUserDetails() {
+async checkTrackingStatus(): Promise<void> {
+    const status = await this.videoService.checkTrackingStatus(this.userId).toPromise();
+    this.trackingEnabled = status.track_enabled;
+    console.log('Tracking status:', this.trackingEnabled);
+}
+
+  addRecord() {
+    this.videoService.addToRecord(this.userId, this.idVideo.toString()).subscribe({
+      next: () => {
+      },
+      error: (err) => {
+        console.error('Error fetching user details', err);
+      }
+    });
+  }
+
+   getUserDetails() {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
         this.user = user;
@@ -173,29 +194,17 @@ export class VideoViewerComponent implements OnInit {
     });
   }
 
-  addRecord() {
-    this.videoService.addToRecord(this.userId, this.idVideo.toString()).subscribe({
-      next: () => {
-      },
-      error: (err) => {
-        console.error('Error fetching user details', err);
-      }
-    });
-  }
-
-  findVideoById = () => {
+  findVideoById() {
     this.videoService.findVideoById(this.idVideo).subscribe({
       next: (data: HttpResponse<IVideo>) => {
         this.video = data.body ? data.body : this.video;
-        this.videoDescription = this.video.description
-          ? this.video.description
-          : '';
+        this.videoDescription = this.video.description ? this.video.description : '';
       },
       error: (err) => {
         console.error('Error fetching video details', err);
       }
     });
-  };
+  }
 
   // Assistir mais tarde
   toggleWatchLater() {

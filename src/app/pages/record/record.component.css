@@ -1,65 +1,90 @@
-.record-container {
-    justify-content: center;
+.header-title {
+    color: green; /* Azul escuro para o título */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-* {
-    font-family: Helvetica, sans-serif;
-}
-
-header {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-    flex-direction: column;
-    align-items: center;
-}
-
-header h1 {
-    font-size: 2.4em;
-    color: #00a550;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
 
 .videos-container {
     display: flex;
     justify-content: center;
-    align-content: center;
+    margin-bottom: 20px;
 }
 
-.videos {    
+
+.videos {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    width: 100%;
-    height: 100%;
-    max-width: 80%;
+    justify-content: center;
+    gap: 20px;
 }
 
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2em;
-    }
 
-    .videos {
-        max-width: 100%;
-        gap: 0.25rem;
-    }
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
 }
 
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.8em;
-    }
 
-    .videos {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.25rem;
-    }
+.video-img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 7px;
+    width: 220px; /* Mantém a proporção original da imagem */
+    height: 124px; /* Mantém a proporção original da imagem */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-    .videos-container {
-        padding: 0.5rem;
-    }
+
+.video-img:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); /* Eleva o vídeo ligeiramente ao passar o mouse */
+}
+
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #34495e;
+}
+
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+.record-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.record-controls button {
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.record-controls button:hover {
+    background-color: #1f6395;
 }

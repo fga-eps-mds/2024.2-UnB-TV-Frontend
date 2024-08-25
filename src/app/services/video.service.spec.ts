@@ -763,6 +763,165 @@ describe('VideoService', () => {
       );
       expect(req.request.method).toBe('GET');
 
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('getFavoriteVideos', () => {
+    it('should get all videos in favorite list for a user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        videoList: [
+          { video_id: '12345', status: true },
+          { video_id: '67890', status: true },
+        ],
+      };
+
+
+      service.getFavoriteVideos(mockUserId).subscribe((response) => {
+        expect(response.videoList.length).toBe(2);
+        expect(response.videoList).toEqual(mockResponse.videoList);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/favorite/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('checkRecord', () => {
+    it('should check the user record history', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        videos: {
+          "12345": "2024-08-14 12:00:00",
+          "67890": "2024-08-14 12:10:00",
+        },
+      };
+
+
+      service.checkRecord(mockUserId).subscribe((response) => {
+        expect(response.videos).toEqual(mockResponse.videos);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_record/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('addToRecord', () => {
+    it('should add a video to the record history', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const currentDateTime = new Date().toLocaleString();
+      const mockResponse = { message: 'Video added to record' };
+
+
+      service.addToRecord(mockUserId, mockVideoId).subscribe((response) => {
+        expect(response.message).toEqual(mockResponse.message);
+      });
+
+
+      const req = httpMock.expectOne(`${environment.videoAPIURL}/record/`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({
+        user_id: mockUserId,
+        videos: { [mockVideoId]: currentDateTime },
+      });
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+describe('toggleTracking', () => {
+  it('should toggle tracking on or off', () => {
+    const mockUserId = 'user123';
+    const mockTrack = true;
+    const mockResponse = { message: 'Rastreamento habilitado' };
+
+
+    service.toggleTracking(mockUserId, mockTrack).subscribe((response) => {
+      expect(response.message).toEqual(mockResponse.message);
+    });
+
+
+    // Ajuste na verificação da URL
+    const req = httpMock.expectOne(
+      (request) =>
+        request.url === `${environment.videoAPIURL}/record/toggle_tracking/` &&
+        request.params.get('user_id') === mockUserId &&
+        request.params.get('track') === mockTrack.toString()
+    );
+
+
+    expect(req.request.method).toBe('POST');
+    req.flush(mockResponse);
+  });
+});
+
+
+
+
+  describe('getRecordSorted', () => {
+    it('should get the sorted record videos', () => {
+      const mockUserId = 'user123';
+      const mockAscending = true;
+      const mockResponse = {
+        videos: {
+          "12345": "2024-08-14 12:00:00",
+          "67890": "2024-08-14 12:10:00",
+        },
+      };
+
+
+      service.getRecordSorted(mockUserId, mockAscending).subscribe((response) => {
+        expect(response.videos).toEqual(mockResponse.videos);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_record_sorted/?user_id=${mockUserId}&ascending=${mockAscending}`
+      );
+      expect(req.request.method).toBe('GET');
+
+
+      req.flush(mockResponse);
+    });
+  });
+
+
+  describe('checkTrackingStatus', () => {
+    it('should check the tracking status for the user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = { track_enabled: true };
+
+
+      service.checkTrackingStatus(mockUserId).subscribe((response) => {
+        expect(response.track_enabled).toBe(mockResponse.track_enabled);
+      });
+
+
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/get_tracking_status/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+
 
       req.flush(mockResponse);
     });
