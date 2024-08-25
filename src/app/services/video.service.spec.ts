@@ -921,4 +921,242 @@ describe('VideoService', () => {
       });
     });
   });
+
+  describe('findProgramName', () => {
+    it('should return the correct program name for the current video', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [
+            { id: 1, title: 'Fala, jovem' },
+            { id: 2, title: 'Informe UnB' },
+          ],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const videoService = TestBed.inject(VideoService);
+  
+      const programName = videoService.findProgramName(catalog, 'Jornalismo', 1);
+      expect(programName).toBe('falaJovem');
+    });
+  
+    it('should return "unbtv" if the video is not found in any program', () => {
+      const catalog: Catalog = {
+        journalism: {
+          falaJovem: [],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      const videoService = TestBed.inject(VideoService);
+  
+      const programName = videoService.findProgramName(catalog, 'Jornalismo', 999);
+      expect(programName).toBe('unbtv');
+    });
+  });
+
+  describe('recommendVideo', () => {
+    let catalog: Catalog;
+    let videos: IVideo[];
+    let watchedVideos: IVideo[];
+    let videoService: VideoService;
+  
+    beforeEach(() => {
+      videoService = TestBed.inject(VideoService);
+  
+      catalog = {
+        journalism: {
+          falaJovem: [
+            { id: 1, title: 'Fala, jovem' },
+            { id: 2, title: 'Informe UnB' },
+          ],
+          informeUnB: [],
+          zapping: []
+        },
+        interviews: {
+          brasilEmQuestao: [],
+          dialogos: [],
+          entrevistas: [],
+          tirandoDeLetra: [],
+          vastoMundo: [],
+          vozesDiplomaticas: []
+        },
+        researchAndScience: {
+          expliqueSuaTese: [],
+          fazendoCiencia: [],
+          radarDaExtencao: [],
+          seLigaNoPAS: [],
+          unbTvCiencia: [],
+          universidadeParaQue: []
+        },
+        artAndCulture: {
+          casaDoSom: [],
+          emCantos: [],
+          esbocos: [],
+          exclusiva: []
+        },
+        specialSeries: {
+          arquiteturaICC: [],
+          desafiosDasEleicoes: [],
+          florestaDeGente: [],
+          guiaDoCalouro: [],
+          memoriasPauloFreire: [],
+          vidaDeEstudante: []
+        },
+        documentaries: {
+          documentaries: [],
+          miniDoc: []
+        },
+        varieties: {
+          pitadasDoCerrado: []
+        },
+        unbtv: []
+      };
+  
+      videos = [
+        { id: 1, title: 'Fala, jovem', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Informe UnB', catalog: 'Jornalismo' } as IVideo,
+        { id: 3, title: 'Esboços: Artista', catalog: 'Arte e Cultura' } as IVideo,
+        { id: 4, title: 'Vídeo sem categoria específica', catalog: 'UnBTV' } as IVideo,
+      ];
+  
+      watchedVideos = [{ id: 1, title: 'Fala, jovem' } as IVideo];
+    });
+  
+    it('should recommend the next video in the same program if not watched', () => {
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Jornalismo',
+        watchedVideos,
+        'falaJovem'
+      );
+  
+      expect(nextVideoId).toBe(2); // Informe UnB should be recommended next
+    });
+  
+    it('should recommend a video from the same category if all videos in the program are watched', () => {
+      watchedVideos = [{ id: 1, title: 'Fala, jovem' } as IVideo, { id: 2, title: 'Informe UnB' } as IVideo];
+  
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Arte e Cultura',
+        watchedVideos,
+        'esbocos'
+      );
+  
+      expect(nextVideoId).toBe(3); // Esboços: Artista should be recommended
+    });
+  
+    it('should return -1 if all videos in the category are watched', () => {
+      watchedVideos = [
+        { id: 1, title: 'Fala, jovem', catalog: 'Jornalismo' } as IVideo,
+        { id: 2, title: 'Informe UnB', catalog: 'Jornalismo' } as IVideo,
+        { id: 3, title: 'Esboços: Artista', catalog: 'Arte e Cultura' } as IVideo,
+        { id: 4, title: 'Vídeo sem categoria específica', catalog: 'UnBTV' } as IVideo, // Todos os vídeos foram assistidos
+      ];
+    
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Jornalismo',
+        watchedVideos,
+        'falaJovem'
+      );
+    
+      expect(nextVideoId).toBe(-1); // No video left to recommend
+    });
+  
+    it('should return -1 if the program or category does not exist', () => {
+      const nextVideoId = videoService.recommendVideo(
+        videos,
+        catalog,
+        'Nonexistent Category',
+        watchedVideos,
+        'nonexistentProgram'
+      );
+  
+      expect(nextVideoId).toBe(-1); // Invalid category and program
+    });
+  });  
+  
 });
