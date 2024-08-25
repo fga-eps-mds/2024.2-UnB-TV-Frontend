@@ -40,7 +40,7 @@ export class SuggestAgendaComponent implements OnInit {
       if (control.value == '') {
         return null;
       }
-      const padrao_telefone = /^\(?[1-9]{2}\)? ?(?:[2-8]|9[0-9])[0-9]{3}\-?[0-9]{4}$/;
+      const padrao_telefone = /^\d{8,15}$/;
       const valido = padrao_telefone.test(control.value);
       return valido ? null : { telefone_invalido: { value: control.value } };
     }
