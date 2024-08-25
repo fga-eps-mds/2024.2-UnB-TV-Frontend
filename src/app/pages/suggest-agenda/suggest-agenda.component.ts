@@ -83,7 +83,7 @@ export class SuggestAgendaComponent implements OnInit {
         });
     } else {
       if(this.suggestAgendaForm.controls['telefoneResponsavel'].errors?.['telefone_invalido']){
-        this.alertService.showMessage("error", "Erro", "Telefone inválido");
+        this.alertService.showMessage("error", "Erro", "Telefone inválido.");
       } else if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']){
         this.alertService.showMessage("error", "Erro", "Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.");
       }else{

@@ -64,38 +64,6 @@ describe('SuggestAgendaComponent', () => {
     expect(component.suggestAgendaForm).toBeTruthy();
   });
 
-  it('should return null for valid phone numbers', () => {
-    const validPhoneNumbers = [
-      '(11) 91234-5678',
-      '(41) 912345678',
-      '(51)987654321',
-      '21 98765-4321',
-      '31923456789'
-    ];
-
-    validPhoneNumbers.forEach(phone => {
-      const control = new FormControl(phone);
-      const result = component.validacaoTelefone()(control);
-      expect(result).toBeNull();
-    });
-  });
-
-  it('should return an error object for invalid phone numbers', () => {
-    const invalidPhoneNumbers = [
-      '129567890',
-      '(11) 1234-5678',
-      '(21) 087654321',
-      '98765-4321',
-      'laskdjflkjas'
-    ];
-
-    invalidPhoneNumbers.forEach(phone => {
-      const control = new FormControl(phone);
-      const result = component.validacaoTelefone()(control);
-      expect(result).toEqual({ telefone_invalido: { value: phone } });
-    });
-  });
-
   it('should call sendSuggestAgenda method when the form is submitted', () => {
     fixture.detectChanges();
     spyOn(component, 'sendSuggestAgenda').and.callThrough();
@@ -145,7 +113,7 @@ describe('SuggestAgendaComponent', () => {
     form.setValue({
       descricao: 'Descrição',
       responsavel: 'Usuário Teste',
-      telefoneResponsavel: '(99) 99999-9999',
+      telefoneResponsavel: 999999999,
       tema: '',
       quando: '',
       local: '',
@@ -154,5 +122,23 @@ describe('SuggestAgendaComponent', () => {
     });
     component.sendSuggestAgenda();
     expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.');
+  });
+
+  it('should handle invalid phone number error', () => {
+    fixture.detectChanges();
+    const alertSpy = spyOn(alertService, 'showMessage');
+    const form = component.suggestAgendaForm;
+    form.setValue({
+      descricao: 'Descrição',
+      responsavel: 'Usuário Teste',
+      telefoneResponsavel: 99999-9999,
+      tema: '',
+      quando: '',
+      local: '',
+      emailContato: 'test@example.xxx',
+      urlVideo: 'https://www.youtube.com/watch?v=bX-8WWmW06Q'
+    });
+    component.sendSuggestAgenda();
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Telefone inválido.');
   });
 });

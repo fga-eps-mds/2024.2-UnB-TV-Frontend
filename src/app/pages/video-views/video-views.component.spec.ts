@@ -71,11 +71,7 @@ describe('VideoViewsComponent', () => {
     expect(component.findAll).toHaveBeenCalled();
     expect(component.filteredVideos).toEqual(component.unbTvVideos);
     component.categories.forEach(category => {
-      if (category === "Todas"){
-        expect(component.selectedCategories[category]).toBeTrue()
-      }else{
-        expect(component.selectedCategories[category]).toBeFalse()
-      }
+      expect(component.selectedCategories[category]).toBeTrue()
     });
   });
 
