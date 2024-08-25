@@ -359,7 +359,7 @@ export class VideoService {
 
   //Assistir Mais Tarde 
   addToWatchLater(videoId: string, userId: string): Observable<any> {
-    console.log(videoId,userId)
+    //console.log(videoId,userId)
     return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
   }
 
@@ -383,7 +383,7 @@ export class VideoService {
 
   // Favoritar
   addToFavorite(videoId: string, userId: string): Observable<any> {
-    console.log('Adding to favorite:', videoId, userId)
+    //console.log('Adding to favorite:', videoId, userId)
     return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
   }
 

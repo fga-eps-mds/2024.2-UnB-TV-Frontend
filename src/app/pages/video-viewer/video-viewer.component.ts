@@ -118,9 +118,9 @@ export class VideoViewerComponent implements OnInit {
         this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
 
         this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
-        console.log("vídeos da categoria do atual: ", this.videosByCategory)
+        //console.log("vídeos da categoria do atual: ", this.videosByCategory)
         this.filterVideosByRecord();
-        console.log("videos assistidos: ", this.filteredVideos)
+        //console.log("videos assistidos: ", this.filteredVideos)
         this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program);
         //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
         if(this.idNextVideo != -1){
@@ -134,8 +134,8 @@ export class VideoViewerComponent implements OnInit {
         }else{
           this.titleNextVideo = "Não há vídeo para ser recomendado"
         }
-        console.log("id do próximo vídeo: ", this.idNextVideo)
-        console.log("título do próximo vídeo: ", this.titleNextVideo)
+        //console.log("id do próximo vídeo: ", this.idNextVideo)
+        //console.log("título do próximo vídeo: ", this.titleNextVideo)
       },
       error: (error) => {
         console.log(error);
