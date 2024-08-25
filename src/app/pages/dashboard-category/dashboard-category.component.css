@@ -9,6 +9,10 @@
   font-family: Helvetic, sans-serif;
 }
 
+.containerCard, .containerLegenda, .containerGraficos {
+  font-size: 12px;
+}
+
 .containerPrincipal {
   display: flex;
   min-height: 100vh;
