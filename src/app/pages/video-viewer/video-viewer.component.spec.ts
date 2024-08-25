@@ -23,6 +23,29 @@ class VideoServiceMock {
     return of(new HttpResponse({ body: mockVideo }));
   }
 
+  //Procurar próximo vídeo
+  findAll() {
+    const mockResponse = {
+      body: {
+        videoList: [
+          { id: 1, title: 'Video 1', description: 'Description 1' },
+          { id: 2, title: 'Video 2', description: 'Description 2' },
+        ]
+      }
+    };
+    return of(new HttpResponse({ body: mockResponse.body }));
+  }
+
+  checkRecord(userId: string) {
+    const mockRecord = {
+      videos: {
+        1: '2024-01-01T00:00:00Z',
+        2: '2024-01-02T00:00:00Z',
+      },
+    };
+    return of(mockRecord);
+  }
+
   // Assistir mais tarde
   addToWatchLater(videoId: string, userId: string) {
     return of({ message: 'Added to watch later list' });
