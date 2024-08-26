@@ -105,11 +105,13 @@ export class VideoViewsComponent {
       this.filteredVideos = this.unbTvVideos;
     }else if(
               !selectedCategories.includes("Todas") &&
+              this.selectedCategories["Todas"] === false &&
               selectedCategories.length === 8
              ){
       this.categories.forEach(category => {
         this.selectedCategories[category] = false;
       });
+      this.filteredVideos = [];
 
     }else if (selectedCategories.length === 0){
       this.filteredVideos = [];
