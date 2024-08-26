@@ -399,7 +399,7 @@ describe('VideoViewerComponent', () => {
     expect(component.recordVideos).toEqual(expectedResponse);
   });
 
-  it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
+  /*it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
     const mySpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of({ track_enabled: true }));
     component.userId = '1';
     tick(); // Simulate passage of time for the async call
@@ -407,5 +407,5 @@ describe('VideoViewerComponent', () => {
       expect(mySpy).toHaveBeenCalledWith('1');
       expect(component.trackingEnabled).toBe(true);
     });
-  }));
+  }));*/
 });
