@@ -28,11 +28,22 @@ export class SuggestAgendaComponent implements OnInit {
       quando: [''],
       local: [''],
       responsavel: ['', [Validators.required]],
-      telefoneResponsavel: ['', [Validators.required]],
+      telefoneResponsavel: ['', [this.validacaoTelefone()]],
       emailContato: ['', [Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
       urlVideo: ['', [this.validacaoUrl()]]
     },
     );
+  }
+
+  validacaoTelefone(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value == '') {
+        return null;
+      }
+      const padrao_telefone = /^\d{8,15}$/;
+      const valido = padrao_telefone.test(control.value);
+      return valido ? null : { telefone_invalido: { value: control.value } };
+    }
   }
 
   validacaoUrl(): ValidatorFn{
@@ -71,7 +82,9 @@ export class SuggestAgendaComponent implements OnInit {
           this.isSendingEmail = false;
         });
     } else {
-      if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']){
+      if(this.suggestAgendaForm.controls['telefoneResponsavel'].errors?.['telefone_invalido']){
+        this.alertService.showMessage("error", "Erro", "Telefone inválido.");
+      } else if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']){
         this.alertService.showMessage("error", "Erro", "Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.");
       }else{
         this.alertService.showMessage("info", "Alerta", "Preencha todos os campos corretamente!");

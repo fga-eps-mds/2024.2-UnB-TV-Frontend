@@ -32,6 +32,7 @@ export class CategoryTableComponent {
     "Séries Especiais",
     "UnBTV",
     "Variedades"
+
   ];
   filteredAggregatedVideos: any[] = [];
   selectedCategories: { [key: string]: boolean } = {};
@@ -44,13 +45,15 @@ export class CategoryTableComponent {
     private authService: AuthService,
     private confirmationService: ConfirmationService
   ) {};
-  
+
   ngOnInit(): void{
     this.categories.forEach(category => this.selectedCategories[category] = false);
-    this.selectedCategories["Todas"] = true;
+    this.categories.forEach(category => {
+      this.selectedCategories[category] = true;
+    });
     this.findAll();
   }
-  
+
   findAll(): void {
     this.videoService.findAll().subscribe({
       next: (data) => {
@@ -107,7 +110,7 @@ export class CategoryTableComponent {
 
     this.aggregatedVideos = Array.from(categoryMap.entries()).map(([category, data]) => ({
       category,
-      videoCount: data.count, 
+      videoCount: data.count,
       totalViews: data.views,
       viewsPerVideo: data.count > 0 ? data.views/data.count : 0
     }));
@@ -141,17 +144,28 @@ export class CategoryTableComponent {
       this.sortAscending = true;
     }
     this.sortAggregatedVideos();
-  } 
+  }
 
   filterCategories(): void {
     const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
     if (selectedCategories.includes("Todas")) {
-      this.filteredAggregatedVideos = this.aggregatedVideos;
-    }else if(selectedCategories.length === 0){
+      this.categories.forEach(category => {
+        this.selectedCategories[category] = true;
+      });
+     this.filteredAggregatedVideos = this.aggregatedVideos;
+    } else if (
+                !selectedCategories.includes("Todas") &&
+                this.selectedCategories["Todas"] === false &&
+                selectedCategories.length === 8
+    ) {
+          this.categories.forEach(category => {
+            this.selectedCategories[category] = false;
+          });
+          this.filteredAggregatedVideos = [];
+    } else if(selectedCategories.length === 0){
       this.filteredAggregatedVideos = [];
-    }
-    else{
-      this.filteredAggregatedVideos = this.aggregatedVideos.filter(video => selectedCategories.includes(video.category));  
+    } else{
+      this.filteredAggregatedVideos = this.aggregatedVideos.filter(video => selectedCategories.includes(video.category));
     }
     this.sortAggregatedVideos();
   }
@@ -182,7 +196,7 @@ export class CategoryTableComponent {
     ];
 
     ws['!cols'] = columnWidths;
-    XLSX.utils.book_append_sheet(wb, ws,'Sheet1'); 
+    XLSX.utils.book_append_sheet(wb, ws,'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
 }

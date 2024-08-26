@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { EmailService } from 'src/app/services/email.service';
 import { SuggestAgendaComponent } from './suggest-agenda.component';
@@ -113,7 +113,7 @@ describe('SuggestAgendaComponent', () => {
     form.setValue({
       descricao: 'Descrição',
       responsavel: 'Usuário Teste',
-      telefoneResponsavel: '(99) 99999-9999',
+      telefoneResponsavel: 999999999,
       tema: '',
       quando: '',
       local: '',
@@ -122,5 +122,23 @@ describe('SuggestAgendaComponent', () => {
     });
     component.sendSuggestAgenda();
     expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.');
+  });
+
+  it('should handle invalid phone number error', () => {
+    fixture.detectChanges();
+    const alertSpy = spyOn(alertService, 'showMessage');
+    const form = component.suggestAgendaForm;
+    form.setValue({
+      descricao: 'Descrição',
+      responsavel: 'Usuário Teste',
+      telefoneResponsavel: 99999-9999,
+      tema: '',
+      quando: '',
+      local: '',
+      emailContato: 'test@example.xxx',
+      urlVideo: 'https://www.youtube.com/watch?v=bX-8WWmW06Q'
+    });
+    component.sendSuggestAgenda();
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Telefone inválido.');
   });
 });

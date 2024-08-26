@@ -72,13 +72,10 @@ describe('CategoryTableComponent', () => {
   it('should call findAll on ngOnInit', () => {
     spyOn(component, 'findAll');
     component.ngOnInit();
+  
     expect(component.findAll).toHaveBeenCalled();
     component.categories.forEach(category => {
-      if (category === "Todas"){
-        expect(component.selectedCategories[category]).toBeTrue()
-      }else{
-        expect(component.selectedCategories[category]).toBeFalse()
-      }
+      expect(component.selectedCategories[category]).toBeTrue();
     });
   });
 
