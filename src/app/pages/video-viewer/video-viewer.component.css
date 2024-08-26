@@ -4,75 +4,68 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+.button-container {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  gap: 1.25rem; 
+}
 
-.watch-later-button {
+.favorite-button, .watch-later-button, .next-video-button {
   background-color: #0087c8;
   color: #fff;
   border: none;
-  padding: 0.15em 0.9em;
-  border-radius: 5em;
+  padding: 0.5rem 1rem;
+  border-radius: 2.5rem;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.5rem;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.watch-later-button.watch-later-active {
-  background-color: #f00; /* Cor para quando o vídeo estiver na lista de assistir mais tarde */
+.favorite-button.favorited, .watch-later-button.watch-later-active {
+  background-color: #f00; 
 }
 
-.watch-later-button:hover {
-  background-color: #00000094; /* Fundo ao passar o mouse */
-  color: white; /* Cor das letras ao passar o mouse */
+.favorite-button:hover, .watch-later-button:hover, .next-video-button:hover {
+  background-color: #00000094; 
+  color: #fff; 
+  transform: scale(1.05); 
 }
 
-.watch-later-button:active {
-  background-color: red; /* Fundo ao clicar */
-  color: white; /* Cor das letras ao clicar */
-}
-
-.title-button-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.favorite-button {
-  color: white;
-  background-color: #0087c8;
-  padding: 0.15em 0.9em;
-  border: none;
-  cursor: pointer;
-  border-radius: 5em;
-  font-size: 1.2em;
-  display: flex; /* Utiliza flexbox para alinhar o conteúdo */
-  align-items: center; /* Alinha verticalmente o conteúdo */
-  gap: 0.3em;
-}
-
-.favorite-button.favorited {
-  background-color: red; /* Fundo quando favorito */
-  color: white; /* Cor das letras quando favorito */
+.favorite-button:active, .watch-later-button:active, .next-video-button:active {
+  background-color: red; 
+  color: #fff; 
+  transform: scale(0.95); 
 }
 
 .favorite-icon {
-  display: flex;
-  width: 1em; /* Define a largura do ícone */
-  height: 1em; /* Define a altura do ícone */
-  fill: #ffffff; /* Define a cor do ícone */
+  width: 1.2rem; 
+  height: 1.2rem;
+  fill: #ffffff;
 }
 
-.favorite-button:hover {
-  background-color: #0085c894; /* Fundo ao passar o mouse */
-  color: white; /* Cor das letras ao passar o mouse */
+.next-video-button {
+  background-color: #00a651;
 }
 
-.favorite-button:active {
-  background-color: red; /* Fundo ao clicar */
-  color: white; /* Cor das letras ao clicar */
+.next-video-button:hover {
+  background-color: #008c4a;
 }
 
-button.favorited span {
-  color: rgb(255, 255, 255);
+@media (max-width: 1180px) {
+  .button-container {
+    flex-direction: column; 
+    gap: 0.7rem; 
+    align-items: flex-start; 
+    font-size: 0.5rem;
+    line-height: 1rem; 
+  }
+
+  .favorite-button, .watch-later-button, .next-video-button {
+    width: 100%; 
+    justify-content: center; 
+  }
 }

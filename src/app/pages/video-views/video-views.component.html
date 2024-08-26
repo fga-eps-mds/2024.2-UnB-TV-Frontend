@@ -7,39 +7,66 @@
         <a href="/homeAdmin" class="linkVoltar">Voltar</a>
       </div>
     </div>
-    <hr class="solid">
+    <hr class="solid" />
     <nav>
       <ul>
-        <li><a href="/video-views" class="linkSelecionado">Dados - Vídeos</a></li>
+        <li>
+          <a href="/video-views" class="linkSelecionado">Dados - Vídeos</a>
+        </li>
         <li><a href="/category-views">Dados - Categorias</a></li>
         <li><a href="/dashboard">Dashboard - Categorias</a></li>
+        <li><a href="/controleSuperAdmin">Administração de Usuários</a></li>
       </ul>
     </nav>
-  </aside>  
+  </aside>
   <main>
     <header>
       <h1>Dados - Vídeos</h1>
-      <button class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white" (click)="exportExcel()">Exportar para Excel</button>
+      <button
+        class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white"
+        (click)="exportExcel()"
+      >
+        Exportar para Excel
+      </button>
     </header>
-    <hr class="solid2">
+    <hr class="solid2" />
     <div class="containerConteudo">
       <div class="containerFiltro">
         <div class="filtroItem">
-          <input [(ngModel)]="filterId" (ngModelChange)="filterVideos()" placeholder="Filtrar por ID" />
+          <input
+            [(ngModel)]="filterId"
+            (ngModelChange)="filterVideos()"
+            placeholder="Filtrar por ID"
+          />
         </div>
         <div class="filtroItem">
-          <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Filtrar por Título" />
+          <input
+            [(ngModel)]="filterTitle"
+            (ngModelChange)="filterVideos()"
+            placeholder="Filtrar por Título"
+          />
         </div>
         <div class="filtroItem">
-          <input [(ngModel)]="filterDescription" (ngModelChange)="filterVideos()" placeholder="Filtrar por Descrição" />
+          <input
+            [(ngModel)]="filterDescription"
+            (ngModelChange)="filterVideos()"
+            placeholder="Filtrar por Descrição"
+          />
         </div>
         <div class="filtroItem">
           <div class="dropdown">
-            <button class="botaoDropdown">Filtrar por Categoria <span class="setinha"></span></button>
+            <button class="botaoDropdown">
+              Filtrar por Categoria <span class="setinha"></span>
+            </button>
             <div class="conteudoDropdown">
               <div *ngFor="let category of categories">
                 <label>
-                  <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterVideos()" /> {{ category }}
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="selectedCategories[category]"
+                    (ngModelChange)="filterVideos()"
+                  />
+                  {{ category }}
                 </label>
               </div>
             </div>
@@ -53,8 +80,12 @@
             <th>Título</th>
             <th>Descrição</th>
             <th>Categoria</th>
-            <th (click)="changeSortOrder()" class="ordenavel">Nº Visualizações
-              <span class="setinha" [ngClass]="{'up': !sortAscending, 'down': sortAscending}"></span> 
+            <th (click)="changeSortOrder()" class="ordenavel">
+              Nº Visualizações
+              <span
+                class="setinha"
+                [ngClass]="{ up: !sortAscending, down: sortAscending }"
+              ></span>
             </th>
           </tr>
         </thead>

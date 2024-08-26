@@ -246,14 +246,132 @@ export class VideoService {
     });
   }
 
+  // filtrar por categoria
+  filterVideosByCategory(videos: IVideo[], category: string): IVideo[]{
+    const filteredVideos: IVideo[] = [];
+    videos.forEach((video) => {
+      if(video.catalog === category){
+        filteredVideos.push(video);
+      }
+    })
+    return filteredVideos;
+  }
 
+  // mapear por categorias e por programas
+  getCatalogAndProgramMaps(catalog: Catalog): { catalogMap: { [key: string]: any }, programMap: { [key: string]: { [key: string]: string } } } {
+    const catalogMap = {
+      "Jornalismo": catalog.journalism,
+      "Entrevista": catalog.interviews,
+      "Pesquisa e Ciência": catalog.researchAndScience,
+      "Arte e Cultura": catalog.artAndCulture,
+      "Séries Especiais": catalog.specialSeries,
+      "Documentais": catalog.documentaries,
+      "Variedades": catalog.varieties
+    };
 
+    const programMap = {
+      "Jornalismo": {
+        falaJovem: "falaJovem",
+        informeUnB: "informeUnb",
+        zapping: "zapping"
+      },
+      "Entrevista": {
+        brasilEmQuestao: "brasilEmQuestao",
+        dialogos: "dialogos",
+        entrevistas: "entrevistas",
+        tirandoDeLetra: "tirandoDeLetra",
+        vastoMundo: "vastoMundo",
+        vozesDiplomaticas: "vozesDiplomaticas"
+      },
+      "Pesquisa e Ciência": {
+        expliqueSuaTese: "expliqueSuaTese",
+        fazendoCiencia: "fazendoCiencia",
+        radarDaExtencao: "radarDaExtencao",
+        seLigaNoPAS: "seLigaNoPAS",
+        unbTvCiencia: "unbTvCiencia",
+        universidadeParaQue: "universidadeParaQue"
+      },
+      "Arte e Cultura": {
+        casaDoSom: "casaDoSom",
+        emCantos: "emCantos",
+        esbocos: "esbocos",
+        exclusiva: "exclusiva"
+      },
+      "Séries Especiais": {
+        arquiteturaICC: "arquiteturaICC",
+        desafiosDasEleicoes: "desafiosDasEleicoes",
+        florestaDeGente: "florestaDeGente",
+        guiaDoCalouro: "guiaDoCalouro",
+        memoriasPauloFreire: "memoriasPauloFreire",
+        vidaDeEstudante: "vidaDeEstudante"
+      },
+      "Documentais": {
+        documentaries: "documentaries",
+        miniDoc: "miniDoc"
+      },
+      "Variedades": {
+        pitadasDoCerrado: "pitadasDoCerrado"
+      }
+    };
+    return { catalogMap, programMap };
+  }
 
+  // encontra o nome do programa com o getCatalogAndProgramMaps
+  findProgramName(catalog: Catalog, category: string, currentVideoId: number): string {
+    const { catalogMap, programMap } = this.getCatalogAndProgramMaps(catalog);
+    const catalogCategory = catalogMap[category];
 
+    if (catalogCategory) {
+      const programs = programMap[category];
+      if (programs) {
+        for (const [key, programName] of Object.entries(programs)) {
+          const section = catalogCategory[key];        
+          if (section) {
+            for (const video of section) {
+              if (video.id == currentVideoId) {
+                //console.log(`o programa é ${programName}`);
+                return programName;
+              }
+            }
+          }
+        }
+      }
+    }
+    //console.log("o programa é unb tv");
+    return "unbtv";
+  }
+
+  //recomenda os videos do mesmo programa e depois videos da mesma categoria
+  recommendVideo(videos: IVideo[], catalog: Catalog, currentVideoCategory: string, watchedVideos: IVideo[], program: string): any {
+    const { catalogMap } = this.getCatalogAndProgramMaps(catalog);
+
+    const programMap = catalogMap[currentVideoCategory];
+
+    if (!programMap) {
+      return -1;
+    }
+
+    const currentProgram = programMap[program];
+    //console.log("currentProgram: ", currentProgram)
+
+    if (currentProgram) {
+      const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+      if (videoNaoAssistido) {
+        return videoNaoAssistido.id;
+      }
+    }
+
+    // Se já assistiu todos os vídeos do programa atual, procurar em outros programas da mesma categoria
+    const videoNaoAssistidoDeOutraCategoria = videos.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+    if (videoNaoAssistidoDeOutraCategoria) {
+      return videoNaoAssistidoDeOutraCategoria.id;
+    }
+    return -1;
+  }
 
   //Assistir Mais Tarde
   addToWatchLater(videoId: string, userId: string): Observable<any> {
-    console.log(videoId,userId)
+    //console.log(videoId,userId)
     return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
   }
 
@@ -280,7 +398,7 @@ export class VideoService {
 
   // Favoritar
   addToFavorite(videoId: string, userId: string): Observable<any> {
-    console.log('Adding to favorite:', videoId, userId)
+    //console.log('Adding to favorite:', videoId, userId)
     return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
   }
 

@@ -62,4 +62,8 @@ export class AuthService {
   setupAdmin(data: any): Observable<any> {
     return this.http.post(`${this.usersAPIURL}/auth/admin-setup`, data);
   }
+
+  super_admin_setup(data: any): Observable<any> {
+    return this.http.post(`${this.usersAPIURL}/auth/super-admin-setup`, data);
+  }
 }
