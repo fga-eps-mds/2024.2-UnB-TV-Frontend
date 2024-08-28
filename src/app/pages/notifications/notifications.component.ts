@@ -49,31 +49,33 @@ export class NotificationsComponent implements OnInit {
     this.userId = decodedToken.id;
   }
 
-  fetchRecommendedVideos(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  fetchRecommendedVideos(): void {
+    if (this.isAuthenticated) {
       const token = localStorage.getItem('token') as string;
       this.notificationService.setUserIdFromToken(token);
-
+  
       this.notificationService.fetchRecommendedVideosCount(this.notificationService.userId)
         .subscribe({
           next: (response) => {
-            this.recommendedVideos = response.recommend_videos;
-            this.numberOfRecommendedVideos = this.recommendedVideos.length;
-
-            // Log para verificar o conteúdo dos vídeos recomendados
+            if (response && Array.isArray(response.recommend_videos)) {
+              const recommended_video_ids = response.recommend_videos.map((id: number) => String(id)); 
+  
+              this.recommendedVideos = this.unbTvVideos.filter(video => recommended_video_ids.includes(String(video.id))); 
+            } else {
+              console.warn('A estrutura da resposta da API não está conforme o esperado:', response);
+            }
+  
             console.log('Vídeos recomendados recebidos:', this.recommendedVideos);
             console.log(this.recommendedVideos[0]);
-
-            resolve();
+            this.numberOfRecommendedVideos = this.recommendedVideos.length;
           },
           error: (error) => {
             console.log('Erro ao buscar vídeos recomendados', error);
-            reject(error);
           }
         });
-    });
+    }
   }
-
+    
   markAsRead(): void {
     // Zera as notificações e atualiza a interface
     localStorage.setItem('notificationsRead', 'true');

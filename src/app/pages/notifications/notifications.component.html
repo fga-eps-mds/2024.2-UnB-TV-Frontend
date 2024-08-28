@@ -1,18 +1,12 @@
 <div class="videos-container my-4">
   <h1 class="header-title">Notificações</h1>
   <div class="button-container">
-    <!-- <button  class="mark-read-button">Marcar como lido</button> -->
     <button (click)="markAsRead()" class="mark-read-button">Marcar como lido</button> 
   </div>
-  <div class="videos">
-    <div *ngFor="let video of recommendedVideos; trackBy: trackByVideoId" class="flex">
-      <div>
-        <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="thumbnail-wrapper cursor-pointer">
-          <img [src]="image.href" [alt]="video.title" class="w-36 h-[85px] rounded-[7px]" />
-        </div>
-      </div>
-      <div class="flex-grow">
-        <p class="video-title">{{ video.title }}</p>
+  <div class="videos-grid">
+    <div *ngFor="let video of recommendedVideos; trackBy: trackByVideoId" class="video-item">
+      <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="thumbnail-wrapper cursor-pointer">
+        <img [src]="image.href" [alt]="video.title" class="video-thumbnail" />
       </div>
     </div>
   </div>

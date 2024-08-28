@@ -35,20 +35,22 @@ describe('NotificationsComponent', () => {
   });
 
   it('should populate recommendedVideos on fetchRecommendedVideos success', async () => {
-    const recommendedVideos = [
+    component.unbTvVideos = [
       { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
-      { id: 2, title: 'Video 2', channels: [{ id: 1, name: 'unbtv' }] }
+      { id: 2, title: 'Video 2', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 3, title: 'Video 3', channels: [{ id: 1, name: 'unbtv' }] }
     ];
 
+    const recommendedVideoIds = [1, 2];
+
     spyOn(authService, 'isAuthenticated').and.returnValue(true);
-    spyOn(notificationService, 'fetchRecommendedVideosCount').and.returnValue(of({ recommend_videos: recommendedVideos }));
+    spyOn(notificationService, 'fetchRecommendedVideosCount').and.returnValue(of({ recommend_videos: recommendedVideoIds }));
     spyOn(notificationService, 'setUserIdFromToken');
 
     await component.fetchRecommendedVideos();
 
     expect(component.recommendedVideos.length).toBe(2);
-    expect(component.recommendedVideos[0].id).toBe(1);
-    expect(component.recommendedVideos[1].id).toBe(2);
+    expect(component.recommendedVideos.map(v => v.id)).toEqual([1, 2]);
   });
 
   it('should filter videos by channel and populate unbTvVideos', () => {

@@ -1,69 +1,66 @@
-.center {
+.videos-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 75em;
     margin: 0 auto;
+    padding: 0 1.25em;
 }
 
 .header-title {
     color: green;
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
+    margin-bottom: 1.25em;
+    font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
 }
 
-.video-title {
-    font-size: 0.85rem; 
-    font-weight: 600; 
-    color: #333; 
-    margin: 0; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-} 
-
-.thumbnail-wrapper {
-    display: inline-block; 
-    border: 1px solid red; /* Temporário para verificar o contêiner */
-}
-
-.videos-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.videos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease;
-}
-
 .button-container {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25em;
 }
 
 .mark-read-button, .btn-read {
-    background-color: #2980b9; /* Cor unificada para os botões */
+    background-color: #2980b9;
     color: #fff;
     border: none;
-    padding: 12px 24px;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    padding: 0.75em 1.5em;
+    margin-bottom: 1.25em;
+    border-radius: 0.3125em;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1.1em;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .mark-read-button:hover, .btn-read:hover {
     background-color: #1f6395;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 2fr);
+    column-gap: 0.3125em;
+    row-gap: 1em;
+    max-width: 75em;
+}
+
+.video-item {
+    display: flex;
+    justify-content: center;
+}
+
+.thumbnail-wrapper {
+    display: inline-block;
+}
+
+.video-thumbnail {
+    display: block;
+    margin: 0 auto;
+    border-radius: 0.4375em;
+    width: 13.75em;
+    height: 7.75em;
+    box-shadow: 0 0.25em 0.375em rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
