@@ -15,6 +15,7 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, Facebo
 
 // Declaration
 import { NgModule, isDevMode } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -46,6 +47,8 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import {ControleSuperAdminComponent} from './pages/controle-super-admin/controle-super-admin.component'
+
 
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
@@ -80,6 +83,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
       registrationStrategy: 'registerWhenStable:30000'
     }),
     NgChartsModule,
+    CommonModule,
   ],
 
   declarations: [
@@ -109,7 +113,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     VideoViewsComponent,
     DashboardCategoryComponent,
     RecordComponent,
-    NotificationsComponent,
+    ControleSuperAdminComponent,
   ],
 
   providers: [
