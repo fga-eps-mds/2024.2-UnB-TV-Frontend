@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { VideoService } from 'src/app/services/video.service';
 import { IVideo } from 'src/shared/model/video.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,43 +13,35 @@ import { NotificationService } from 'src/app/services/notification.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnInit {
   unbTvVideos: IVideo[] = [];
   unbTvChannelId = UNB_TV_CHANNEL_ID;
   videosEduplay: IVideo[] = [];
   userId: string = ''; 
-  user: any; 
   isAuthenticated: boolean = false; 
-  favoriteVideos: IVideo[] = [];
+  recommendedVideos: IVideo[] = [];
+  numberOfRecommendedVideos: number = 0;
   catalog: Catalog = new Catalog();
-  numberOfFavoriteVideos: number = 0;
+  notificationsRead: boolean = false;
 
   constructor(
     private videoService: VideoService,
     private authService: AuthService,
     private userService: UserService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.notificationsRead = localStorage.getItem('notificationsRead') === 'true';
+    
     if (this.isAuthenticated) {
       this.setUserIdFromToken(localStorage.getItem('token') as string);
       await this.findAll();
-      await this.getFavoriteVideos();
+      await this.fetchRecommendedVideos();  
+      this.notificationService.fetchRecommendedVideosCount(this.userId);
     }
-    this.notificationService.fetchFavoriteVideosCount();
-  }
-
-  getUserDetails() {
-    this.userService.getUser(this.userId).subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-      error: (err) => {
-        console.error('Error fetching user details', err);
-      }
-    });
   }
 
   setUserIdFromToken(token: string) {
@@ -57,36 +49,43 @@ export class NotificationsComponent {
     this.userId = decodedToken.id;
   }
 
-  getFavoriteVideos(): Promise<void> {
+  fetchRecommendedVideos(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (this.isAuthenticated) {
-        this.videoService.getFavoriteVideos(this.userId).subscribe({
-          next: (data) => {
-            if (data && Array.isArray(data.videoList)) {
-              this.favoriteVideos = data.videoList.map((item: any) => {
+      const token = localStorage.getItem('token') as string;
+      this.notificationService.setUserIdFromToken(token);
 
-                const video = this.unbTvVideos.find(video => String(video.id) === String(item.video_id));
-                return video || null;
-              }).filter((video: IVideo | null): video is IVideo => video !== null); 
-              
-             
-              this.numberOfFavoriteVideos = this.favoriteVideos.length;
-              this.notificationService.updateFavoriteVideosCount(this.numberOfFavoriteVideos);
-              
-            } else {
-              console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
-            }
+      this.notificationService.fetchRecommendedVideosCount(this.notificationService.userId)
+        .subscribe({
+          next: (response) => {
+            this.recommendedVideos = response.recommend_videos;
+            this.numberOfRecommendedVideos = this.recommendedVideos.length;
+
+            // Log para verificar o conteúdo dos vídeos recomendados
+            console.log('Vídeos recomendados recebidos:', this.recommendedVideos);
+            console.log(this.recommendedVideos[0]);
+
             resolve();
           },
           error: (error) => {
-            console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
+            console.log('Erro ao buscar vídeos recomendados', error);
             reject(error);
           }
         });
-      } else {
-        resolve();
-      }
     });
+  }
+
+  markAsRead(): void {
+    // Zera as notificações e atualiza a interface
+    localStorage.setItem('notificationsRead', 'true');
+    this.notificationsRead = true;
+    this.recommendedVideos = [];
+    this.numberOfRecommendedVideos = 0;
+
+    // Atualiza o contador de notificações no serviço para 0
+    this.notificationService.updateRecommendedVideosCount(0);
+
+    // Força a atualização da interface
+    this.cdr.detectChanges();
   }
 
   findAll(): Promise<void> {
@@ -102,6 +101,10 @@ export class NotificationsComponent {
         complete: () => {
           this.filterVideosByChannel(this.videosEduplay);
           this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
+
+          // Verificar o conteúdo dos vídeos carregados
+          console.log('Vídeos do canal UNB TV carregados:', this.unbTvVideos);
+
           resolve();
         },
       });
@@ -121,5 +124,4 @@ export class NotificationsComponent {
   trackByVideoId(index: number, video: IVideo): string {
     return video.id ? video.id.toString() : index.toString();
   }
-
 }

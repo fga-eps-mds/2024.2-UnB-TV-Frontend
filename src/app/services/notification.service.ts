@@ -1,61 +1,43 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { VideoService } from 'src/app/services/video.service';
+import { BehaviorSubject, Observable  } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { IVideo } from 'src/shared/model/video.model';
 import jwt_decode from 'jwt-decode';
-import { HttpClient } from '@angular/common/http';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  public favoriteVideosCountSource = new BehaviorSubject<number>(0);
-  public favoriteVideosCount$ = this.favoriteVideosCountSource.asObservable();
+  public recommendedVideosCountSource = new BehaviorSubject<number>(0);
+  public recommendedVideosCount$ = this.recommendedVideosCountSource.asObservable();
   public userId: string = '';
-  public favoriteVideos: IVideo[] = [];
+  public recommendedVideos: IVideo[] = [];
+  private videoServiceApiURL = environment.videoAPIURL; // URL base correta
 
   constructor(
-    private videoService: VideoService,
+    private http: HttpClient,
     private authService: AuthService
   ) {}
 
-  updateFavoriteVideosCount(count: number) {
-    this.favoriteVideosCountSource.next(count);
+  updateRecommendedVideosCount(count: number) {
+    this.recommendedVideosCountSource.next(count);
   }
 
-  fetchFavoriteVideosCount(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (this.authService.isAuthenticated()) {
-        this.setUserIdFromToken(localStorage.getItem('token') as string);
-        this.videoService.getFavoriteVideos(this.userId).subscribe({
-          next: (data) => {
-            if (data && Array.isArray(data.videoList)) {
-              this.favoriteVideos = data.videoList.map((item: any) => {
-               
-                return { id: item.video_id, ...item };
-              });
-
-              const newCount = this.favoriteVideos.length;
-              this.updateFavoriteVideosCount(newCount);
-            } else {
-              console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
-            }
-            resolve();
-          },
-          error: (error) => {
-            console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
-            reject(error);
-          }
-        });
-      } else {
-        resolve();
-      }
-    });
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
   }
+
+  fetchRecommendedVideosCount(userId: string): Observable<any> {
+    return this.http.get<{ recommend_videos: IVideo[] }>(`${this.videoServiceApiURL}/recommendation/get_recommendation_record/`, {
+      params: { user_id: userId }
+    });
+  }
 }
+
