@@ -1321,5 +1321,28 @@ describe('toggleTracking', () => {
       expect(nextVideoId).toBe(123456); // Invalid category and program
     });
   });  
+
+  describe('getRecommendationFromRecord', () => {
+    it('should get the recommendation from record for a user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        recommend_videos: {
+          1: 'Mock Video Recommendation 1',
+          2: 'Mock Video Recommendation 2',
+        },
+      };
+  
+      service.getRecommendationFromRecord(mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+  
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/recommendation/get_recommendation_record/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+  
+      req.flush(mockResponse);
+    });
+  });
   
 });
