@@ -3,10 +3,10 @@
   <div class="button-container">
     <button (click)="markAsRead()" class="mark-read-button">Marcar como lido</button> 
   </div>
-  <div class="videos-grid">
-    <div *ngFor="let video of recommendedVideos; trackBy: trackByVideoId" class="video-item">
-      <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="thumbnail-wrapper cursor-pointer">
-        <img [src]="image.href" [alt]="video.title" class="video-thumbnail" />
+  <div class="videos">
+    <div *ngFor="let video of recommendedVideos; trackBy: trackByVideoId" class="flex">
+      <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
+        <img [src]="image.href" [alt]="video.title" class="video-img" />
       </div>
     </div>
   </div>
