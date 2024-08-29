@@ -40,6 +40,8 @@ export class VideoViewerComponent implements OnInit {
   idNextVideo: number;
   titleNextVideo: any;
   showTitleNextVideo: boolean = false;
+  recommendedVideos: any = [];
+  recommendedVideo: any;
 
   expandDescription() {
     this.showDescription = !this.showDescription;
@@ -67,7 +69,9 @@ export class VideoViewerComponent implements OnInit {
     this.findVideoById();
     iframe.src = this.eduplayVideoUrl + this.idVideo;
     this.checkRecord();
-    this.findAll();
+    this.checkRecommendation().then(() => {
+      this.findAll();
+    });
   }
 
   checkRecord(): Promise<void> {
@@ -85,10 +89,30 @@ export class VideoViewerComponent implements OnInit {
     });
   }
 
+  checkRecommendation(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.getRecommendationFromRecord(this.userId.toString()).subscribe({
+        next: (response) => {
+          this.recommendedVideos = response;
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error checking record', err);
+          reject(err);
+        }
+      });
+    });
+  }
+
   //Função responsável por trazer todos os vídeos já assistidos pelo usuário
   filterVideosByRecord(): void {
     const keys = Object.keys(this.recordVideos.videos).map(id => parseInt(id, 10))
     this.filteredVideos = this.unbTvVideos.filter(video => video.id !== undefined && keys.includes(video.id));
+  }
+
+  filterRecommendVideo(): void {
+    console.log("teste: ", Object.values(this.recommendedVideos.recommend_videos));
+    this.recommendedVideo = Object.values(this.recommendedVideos.recommend_videos)[0];
   }
 
   findAll(): void {
@@ -112,7 +136,8 @@ export class VideoViewerComponent implements OnInit {
         console.log("vídeos da categoria do atual: ", this.videosByCategory)
         this.filterVideosByRecord();
         console.log("videos assistidos: ", this.filteredVideos)
-        this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program);
+        this.filterRecommendVideo();
+        this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program, this.recommendedVideo);
         //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
         if(this.idNextVideo != -1){
           //Loop para encontrar o título do próximo vídeo
@@ -233,7 +258,6 @@ export class VideoViewerComponent implements OnInit {
       }
     });
   }
-  
 
   // Favoritar
   toggleFavorite() {
