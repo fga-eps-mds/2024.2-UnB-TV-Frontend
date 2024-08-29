@@ -23,6 +23,7 @@ class VideoServiceMock {
     };
     return of(new HttpResponse({ body: mockVideo }));
   }
+
   getRecommendationFromRecord(userId: string) {
     const mockRecommendation = {
       recommend_videos: {
@@ -32,7 +33,6 @@ class VideoServiceMock {
     };
     return of(mockRecommendation);
   }
-
 
   //Procurar próximo vídeo
   findAll() {
@@ -343,12 +343,12 @@ describe('VideoViewerComponent', () => {
   // Histórico
   it('should call addToRecord service method with the correct parameters', () => {
     const addToRecordSpy = spyOn(videoService, 'addToRecord').and.callThrough();
-
+  
     component.userId = '12345';
     component.idVideo = 67890;
 
     component.addRecord();
-
+  
     expect(addToRecordSpy).toHaveBeenCalledWith('12345', '67890');
 
     expect(addToRecordSpy(component.userId, component.idVideo.toString()).subscribe).toBeDefined();
@@ -387,26 +387,53 @@ describe('VideoViewerComponent', () => {
       { id: 1, title: 'Video 1', channels: [{ id: 12, name: "unbtvchannel" }] },
       { id: 2, title: 'Video 2', channels: [{ id: 13, name: "otherchannel" }] }
     ];
-
+  
     component.unbTvChannelId = 12;
     component.unbTvVideos = [];
-
+  
     component.filterVideosByChannel(mockVideos);
-
+  
     expect(component.unbTvVideos.length).toBe(1);
     expect(component.unbTvVideos[0].id).toBe(1);
   });
-
+  
   it('should call checkRecord service method and set recordVideos video-viewer', async () => {
     const expectedResponse = [{ id: 1, title: 'Video 1' }];
     const checkRecordSpy = spyOn(videoService, 'checkRecord').and.returnValue(of(expectedResponse));
-
+  
     component.userId = '12345';
-
+    
     await component.checkRecord();
-
+    
     expect(checkRecordSpy).toHaveBeenCalledWith('12345');
     expect(component.recordVideos).toEqual(expectedResponse);
   });
+
+  it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
+    const expectedResponse = { track_enabled: true };
+    const checkTrackingStatusSpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of(expectedResponse));
+    
+    component.userId = '1';
+    component.checkTrackingStatus().then(() => {
+      expect(checkTrackingStatusSpy).toHaveBeenCalledWith('1');
+      expect(component.trackingEnabled).toBe(true);
+      console.log('Tracking status:', component.trackingEnabled);
+    });
+    
+    tick(); // Simula a passagem do tempo para a chamada assíncrona
+  }));
+  
+  it('should handle checkTrackingStatus errors gracefully', fakeAsync(() => {
+    const checkTrackingStatusSpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error').and.callThrough(); // Usando callThrough para garantir que a função original ainda seja chamada
+  
+    component.userId = '1';
+    component.checkTrackingStatus().catch(() => {
+      expect(checkTrackingStatusSpy).toHaveBeenCalledWith('1');
+      expect(component.trackingEnabled).toBeTrue();
+    });
+  
+    tick(); // Simula a passagem do tempo para a chamada assíncrona
+  }));
 
 });
