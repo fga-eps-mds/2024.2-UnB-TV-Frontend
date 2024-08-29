@@ -92,7 +92,7 @@ const routes: Routes = [
   {
     path: 'update-role',
     component: UpdateRoleComponent,
-    canActivate: [AdminGuard],
+    canActivate: [TokenSuperAdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
   {
