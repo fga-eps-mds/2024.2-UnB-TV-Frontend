@@ -17,13 +17,19 @@
       </h4>
       <div class="button-container" *ngIf="userId!==''">
         <button class="favorite-button" (click)="toggleFavorite()" [class.favorited]="isFavorite">
-          <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon"/> 
+          <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon"/>
           <span *ngIf="isFavorite"> Favoritado</span>
           <span *ngIf="!isFavorite"> Favoritar </span>
-        </button> 
+        </button>
         <button class="watch-later-button" (click)="toggleWatchLater()" [ngClass]="{'watch-later-active': isWatchLater}">
           {{ isWatchLater ? 'Remover da lista': 'Assistir Mais Tarde'}}
         </button>
+        <button class="next-video-button" [title]="titleNextVideo" (click)="nextVideo()">
+          Próximo Vídeo
+          <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
+        </button>
+      </div>
+      <div class="button-container" *ngIf="userId==''">
         <button class="next-video-button" [title]="titleNextVideo" (click)="nextVideo()">
           Próximo Vídeo
           <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
