@@ -23,6 +23,16 @@ class VideoServiceMock {
     };
     return of(new HttpResponse({ body: mockVideo }));
   }
+  getRecommendationFromRecord(userId: string) {
+    const mockRecommendation = {
+      recommend_videos: {
+        1: 'Mock Video Recommendation 1',
+        2: 'Mock Video Recommendation 2',
+      },
+    };
+    return of(mockRecommendation);
+  }
+
 
   //Procurar próximo vídeo
   findAll() {
@@ -333,12 +343,12 @@ describe('VideoViewerComponent', () => {
   // Histórico
   it('should call addToRecord service method with the correct parameters', () => {
     const addToRecordSpy = spyOn(videoService, 'addToRecord').and.callThrough();
-  
+
     component.userId = '12345';
     component.idVideo = 67890;
 
     component.addRecord();
-  
+
     expect(addToRecordSpy).toHaveBeenCalledWith('12345', '67890');
 
     expect(addToRecordSpy(component.userId, component.idVideo.toString()).subscribe).toBeDefined();
@@ -377,35 +387,26 @@ describe('VideoViewerComponent', () => {
       { id: 1, title: 'Video 1', channels: [{ id: 12, name: "unbtvchannel" }] },
       { id: 2, title: 'Video 2', channels: [{ id: 13, name: "otherchannel" }] }
     ];
-  
+
     component.unbTvChannelId = 12;
     component.unbTvVideos = [];
-  
+
     component.filterVideosByChannel(mockVideos);
-  
+
     expect(component.unbTvVideos.length).toBe(1);
     expect(component.unbTvVideos[0].id).toBe(1);
   });
-  
+
   it('should call checkRecord service method and set recordVideos video-viewer', async () => {
     const expectedResponse = [{ id: 1, title: 'Video 1' }];
     const checkRecordSpy = spyOn(videoService, 'checkRecord').and.returnValue(of(expectedResponse));
-  
+
     component.userId = '12345';
-    
+
     await component.checkRecord();
-    
+
     expect(checkRecordSpy).toHaveBeenCalledWith('12345');
     expect(component.recordVideos).toEqual(expectedResponse);
   });
 
-  /*it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
-    const mySpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of({ track_enabled: true }));
-    component.userId = '1';
-    tick(); // Simulate passage of time for the async call
-    component.checkTrackingStatus().then(() => {
-      expect(mySpy).toHaveBeenCalledWith('1');
-      expect(component.trackingEnabled).toBe(true);
-    });
-  }));*/
 });
