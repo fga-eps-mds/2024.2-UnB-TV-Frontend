@@ -42,6 +42,7 @@ export class VideoViewerComponent implements OnInit {
   showTitleNextVideo: boolean = false;
   recommendedVideos: any = [];
   recommendedVideo: any;
+  trackingEnabled: boolean = true;
 
   expandDescription() {
     this.showDescription = !this.showDescription;
@@ -102,6 +103,11 @@ export class VideoViewerComponent implements OnInit {
         }
       });
     });
+  }
+  async checkTrackingStatus(): Promise<void> {
+    const status = await this.videoService.checkTrackingStatus(this.userId).toPromise();
+    this.trackingEnabled = status.track_enabled;
+    console.log('Tracking status:', this.trackingEnabled);
   }
 
   //Função responsável por trazer todos os vídeos já assistidos pelo usuário
@@ -178,7 +184,7 @@ export class VideoViewerComponent implements OnInit {
         window.location.reload();
       });
     }
-  }  
+  }
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
