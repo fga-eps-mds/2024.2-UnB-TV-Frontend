@@ -12,11 +12,9 @@ import { IEduplayVideosByInstitution } from 'src/shared/model/eduplay-by-institu
 import { environment } from '../environment/environment';
 import { Catalog } from 'src/shared/model/catalog.model';
 
-
 type VideoResponseType = HttpResponse<IVideo>;
 type EduplayByInstitutionResponseType =
   HttpResponse<IEduplayVideosByInstitution>;
-
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +29,7 @@ export class VideoService {
   private selectedCatalogProgram = new BehaviorSubject<IVideo[]>([]);
   //catalog: Catalog = new Catalog();
 
-
   constructor(private http: HttpClient) { }
-
 
   findAll(): Observable<EduplayByInstitutionResponseType> {
     let headers = new HttpHeaders({ clientkey: this.eduplayClientKey });
@@ -43,10 +39,8 @@ export class VideoService {
     );
   }
 
-
   findVideoById(idVideo: number): Observable<VideoResponseType> {
     let headers = new HttpHeaders({ clientkey: this.eduplayClientKey });
-
 
     return this.http.get<IVideo>(`${this.resourceUrl}/${idVideo}`, {
       headers: headers,
@@ -54,16 +48,13 @@ export class VideoService {
     });
   }
 
-
   setVideosCatalog(videos: IVideo[]) {
     this.selectedCatalogProgram.next(videos);
   }
 
-
   getVideosCatalog(): Observable<IVideo[]> {
     return this.selectedCatalogProgram.asObservable();
   }
-
 
   //atribui categoria aos videos
   videosCatalog(videos: IVideo[], catalog: Catalog): void {
@@ -224,10 +215,8 @@ export class VideoService {
       },
     ];
 
-
     videos.forEach((video) => {
       const keywordsTitle = video?.title?.toLowerCase() ?? '';
-
 
       if (keywordsTitle) {
         const category = keywordsCategories.find((config) =>
@@ -375,7 +364,6 @@ export class VideoService {
     return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
   }
 
-
   removeFromWatchLater(videoId: string, userId: string): Observable<any> {
     return this.http.delete(`${this.videoServiceApiURL}/watch-later/${videoId}`, {
       params: { user_id: userId }
@@ -388,13 +376,11 @@ export class VideoService {
     });
   }
 
-
   getWatchLaterVideos(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/watch-later/`, {
       params: { user_id: userId }
     });
   }
-
 
   // Favoritar
   addToFavorite(videoId: string, userId: string): Observable<any> {
@@ -402,62 +388,57 @@ export class VideoService {
     return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
   }
 
-
   removeFromFavorite(videoId: string, userId: string): Observable<any> {
     return this.http.delete(`${this.videoServiceApiURL}/favorite/${videoId}`, {
       params: { user_id: userId }
     });
   }
  
-
-
   checkFavorite(videoId: string, userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/favorite/status/${videoId}`, {
       params: { user_id: userId }
     });
   }
 
-
   getFavoriteVideos(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/favorite/`, {
       params: { user_id: userId }
     });
   }
-   // Historico
+  
+  // Historico
   checkRecord(userId: string): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record/`, {
       params: { user_id: userId }
     });
   }
 
-
- addToRecord(userId: string, videoId: string): Observable<any> {
+  addToRecord(userId: string, videoId: string): Observable<any> {
     const currentDateTime: string = new Date().toLocaleString();
     return this.http.post(`${this.videoServiceApiURL}/record/`, { user_id: userId.toString(), videos: { [videoId]: currentDateTime}});
   }
 
-
   toggleTracking(userId: string, track: boolean): Observable<any> {
-  return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
-    params: { user_id: userId, track: track.toString() }
-  });
-}
+    return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
+      params: { user_id: userId, track: track.toString() }
+    });
+  }
 
+  getRecordSorted(userId: string, ascending: boolean): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {
+      params: { user_id: userId, ascending: ascending.toString() }
+    });
+  }
 
-getRecordSorted(userId: string, ascending: boolean): Observable<any> {
-  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {
-    params: { user_id: userId, ascending: ascending.toString() }
-  });
-}
+  checkTrackingStatus(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_tracking_status/`, {
+      params: { user_id: userId }
+    });
+  }
 
-
-checkTrackingStatus(userId: string): Observable<any> {
-  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_tracking_status/`, {
-    params: { user_id: userId }
-  });
-}
-
-
-
-
+  getRecommendationFromRecord(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/recommendation/get_recommendation_record/`, {
+      params: { user_id: userId }
+    });
+  }
 }
