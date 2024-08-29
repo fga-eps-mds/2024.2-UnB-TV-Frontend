@@ -331,30 +331,37 @@ export class VideoService {
   }
 
   //recomenda os videos do mesmo programa e depois videos da mesma categoria
-  recommendVideo(videos: IVideo[], catalog: Catalog, currentVideoCategory: string, watchedVideos: IVideo[], program: string): any {
+  recommendVideo(videos: IVideo[], catalog: Catalog, currentVideoCategory: string, watchedVideos: IVideo[], program: string, recommendedVideo: any): any {
     const { catalogMap } = this.getCatalogAndProgramMaps(catalog);
 
     const programMap = catalogMap[currentVideoCategory];
 
-    if (!programMap) {
+    /*if (!programMap) {
       return -1;
-    }
+    }*/
 
-    const currentProgram = programMap[program];
-    //console.log("currentProgram: ", currentProgram)
+    if(program != 'unbtv'){
+      const currentProgram = programMap[program];
+      //console.log("currentProgram: ", currentProgram)
 
-    if (currentProgram) {
-      const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
-      if (videoNaoAssistido) {
-        return videoNaoAssistido.id;
+      if (currentProgram) {
+        const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+        if (videoNaoAssistido) {
+          return videoNaoAssistido.id;
+        }
+      }
+
+      // Se já assistiu todos os vídeos do programa atual, procurar em outros programas da mesma categoria
+      const videoNaoAssistidoDeOutraCategoria = videos.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
+      if (videoNaoAssistidoDeOutraCategoria) {
+        return videoNaoAssistidoDeOutraCategoria.id;
       }
     }
 
-    // Se já assistiu todos os vídeos do programa atual, procurar em outros programas da mesma categoria
-    const videoNaoAssistidoDeOutraCategoria = videos.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
-    if (videoNaoAssistidoDeOutraCategoria) {
-      return videoNaoAssistidoDeOutraCategoria.id;
+    if(recommendedVideo){
+      return recommendedVideo;
     }
+
     return -1;
   }
 
