@@ -64,15 +64,20 @@ export class VideoViewerComponent implements OnInit {
     if (this.authService.isAuthenticated()){
       this.setUserIdFromToken(localStorage.getItem('token') as string);
       this.getUserDetails();
+      this.checkTrackingStatus();
       this.addRecord();
-    }
-
-    this.findVideoById();
-    iframe.src = this.eduplayVideoUrl + this.idVideo;
-    this.checkRecord();
-    this.checkRecommendation().then(() => {
+      this.findVideoById();
+      iframe.src = this.eduplayVideoUrl + this.idVideo;
+      this.checkRecord();
+      this.checkRecommendation().then(() => {
+        this.findAll();
+      });
+    }else{
+      this.findVideoById();
+      iframe.src = this.eduplayVideoUrl + this.idVideo;
+      this.checkRecord();
       this.findAll();
-    });
+    }
   }
 
   checkRecord(): Promise<void> {
@@ -104,6 +109,7 @@ export class VideoViewerComponent implements OnInit {
       });
     });
   }
+
   async checkTrackingStatus(): Promise<void> {
     const status = await this.videoService.checkTrackingStatus(this.userId).toPromise();
     this.trackingEnabled = status.track_enabled;
@@ -128,32 +134,57 @@ export class VideoViewerComponent implements OnInit {
         this.filterVideosByChannel(this.videosEduplay);
         this.videoService.videosCatalog(this.unbTvVideos, this.catalog)
 
-        //Loop para encontrar a categoria do vídeo atual
-        this.unbTvVideos.forEach((video) => {
-          if(video.id == this.idVideo){
-            this.categoryVideo = video.catalog
-            return;
-          }
-        })
-        //Chamada de função para encontrar o programa do vídeo atual
-        this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
+        if(this.authService.isAuthenticated() && this.trackingEnabled){
+          console.log("dentro do if")
+          //Loop para encontrar a categoria do vídeo atual
+          this.unbTvVideos.forEach((video) => {
+            if(video.id == this.idVideo){
+              this.categoryVideo = video.catalog
+              return;
+            }
+          })
+          //Chamada de função para encontrar o programa do vídeo atual
+          this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
 
-        this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
-        console.log("vídeos da categoria do atual: ", this.videosByCategory)
-        this.filterVideosByRecord();
-        console.log("videos assistidos: ", this.filteredVideos)
-        this.filterRecommendVideo();
-        this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program, this.recommendedVideo);
+          this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
+          console.log("vídeos da categoria do atual: ", this.videosByCategory)
+          this.filterVideosByRecord();
+          console.log("videos assistidos: ", this.filteredVideos)
+          this.filterRecommendVideo();
+          this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program, this.recommendedVideo);
+        }else{
+          console.log("dentro do else")
+          console.log("id do video atual: ", this.idVideo)
+          console.log("array de videos unbtv: ", this.unbTvVideos)
+          for(const i in this.unbTvVideos){
+            if(this.unbTvVideos[i].id == this.idVideo){
+              console.log("video encontrado: ", this.unbTvVideos[i])
+              console.log("posição do vídeo atual no array: ", i)
+              if(Number(i) == (this.unbTvVideos.length - 1)){
+                this.idNextVideo = Number(this.unbTvVideos[0].id);
+              }else{
+                this.idNextVideo = Number(this.unbTvVideos[Number(i) + 1].id)
+              }
+              break;
+            }
+          }
+          console.log("próximo video: ", this.unbTvVideos[this.idNextVideo])
+
+        }
         //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
         if(this.idNextVideo != -1){
+          console.log("entrou no if do next video: ", this.idNextVideo)
           //Loop para encontrar o título do próximo vídeo
           this.unbTvVideos.forEach((video) => {
+            //console.log("id do video: ", video.id)
             if(video.id == this.idNextVideo){
+              console.log("entrou aqui")
               this.titleNextVideo = video.title;
               return;
             }
           })
         }else{
+          console.log("entrou no else do next video")
           this.titleNextVideo = "Não há vídeo para ser recomendado"
         }
         console.log("id do próximo vídeo: ", this.idNextVideo)
