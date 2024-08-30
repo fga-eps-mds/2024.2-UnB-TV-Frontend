@@ -123,7 +123,6 @@ export class VideoViewerComponent implements OnInit {
   }
 
   filterRecommendVideo(): void {
-    console.log("teste: ", Object.values(this.recommendedVideos.recommend_videos));
     this.recommendedVideo = Object.values(this.recommendedVideos.recommend_videos)[0];
   }
 
@@ -135,7 +134,6 @@ export class VideoViewerComponent implements OnInit {
         this.videoService.videosCatalog(this.unbTvVideos, this.catalog)
 
         if(this.authService.isAuthenticated() && this.trackingEnabled){
-          console.log("dentro do if")
           //Loop para encontrar a categoria do vídeo atual
           this.unbTvVideos.forEach((video) => {
             if(video.id == this.idVideo){
@@ -147,19 +145,12 @@ export class VideoViewerComponent implements OnInit {
           this.program = this.videoService.findProgramName(this.catalog, this.categoryVideo, this.idVideo);
 
           this.videosByCategory = this.videoService.filterVideosByCategory(this.unbTvVideos, this.categoryVideo);
-          console.log("vídeos da categoria do atual: ", this.videosByCategory)
           this.filterVideosByRecord();
-          console.log("videos assistidos: ", this.filteredVideos)
           this.filterRecommendVideo();
           this.idNextVideo = this.videoService.recommendVideo(this.videosByCategory, this.catalog, this.categoryVideo, this.filteredVideos, this.program, this.recommendedVideo);
         }else{
-          console.log("dentro do else")
-          console.log("id do video atual: ", this.idVideo)
-          console.log("array de videos unbtv: ", this.unbTvVideos)
           for(const i in this.unbTvVideos){
             if(this.unbTvVideos[i].id == this.idVideo){
-              console.log("video encontrado: ", this.unbTvVideos[i])
-              console.log("posição do vídeo atual no array: ", i)
               if(Number(i) == (this.unbTvVideos.length - 1)){
                 this.idNextVideo = Number(this.unbTvVideos[0].id);
               }else{
@@ -168,27 +159,20 @@ export class VideoViewerComponent implements OnInit {
               break;
             }
           }
-          console.log("próximo video: ", this.unbTvVideos[this.idNextVideo])
 
         }
         //Se o id for diferente de -1, o usuário ainda não viu todos os vídeos da categoria atual
         if(this.idNextVideo != -1){
-          console.log("entrou no if do next video: ", this.idNextVideo)
           //Loop para encontrar o título do próximo vídeo
           this.unbTvVideos.forEach((video) => {
-            //console.log("id do video: ", video.id)
             if(video.id == this.idNextVideo){
-              console.log("entrou aqui")
               this.titleNextVideo = video.title;
               return;
             }
           })
         }else{
-          console.log("entrou no else do next video")
           this.titleNextVideo = "Não há vídeo para ser recomendado"
         }
-        console.log("id do próximo vídeo: ", this.idNextVideo)
-        console.log("título do próximo vídeo: ", this.titleNextVideo)
       },
       error: (error) => {
         console.log(error);

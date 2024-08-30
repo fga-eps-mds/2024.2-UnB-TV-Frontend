@@ -318,7 +318,6 @@ export class VideoService {
           if (section) {
             for (const video of section) {
               if (video.id == currentVideoId) {
-                //console.log(`o programa é ${programName}`);
                 return programName;
               }
             }
@@ -326,7 +325,6 @@ export class VideoService {
         }
       }
     }
-    //console.log("o programa é unb tv");
     return "unbtv";
   }
 
@@ -342,7 +340,6 @@ export class VideoService {
 
     if(program != 'unbtv'){
       const currentProgram = programMap[program];
-      //console.log("currentProgram: ", currentProgram)
 
       if (currentProgram) {
         const videoNaoAssistido = currentProgram.find((video: IVideo) => !watchedVideos.some((v: IVideo) => v.id === video.id));
@@ -367,7 +364,6 @@ export class VideoService {
 
   //Assistir Mais Tarde
   addToWatchLater(videoId: string, userId: string): Observable<any> {
-    //console.log(videoId,userId)
     return this.http.post(`${this.videoServiceApiURL}/watch-later/`, { video_id: videoId, user_id: userId });
   }
 
@@ -391,7 +387,6 @@ export class VideoService {
 
   // Favoritar
   addToFavorite(videoId: string, userId: string): Observable<any> {
-    //console.log('Adding to favorite:', videoId, userId)
     return this.http.post(`${this.videoServiceApiURL}/favorite/`, { video_id: videoId, user_id: userId });
   }
 
