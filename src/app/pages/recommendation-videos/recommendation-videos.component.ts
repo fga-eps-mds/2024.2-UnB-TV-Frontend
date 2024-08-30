@@ -49,7 +49,7 @@ export class RecommendationVideosComponent implements OnInit {
         this.recommendVideosByRecord();
       },
       error: (err) => {
-        console.error('Error fetching user details', err);
+        console.error('Erro ao buscar detalhes do usuário', err);
       }
     });
   }
@@ -65,4 +65,30 @@ export class RecommendationVideosComponent implements OnInit {
       }
     });
   }
+
+  findAll(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.videoService.findAll().subscribe({
+        next: (data) => {
+          this.videosEduplay = data.body?.videoList ?? [];
+          this.filterVideosByChannel(this.videosEduplay);
+          this.videoService.videosCatalog(this.unbTvVideos, this.catalog);
+          resolve(); 
+        },
+        error: (error) => {
+          console.log(error);
+          reject(error); 
+        }
+      });
+    });
+  }
+
+  filterVideosByChannel(videos: IVideo[]): void {
+    videos.forEach((video) => {
+      const channel = video?.channels;
+      if ( channel && channel[0].id === this.unbTvChannelId) {
+        this.unbTvVideos.push(video);
+      }
+    }
+  )};
 }
