@@ -148,7 +148,7 @@ export class DashboardCategoryComponent implements OnInit {
     const videoCountsPizza = Array.from(categoryMap.values()).map(data => ((data.count / this.videosAllCategories) * 100).toFixed(2));
     const totalViewsPizza = Array.from(categoryMap.values()).map(data => ((data.views / this.viewsAllCategories) * 100).toFixed(2));
 
-    new Chart(this.videoCountChartRef.nativeElement, {
+    let graphVideoCountBar = new Chart(this.videoCountChartRef.nativeElement, {
       type: 'bar',
       data: {
         labels: categories,
@@ -173,7 +173,7 @@ export class DashboardCategoryComponent implements OnInit {
       }
     });
 
-    new Chart(this.totalViewsChartRef.nativeElement, {
+    let graphTotalViewsBar = new Chart(this.totalViewsChartRef.nativeElement, {
       type: 'bar',
       data: {
         labels: categories,
@@ -198,7 +198,7 @@ export class DashboardCategoryComponent implements OnInit {
       }
     });
 
-    new Chart(this.viewsPerVideoChartRef.nativeElement, {
+    let graphViewsPerVideoBar = new Chart(this.viewsPerVideoChartRef.nativeElement, {
       type: 'bar',
       data: {
         labels: categories,
@@ -223,7 +223,7 @@ export class DashboardCategoryComponent implements OnInit {
       }
     });
     
-    new Chart(this.videoCountChartPizzaRef.nativeElement, {
+    let graphVideoCountPizza = new Chart(this.videoCountChartPizzaRef.nativeElement, {
       type: 'pie',
       data: {
         labels: categories,
@@ -256,7 +256,7 @@ export class DashboardCategoryComponent implements OnInit {
       }
     });
 
-    new Chart(this.totalViewsChartPizzaRef.nativeElement, {
+    let graphTotalViewsPizza = new Chart(this.totalViewsChartPizzaRef.nativeElement, {
       type: 'pie',
       data: {
         labels: categories,

@@ -71,4 +71,8 @@ export class ActiveAccountComponent implements OnInit {
   navigator(rota: string): void {
     this.router.navigate([rota]);
   }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
+  }
 }

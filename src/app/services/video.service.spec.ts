@@ -501,87 +501,42 @@ describe('VideoService', () => {
   });
 
   describe('videosCatalog', () => {
-    it('should categorize videos correctly', () => {
-      const mockVideos: IVideo[] = [
-        {
-          id: 1,
-          title: 'Fala, jovem',
-          description: '',
-          keywords: '',
-          visibility: 'PUBLIC',
-          duration: 1000,
-          embed: '',
-          generateLibras: false,
-          generateSubtitle: false,
-          qtAccess: 0,
-          qtLikes: 0,
-          images: [],
-          channels: [],
-        },
-        {
-          id: 2,
-          title: 'Informe UnB',
-          description: '',
-          keywords: '',
-          visibility: 'PUBLIC',
-          duration: 1000,
-          embed: '',
-          generateLibras: false,
-          generateSubtitle: false,
-          qtAccess: 0,
-          qtLikes: 0,
-          images: [],
-          channels: [],
-        },
-        {
-          id: 3,
-          title: 'Esboços: Artista',
-          description: '',
-          keywords: '',
-          visibility: 'PUBLIC',
-          duration: 1000,
-          embed: '',
-          generateLibras: false,
-          generateSubtitle: false,
-          qtAccess: 0,
-          qtLikes: 0,
-          images: [],
-          channels: [],
-        },
-        {
-          id: 4,
-          title: 'Vídeo sem categoria específica',
-          description: '',
-          keywords: '',
-          visibility: 'PUBLIC',
-          duration: 1000,
-          embed: '',
-          generateLibras: false,
-          generateSubtitle: false,
-          qtAccess: 0,
-          qtLikes: 0,
-          images: [],
-          channels: [],
-        },
+    it('should categorize videos correctly based on keywords', () => {
+      const catalog = new Catalog();
+      const videos: IVideo[] = [
+        { id: 1, title: 'Fala, jovem', catalog: '' } as IVideo,
+        { id: 2, title: 'Informe UnB', catalog: '' } as IVideo,
+        { id: 3, title: 'Esboços', catalog: '' } as IVideo,
+        { id: 4, title: 'Unknown title', catalog: '' } as IVideo,
       ];
-
-      // expect(mockVideos[0]['catalog']).toBe('Jornalismo');
-      // expect(service.catalog.journalism.falaJovem).toContain(mockVideos[0]);
-
-
-      // expect(mockVideos[1]['catalog']).toBe('Jornalismo');
-      // expect(service.catalog.journalism.informeUnB).toContain(mockVideos[1]);
-
-
-      // expect(mockVideos[2]['catalog']).toBe('Arte e Cultura');
-      // expect(service.catalog.artAndCulture.esbocos).toContain(mockVideos[2]);
-
-
-      // expect(mockVideos[3]['catalog']).toBe('UnBTV');
-      // expect(service.catalog.unbtv).toContain(mockVideos[3]);
+  
+      service.videosCatalog(videos, catalog);
+  
+      expect(videos[0]['catalog']).toBe('Jornalismo');
+      expect(catalog.journalism.falaJovem).toContain(videos[0]);
+  
+      expect(videos[1]['catalog']).toBe('Jornalismo');
+      expect(catalog.journalism.informeUnB).toContain(videos[1]);
+  
+      expect(videos[2]['catalog']).toBe('Arte e Cultura');
+      expect(catalog.artAndCulture.esbocos).toContain(videos[2]);
+  
+      expect(videos[3]['catalog']).toBe('UnBTV');
+      expect(catalog.unbtv).toContain(videos[3]);
+    });
+  
+    it('should handle videos with titles not matching any keyword and assign them to UnBTV category', () => {
+      const catalog = new Catalog();
+      const videos: IVideo[] = [
+        { id: 1, title: 'Unknown Video', catalog: '' } as IVideo
+      ];
+  
+      service.videosCatalog(videos, catalog);
+  
+      expect(videos[0]['catalog']).toBe('UnBTV');
+      expect(catalog.unbtv).toContain(videos[0]);
     });
   });
-
 
   describe('addToWatchLater', () => {
     it('should add a video to the watch later list', () => {
@@ -941,21 +896,27 @@ describe('toggleTracking', () => {
         { id: 2, title: 'Video 2', catalog: 'Documentais' } as IVideo,
         { id: 3, title: 'Video 3', catalog: 'Jornalismo' } as IVideo
       ];
-
-      const result = filterVideosByCategory(videos, 'Jornalismo');
-
+  
+      const result = service.filterVideosByCategory(videos, 'Jornalismo');
+  
       expect(result.length).toBe(2);
       expect(result).toEqual([videos[0], videos[2]]);
     });
-
+  
     it('should return an empty array if no videos match the category', () => {
       const videos = [
         { id: 1, title: 'Video 1', catalog: 'Documentais' } as IVideo,
         { id: 2, title: 'Video 2', catalog: 'Variedades' } as IVideo
       ];
-
-      const result = filterVideosByCategory(videos, 'Jornalismo');
-
+  
+      const result = service.filterVideosByCategory(videos, 'Jornalismo');
+  
+      expect(result.length).toBe(0);
+    });
+  
+    it('should handle an empty video list', () => {
+      const videos: IVideo[] = [];
+      const result = service.filterVideosByCategory(videos, 'Jornalismo');
       expect(result.length).toBe(0);
     });
   });

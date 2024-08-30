@@ -165,4 +165,8 @@ export class CatalogComponent implements OnInit {
     this.videoService.setVideosCatalog(videos);
     this.router.navigate(['/videos']);
   }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
+  }
 }

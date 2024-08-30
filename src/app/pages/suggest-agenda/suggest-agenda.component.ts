@@ -81,14 +81,12 @@ export class SuggestAgendaComponent implements OnInit {
         () => {
           this.isSendingEmail = false;
         });
-    } else {
-      if(this.suggestAgendaForm.controls['telefoneResponsavel'].errors?.['telefone_invalido']){
-        this.alertService.showMessage("error", "Erro", "Telefone inválido.");
-      } else if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']){
-        this.alertService.showMessage("error", "Erro", "Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.");
-      }else{
-        this.alertService.showMessage("info", "Alerta", "Preencha todos os campos corretamente!");
-      }
-    }
+    } else if(this.suggestAgendaForm.controls['telefoneResponsavel'].errors?.['telefone_invalido']) {
+      this.alertService.showMessage("error", "Erro", "Telefone inválido.");
+    } else if(this.suggestAgendaForm.controls['urlVideo'].errors?.['url_invalida']) {
+      this.alertService.showMessage("error", "Erro", "Serviços válidos: Youtube, Google Drive, Microsoft Stream, Streamable e Vimeo.");
+    }else{
+      this.alertService.showMessage("info", "Alerta", "Preencha todos os campos corretamente!");
+  }
   }
 }

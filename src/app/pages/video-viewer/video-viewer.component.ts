@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { VideoService } from '../../services/video.service';
 import { IVideo, Video } from 'src/shared/model/video.model';
@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import jwt_decode from 'jwt-decode';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { Catalog } from 'src/shared/model/catalog.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-viewer',
@@ -89,7 +88,7 @@ export class VideoViewerComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error checking record', err);
-          reject(err);
+          reject(new Error(err));
         }
       });
     });
@@ -104,7 +103,7 @@ export class VideoViewerComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error checking record', err);
-          reject(err);
+          reject(new Error(err));
         }
       });
     });
@@ -138,7 +137,6 @@ export class VideoViewerComponent implements OnInit {
           this.unbTvVideos.forEach((video) => {
             if(video.id == this.idVideo){
               this.categoryVideo = video.catalog
-              return;
             }
           })
           //Chamada de função para encontrar o programa do vídeo atual
@@ -167,7 +165,6 @@ export class VideoViewerComponent implements OnInit {
           this.unbTvVideos.forEach((video) => {
             if(video.id == this.idNextVideo){
               this.titleNextVideo = video.title;
-              return;
             }
           })
         }else{
@@ -345,5 +342,9 @@ export class VideoViewerComponent implements OnInit {
     } else {
       console.warn('A API de compartilhamento não é suportada neste navegador.');
     }
+  }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
   }
 }

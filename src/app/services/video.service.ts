@@ -334,10 +334,6 @@ export class VideoService {
 
     const programMap = catalogMap[currentVideoCategory];
 
-    /*if (!programMap) {
-      return -1;
-    }*/
-
     if(program != 'unbtv'){
       const currentProgram = programMap[program];
 

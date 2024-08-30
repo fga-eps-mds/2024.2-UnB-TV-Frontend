@@ -436,4 +436,32 @@ describe('VideoViewerComponent', () => {
     tick(); // Simula a passagem do tempo para a chamada assíncrona
   }));
 
+  it('should handle errors when adding to watch later', fakeAsync(() => {
+    const addSpy = spyOn(videoService, 'addToWatchLater').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error');
+    const alertSpy = spyOn(alertService, 'showMessage');
+  
+    component.isWatchLater = false;  // Simula o estado inicial
+    component.toggleWatchLater();
+    tick();  // Avança o tempo para resolver a Promise
+  
+    expect(addSpy).toHaveBeenCalledWith('190329', '1');
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error adding to watch later', 'Error');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para assistir mais tarde');
+  }));
+  
+  it('should handle errors when removing from watch later', fakeAsync(() => {
+    const removeSpy = spyOn(videoService, 'removeFromWatchLater').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error');
+    const alertSpy = spyOn(alertService, 'showMessage');
+  
+    component.isWatchLater = true;  // Simula o estado inicial
+    component.toggleWatchLater();
+    tick();  // Avança o tempo para resolver a Promise
+  
+    expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error removing from watch later', 'Error');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao remover o vídeo da lista de assistir mais tarde');
+  }));
+
 });
