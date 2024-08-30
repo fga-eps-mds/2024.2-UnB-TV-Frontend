@@ -175,5 +175,25 @@ describe('ControleSuperAdminComponent', () => {
     expect(alertService.showMessage).not.toHaveBeenCalledWith('error', 'Erro', "Usuário não pode receber essa role, por não ter 'unb' no email");
   });
 
+  it('should handle error when updating user role fails', () => {
+    const errorResponse = new HttpErrorResponse({
+      status: 400,
+      statusText: "Usuário não pode receber essa role"
+    });
+    spyOn(userService, 'updateUserRoleSuperAdmin').and.returnValue(throwError(() => errorResponse));
+    spyOn(alertService, 'showMessage').and.callThrough();
+    component.updateUserRole(1, 'ADMIN');
+    expect(alertService.showMessage).toHaveBeenCalledWith(
+      'error',
+      'Erro',
+      "Usuário não pode receber essa role, por não ter 'unb' no email"
+    );
+  });
 
+  it('should handle role change event', () => {
+    spyOn(component, 'updateUserRole').and.callThrough();
+    const event = { target: { value: 'ADMIN' } } as unknown as Event;
+    component.onRoleChange(1, event);
+    expect(component.updateUserRole).toHaveBeenCalledWith(1, 'ADMIN');
+  });
 });
