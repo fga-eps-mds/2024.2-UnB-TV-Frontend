@@ -55,6 +55,10 @@ import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 import { RecordComponent } from './pages/record/record.component';
 import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
+import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
+import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
+import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
+
 
 @NgModule({
   imports: [
@@ -115,6 +119,9 @@ import { RecommendationVideosComponent } from './pages/recommendation-videos/rec
     RecordComponent,
     ControleSuperAdminComponent,
     RecommendationVideosComponent,
+    YourUnBTVComponent,
+    FavoriteVideosComponent,
+    WatchLaterVideosComponent
   ],
 
   providers: [
