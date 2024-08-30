@@ -53,4 +53,16 @@ export class RecommendationVideosComponent implements OnInit {
       }
     });
   }
+
+  recommendVideosByRecord() {
+    this.videoService.getRecommendationFromRecord(this.userId.toString()).subscribe({
+      next: (response) => {
+        const videosID = Object.values(response.recommend_videos).map(id => (id as number).toString());
+        this.recommendVideos = this.unbTvVideos.filter(video => videosID.includes(String(video.id)));
+      },
+      error: (err) => {
+
+      }
+    });
+  }
 }
