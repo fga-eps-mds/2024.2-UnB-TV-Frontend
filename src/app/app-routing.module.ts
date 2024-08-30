@@ -29,6 +29,7 @@ import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
+import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
@@ -133,6 +134,10 @@ const routes: Routes = [
     component: ControleSuperAdminComponent,
     canActivate: [TokenSuperAdminGuard],
   },
+  {
+    path: 'recommendation',
+    component: RecommendationVideosComponent,
+  }
 ];
 
 @NgModule({

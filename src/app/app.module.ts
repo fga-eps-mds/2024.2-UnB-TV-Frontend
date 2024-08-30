@@ -54,6 +54,7 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 import { RecordComponent } from './pages/record/record.component';
+import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
 
 @NgModule({
   imports: [
@@ -113,6 +114,7 @@ import { RecordComponent } from './pages/record/record.component';
     DashboardCategoryComponent,
     RecordComponent,
     ControleSuperAdminComponent,
+    RecommendationVideosComponent,
   ],
 
   providers: [
