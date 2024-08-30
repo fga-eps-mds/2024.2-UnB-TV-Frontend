@@ -101,4 +101,10 @@ export class ControleSuperAdminComponent implements OnInit {
       },
     });
   }
+  onRoleChange(userId: number, event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const newRole = selectElement.value;
+
+    this.updateUserRole(userId, newRole);
+  }
 }
