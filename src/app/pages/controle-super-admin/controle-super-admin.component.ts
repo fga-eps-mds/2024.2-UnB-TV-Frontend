@@ -85,4 +85,20 @@ export class ControleSuperAdminComponent implements OnInit {
     );
     this.userId = decodedToken.id;
   }
+  updateUserRole(id: number, role: string) {
+    this.userService.updateUserRoleSuperAdmin(id, role).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (erro) => {
+        console.error('Erro', erro);
+        this.alertService.showMessage(
+          'error',
+          'Erro',
+          "Usuário não pode receber essa role, por não ter 'unb' no email"
+        );
+        this.loadUsers();
+      },
+    });
+  }
 }
