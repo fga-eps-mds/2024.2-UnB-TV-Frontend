@@ -9,3 +9,25 @@
   border: none;
   box-shadow: none;
 }
+
+:host ::ng-deep .notification-badge-wrapper {
+  pointer-events: none; 
+  position: relative;
+  top: -1em; 
+  left: -1.8em; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .notification-badge {
+  background-color: red; 
+  color: white; 
+  border-radius: 50%;
+  padding: 0.7em 0.5em;
+  font-size: 0.7em;
+  margin-left: 0.5em;
+  display: inline-block;
+  min-width: 1.5em;
+  text-align: center;
+}
