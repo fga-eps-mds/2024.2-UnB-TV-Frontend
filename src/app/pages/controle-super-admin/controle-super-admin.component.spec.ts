@@ -23,6 +23,13 @@ class UserServiceMock {
     // Simulate successful user deletion
     return of(null);
   }
+
+  updateUserRoleSuperAdmin(id: number, role: string) {
+    if (role === 'ADMIN' && !['User 1', 'User 2'].includes('unb')) {
+      return throwError(() => new HttpErrorResponse({ status: 400, statusText: "Usuário não pode receber essa role" }));
+    }
+    return of({});
+  }
 }
 
 class AlertServiceMock {
@@ -155,4 +162,18 @@ describe('ControleSuperAdminComponent', () => {
     expect(confirmationService.confirm).toHaveBeenCalled();
     expect(authService.logout).not.toHaveBeenCalled();
   });
+
+  it('should update user role successfully', () => {
+    const userId = 1;
+    const role = 'ADMIN';
+    spyOn(userService, 'updateUserRoleSuperAdmin').and.returnValue(of({}));
+    spyOn(alertService, 'showMessage').and.callThrough();
+
+    component.updateUserRole(userId, role);
+
+    expect(userService.updateUserRoleSuperAdmin).toHaveBeenCalledWith(userId, role);
+    expect(alertService.showMessage).not.toHaveBeenCalledWith('error', 'Erro', "Usuário não pode receber essa role, por não ter 'unb' no email");
+  });
+
+
 });
