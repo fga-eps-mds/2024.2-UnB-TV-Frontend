@@ -30,6 +30,9 @@ import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
 import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
+import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
+import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
+import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
@@ -137,6 +140,21 @@ const routes: Routes = [
   {
     path: 'recommendation',
     component: RecommendationVideosComponent,
+  }
+  {
+    path: 'sua-unbtv',
+    component: YourUnBTVComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'favorites',
+    component: FavoriteVideosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'watch-later',
+    component: WatchLaterVideosComponent,
+    canActivate: [AuthGuard],
   }
 ];
 
