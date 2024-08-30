@@ -119,5 +119,79 @@ button {
 }
 
 button:hover {
-  background-color: #7ad0eb;
+  background-color: #979ea0;
+}
+
+.btn_and_select_container{
+  display: flex;
+}
+
+/* Estilo para o select */
+select {
+  background-color: #2198d3; /* Cor de fundo do select */
+  border: 1px solid #0087c8; /* Borda do select */
+  color: white; /* Cor do texto no select */
+  padding: 0.5em 1em; /* Espaçamento interno */
+  border-radius: 0.375rem; /* Arredondamento dos cantos */
+  font-size: 1rem; /* Tamanho da fonte */
+  appearance: none; /* Remove a aparência padrão do dropdown */
+  -webkit-appearance: none; /* Remove a aparência padrão do dropdown no Safari/Chrome */
+  -moz-appearance: none; /* Remove a aparência padrão do dropdown no Firefox */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='none' stroke='%23000000' stroke-width='1.5' d='M1 2l4 4 4-4'/%3E%3C/svg%3E"); /* Seta personalizada */
+  background-repeat: no-repeat; /* Não repete a imagem de fundo */
+  background-position: right 1em center; /* Posiciona a seta à direita */
+  background-size: 0.65em; /* Tamanho da seta */
+  cursor: pointer; /* Muda o cursor para pointer */
+  min-width: 12rem;
+}
+
+/* Estilo para o texto readonly */
+.readOnly-text {
+  background-color: #00a550; /* Cor de fundo verde */
+  border: 1px solid #00a550; /* Borda verde */
+  color: white; /* Cor do texto branco */
+  padding: 0.5rem 1rem; /* Espaçamento interno igual ao select */
+  border-radius: 0.375rem; /* Arredondamento dos cantos */
+  font-size: 1rem; /* Tamanho da fonte */
+  display: flex; /* Usado para centralizar verticalmente */
+  align-items: center; /* Centraliza o texto verticalmente */
+  justify-content: center; /* Centraliza o texto horizontalmente */
+  width: auto; /* Define o tamanho automático para alinhar com o conteúdo */
+  min-width: 10rem; /* Define uma largura mínima para o texto readonly */
+  text-align: center; /* Centraliza o texto dentro do elemento */
+  cursor: not-allowed; /* Cursor de proibição padrão */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
+  min-width: 12rem;
+}
+
+/* Efeito hover para o texto readonly */
+.readOnly-text:hover {
+  background-color: #008744; /* Cor de fundo mais escura no hover */
+  box-shadow: 0px 0px 10px rgba(0, 135, 200, 0.3); /* Adiciona sombra ao passar o mouse */
+}
+.readOnly_excluir {
+  background-color: #ff4c4c; /* Vermelho mais escuro */
+  color: white; /* Cor do texto branco */
+  padding: 0.5em 1em; /* Mesmo padding que o botão ativo */
+  border-radius: 5px; /* Mesmo arredondamento que o botão ativo */
+  font-size: 16px; /* Tamanho da fonte alinhado com o botão ativo */
+  display: inline-block; /* Exibir como bloco inline */
+  cursor: not-allowed; /* Cursor de não permitido */
+  text-align: center; /* Centraliza o texto */
+  width: auto; /* Ajusta o tamanho com base no conteúdo */
+  min-width: 80px; /* Largura mínima para alinhar com o botão ativo */
+  border: none; /* Remove qualquer borda */
+  margin-right: 0.5em; /* Mesmo espaçamento à direita que o botão ativo */
+  line-height: 1.5; /* Alinha verticalmente o texto dentro do botão */
+}
+
+/* Estilizando a seta do select */
+select:focus {
+  border-color: #0087c8; /* Cor da borda ao focar */
+  outline: none; /* Remove o contorno ao focar */
+  box-shadow: 0 0 0 0.125rem rgba(0, 135, 200, 0.3); /* Adiciona uma sombra ao focar */
+}
+
+select option {
+  color: #000; /* Cor do texto das opções */
 }
