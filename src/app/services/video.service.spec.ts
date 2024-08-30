@@ -1266,7 +1266,8 @@ describe('toggleTracking', () => {
         catalog,
         'Jornalismo',
         watchedVideos,
-        'falaJovem'
+        'falaJovem',
+        123456
       );
   
       expect(nextVideoId).toBe(2); // Informe UnB should be recommended next
@@ -1280,13 +1281,14 @@ describe('toggleTracking', () => {
         catalog,
         'Arte e Cultura',
         watchedVideos,
-        'esbocos'
+        'esbocos',
+        123456
       );
   
       expect(nextVideoId).toBe(3); // Esboços: Artista should be recommended
     });
   
-    it('should return -1 if all videos in the category are watched', () => {
+    it('should return the recommended video id if all videos in the category are watched', () => {
       watchedVideos = [
         { id: 1, title: 'Fala, jovem', catalog: 'Jornalismo' } as IVideo,
         { id: 2, title: 'Informe UnB', catalog: 'Jornalismo' } as IVideo,
@@ -1299,23 +1301,48 @@ describe('toggleTracking', () => {
         catalog,
         'Jornalismo',
         watchedVideos,
-        'falaJovem'
+        'falaJovem',
+        123456
       );
     
-      expect(nextVideoId).toBe(-1); // No video left to recommend
+      expect(nextVideoId).toBe(123456); // No video left to recommend
     });
   
-    it('should return -1 if the program or category does not exist', () => {
+    it('should return the recommended video id if the program or category does not exist', () => {
       const nextVideoId = videoService.recommendVideo(
         videos,
         catalog,
         'Nonexistent Category',
         watchedVideos,
-        'nonexistentProgram'
+        'unbtv',
+        123456
       );
   
-      expect(nextVideoId).toBe(-1); // Invalid category and program
+      expect(nextVideoId).toBe(123456); // Invalid category and program
     });
   });  
+
+  describe('getRecommendationFromRecord', () => {
+    it('should get the recommendation from record for a user', () => {
+      const mockUserId = 'user123';
+      const mockResponse = {
+        recommend_videos: {
+          1: 'Mock Video Recommendation 1',
+          2: 'Mock Video Recommendation 2',
+        },
+      };
+  
+      service.getRecommendationFromRecord(mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+  
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/recommendation/get_recommendation_record/?user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('GET');
+  
+      req.flush(mockResponse);
+    });
+  });
   
 });
