@@ -1,90 +1,45 @@
 .header-title {
-    color: green; /* Azul escuro para o título */
+    color: green;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
 }
 
-
-.videos-container {
+.container {
+    margin: 1.5em auto;
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: center; 
 }
 
-
-.videos {
+.container-videos {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    flex-wrap: wrap; 
+    gap: 1em; 
+    justify-content: center; 
 }
 
-
-.flex {
+.videos-frame {
+    flex: 0 1 auto; 
     display: flex;
-    flex-direction: column;
     align-items: center;
-    transition: transform 0.3s ease;
+    justify-content: center;
+    width: 10.5em; 
+    height: 6.5em; 
 }
 
-
-.video-img {
-    display: block;
-    margin: 0 auto;
+.videos-frame img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
     border-radius: 7px;
-    width: 220px; /* Mantém a proporção original da imagem */
-    height: 124px; /* Mantém a proporção original da imagem */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-
-.video-img:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px); /* Eleva o vídeo ligeiramente ao passar o mouse */
-}
-
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+.videos-frame img:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px); 
     cursor: pointer;
-    color: #34495e;
-}
-
-
-.checkbox-label input[type="checkbox"] {
-    margin-right: 10px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
-
-
-.record-controls {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-
-.record-controls button {
-    background-color: #2980b9;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-
-.record-controls button:hover {
-    background-color: #1f6395;
 }
