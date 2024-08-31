@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IVideo } from 'src/shared/model/video.model';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { Catalog } from 'src/shared/model/catalog.model';
-import { IVideo } from 'src/shared/model/video.model';
-import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { UserService } from '../../services/user.service';
 import { VideoService } from '../../services/video.service';
+
 
 @Component({
   selector: 'app-recommendation-videos',
@@ -17,10 +18,10 @@ export class RecommendationVideosComponent implements OnInit {
   videosEduplay: IVideo[] = [];
   unbTvVideos: IVideo[] = [];
   catalog: Catalog = new Catalog();
-  userId: string;
+  userId: string; 
   user: any;
   recommendVideos: IVideo[] = [];
-  
+
   constructor(
     private userService: UserService,
     private videoService: VideoService,
@@ -30,8 +31,8 @@ export class RecommendationVideosComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.setUserIdFromToken(localStorage.getItem('token') as string);
     try {
-      await this.findAll();
-      this.getUserDetails();
+      await this.findAll(); 
+      this.getUserDetails(); 
     } catch (error) {
       console.error('Erro ao buscar os vídeos:', error);
     }
@@ -41,7 +42,7 @@ export class RecommendationVideosComponent implements OnInit {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.id;
   }
-
+ 
   getUserDetails() {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
@@ -49,7 +50,7 @@ export class RecommendationVideosComponent implements OnInit {
         this.recommendVideosByRecord();
       },
       error: (err) => {
-        console.error('Erro ao buscar detalhes do usuário', err);
+        console.error('Error fetching user details', err);
       }
     });
   }
@@ -58,10 +59,10 @@ export class RecommendationVideosComponent implements OnInit {
     this.videoService.getRecommendationFromRecord(this.userId.toString()).subscribe({
       next: (response) => {
         const videosID = Object.values(response.recommend_videos).map(id => (id as number).toString());
-        this.recommendVideos = this.unbTvVideos.filter(video => videosID.includes(String(video.id)));
+        
+        this.recommendVideos = this.unbTvVideos.filter(video => videosID.includes(String(video.id))); 
       },
       error: (err) => {
-
       }
     });
   }
@@ -82,13 +83,13 @@ export class RecommendationVideosComponent implements OnInit {
       });
     });
   }
-
+  
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
       const channel = video?.channels;
-      if ( channel && channel[0].id === this.unbTvChannelId) {
+      if (channel && channel[0].id === this.unbTvChannelId) {
         this.unbTvVideos.push(video);
       }
-    }
-  )};
+    });
+  }
 }

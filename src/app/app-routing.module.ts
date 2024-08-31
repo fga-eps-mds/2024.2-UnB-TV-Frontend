@@ -140,7 +140,8 @@ const routes: Routes = [
   {
     path: 'recommendation',
     component: RecommendationVideosComponent,
-  }
+    canActivate: [AuthGuard],
+  },
   {
     path: 'sua-unbtv',
     component: YourUnBTVComponent,
