@@ -431,7 +431,7 @@ export class VideoService {
   }
 
 
- addToRecord(userId: string, videoId: string): Observable<any> {
+  addToRecord(userId: string, videoId: string): Observable<any> {
     const currentDateTime: string = new Date().toLocaleString();
     return this.http.post(`${this.videoServiceApiURL}/record/`, { user_id: userId.toString(), videos: { [videoId]: currentDateTime}});
   }
@@ -441,23 +441,25 @@ export class VideoService {
   return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
     params: { user_id: userId, track: track.toString() }
   });
-}
+  }
 
 
-getRecordSorted(userId: string, ascending: boolean): Observable<any> {
-  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {
-    params: { user_id: userId, ascending: ascending.toString() }
-  });
-}
+  getRecordSorted(userId: string, ascending: boolean): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {
+      params: { user_id: userId, ascending: ascending.toString() }
+    });
+  }
 
 
-checkTrackingStatus(userId: string): Observable<any> {
-  return this.http.get<any>(`${this.videoServiceApiURL}/record/get_tracking_status/`, {
-    params: { user_id: userId }
-  });
-}
+  checkTrackingStatus(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/record/get_tracking_status/`, {
+      params: { user_id: userId }
+    });
+  }
 
-
-
-
+  getRecommendationFromRecord(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.videoServiceApiURL}/recommendation/get_recommendation_record/`, {
+      params: { user_id: userId }
+    });
+  }
 }
