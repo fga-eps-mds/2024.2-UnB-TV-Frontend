@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { VideoService } from 'src/app/services/video.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-controle-super-admin',
@@ -16,6 +17,7 @@ import { VideoService } from 'src/app/services/video.service';
 export class ControleSuperAdminComponent implements OnInit {
   users: any[] = [];
   loading: boolean = true;
+  userId: number = 0;
 
   constructor(
     private videoService: VideoService,
@@ -28,6 +30,7 @@ export class ControleSuperAdminComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getUserid();
     this.loadUsers();
   }
 
@@ -74,5 +77,33 @@ export class ControleSuperAdminComponent implements OnInit {
       },
       reject: () => {},
     });
+  }
+  getUserid() {
+    const decodedToken: any = jwt_decode(
+      localStorage.getItem('token') as string
+    );
+    this.userId = decodedToken.id;
+  }
+  updateUserRole(id: number, role: string) {
+    this.userService.updateUserRoleSuperAdmin(id, role).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (erro) => {
+        console.error('Erro', erro);
+        this.alertService.showMessage(
+          'error',
+          'Erro',
+          "Usuário não pode receber essa role, por não ter 'unb' no email"
+        );
+        this.loadUsers();
+      },
+    });
+  }
+  onRoleChange(userId: number, event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const newRole = selectElement.value;
+
+    this.updateUserRole(userId, newRole);
   }
 }

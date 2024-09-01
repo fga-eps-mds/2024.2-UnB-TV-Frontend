@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from 'src/app/services/user.service';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-
 import { UpdateRoleComponent } from './update-role.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,14 +33,13 @@ const mockData = [
     "role": "USER",
     "is_active": true,
   }
-]
+];
 
 class UserServiceMock {
-  constructor() { }
   getAllUsers() {
-    return of(mockData);
+    return of({ body: mockData, headers: new Headers({'x-total-count': '3'}) });
   }
-  updateUserRole() {
+  updateUserRoleSuperAdmin(id: number, role: string) {
     return of({});
   }
 }
@@ -57,9 +54,9 @@ describe('UpdateRoleComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [UpdateRoleComponent],
       imports: [HttpClientTestingModule, MatPaginatorModule, FormsModule, BrowserAnimationsModule],
-      providers: [{ provide: UserService, useValue: new UserServiceMock() }]
+      providers: [{ provide: UserService, useClass: UserServiceMock }]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(UpdateRoleComponent);
     component = fixture.componentInstance;
@@ -68,8 +65,8 @@ describe('UpdateRoleComponent', () => {
   });
 
   it('should create', () => {
-    let adminToken: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsdWNhc2NhbmRyYWRleDFAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzAwMTAwMDQxfQ.aDhw1xkK55bhUQCm6tSxX4LYxq8hP_b3T8gYUS449F8"
-    localStorage.setItem("token", adminToken)
+    let adminToken: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsdWNhc2NhbmRyYWRleDFAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzAwMTAwMDQxfQ.aDhw1xkK55bhUQCm6tSxX4LYxq8hP_b3T8gYUS449F8";
+    localStorage.setItem("token", adminToken);
 
     component.users = mockData;
     fixture.detectChanges();
@@ -82,15 +79,12 @@ describe('UpdateRoleComponent', () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-
   it('should get all users and data headers is null', () => {
     const mySpy = spyOn(userService, 'getAllUsers').and.returnValue(of({ headers: null, body: [] }));
     component.getAllUsers();
     expect(mySpy).toHaveBeenCalled();
     expect(component.users).toEqual([]);
   });
-
-
 
   it('should get all users and return error', () => {
     const mySpy = spyOn(userService, 'getAllUsers').and.returnValue(throwError(() => new Error('Erro')));
@@ -119,16 +113,21 @@ describe('UpdateRoleComponent', () => {
   });
 
   it('should update user role', () => {
-    const mySpy = spyOn(userService, 'updateUserRole').and.callThrough();
-    component.updateUserRole(1);
-    expect(mySpy).toHaveBeenCalled();
+    const mySpy = spyOn(userService, 'updateUserRoleSuperAdmin').and.callThrough();
+    component.updateUserRole(1, 'ADMIN');
+    expect(mySpy).toHaveBeenCalledWith(1, 'ADMIN');
   });
 
   it('should update user role and return error', () => {
-    const mySpy = spyOn(userService, 'updateUserRole').and.returnValue(throwError(() => new Error('Erro')));
-    component.updateUserRole(1);
-    expect(mySpy).toHaveBeenCalled();
+    const mySpy = spyOn(userService, 'updateUserRoleSuperAdmin').and.returnValue(throwError(() => new Error('Erro')));
+    component.updateUserRole(1, 'ADMIN');
+    expect(mySpy).toHaveBeenCalledWith(1, 'ADMIN');
   });
 
-
+  it('should handle role change event', () => {
+    const mySpy = spyOn(component, 'updateUserRole');
+    const event = { target: { value: 'ADMIN' } } as unknown as Event;
+    component.onRoleChange(1, event);
+    expect(mySpy).toHaveBeenCalledWith(1, 'ADMIN');
+  });
 });

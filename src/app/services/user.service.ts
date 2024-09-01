@@ -56,6 +56,10 @@ export class UserService {
     return this.http.patch(`${this.usersAPIURL}/users/role/${id}`, {});
   }
 
+  updateUserRoleSuperAdmin(id: any, newRole: any): Observable<any> {
+    return this.http.patch(`${this.usersAPIURL}/users/role/superAdmin/${id}`, { role: newRole });
+  }  
+
   deleteUser(id: any): Observable<any> {
     return this.http.delete(`${this.usersAPIURL}/users/${id}`);
   }

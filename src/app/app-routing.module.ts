@@ -33,10 +33,11 @@ import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
 import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
 import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { SuperAdminActivateComponent } from './pages/super-admin-activate/super-admin-activate.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
-
+import { TokenSuperAdminGuard } from './guard/super-admin.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
@@ -96,7 +97,7 @@ const routes: Routes = [
   {
     path: 'update-role',
     component: UpdateRoleComponent,
-    canActivate: [AdminGuard],
+    canActivate: [TokenSuperAdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
 
@@ -107,6 +108,10 @@ const routes: Routes = [
   {
     path: 'adminActivate',
     component: AdminActivateComponent
+  },
+  {
+    path: 'superAdminActivate',
+    component: SuperAdminActivateComponent,
   },
   { 
     path: 'category-views',
@@ -152,7 +157,12 @@ const routes: Routes = [
     path: 'watch-later',
     component: WatchLaterVideosComponent,
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'controleSuperAdmin',
+    component: ControleSuperAdminComponent,
+    canActivate: [TokenSuperAdminGuard],
+  },
 ];
 
 @NgModule({

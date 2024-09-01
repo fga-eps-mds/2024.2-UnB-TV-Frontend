@@ -42,9 +42,29 @@
           <td>{{ user.name }}</td>
           <td>{{ user.connection }}</td>
           <td>{{ user.email }}</td>
-          <th scope="col">{{ user.role }}</th>
-          <td>
-            <button (click)="deleteUser(user.id)">Excluir</button>
+          <th>{{ user.role }}</th>
+          <td class="btn_and_select_container">
+            <button
+              *ngIf="user.id !== userId; else readOnly_exlcuir"
+              (click)="deleteUser(user.id)"
+            >
+              Excluir
+            </button>
+            <select
+              [(ngModel)]="user.role"
+              (change)="onRoleChange(user.id, $event)"
+              *ngIf="user.id !== userId; else readOnly"
+            >
+              <option value="USER">Usuário</option>
+              <option value="ADMIN">Administrador</option>
+              <option value="COADMIN">Co-administrador</option>
+            </select>
+            <ng-template #readOnly>
+              <span class="readOnly-text">Você</span>
+            </ng-template>
+            <ng-template #readOnly_exlcuir>
+              <span class="readOnly_excluir">Excluir</span>
+            </ng-template>
           </td>
         </tr>
       </tbody>
