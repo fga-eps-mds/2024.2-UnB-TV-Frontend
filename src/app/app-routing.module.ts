@@ -36,7 +36,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
-
+import { TokenSuperAdminGuard } from './guard/super-admin.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
