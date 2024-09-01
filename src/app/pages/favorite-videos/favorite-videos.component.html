@@ -1,30 +1,12 @@
-<!--<div class="record-container">
-        <header>
-            <h1 class="header-title">Vídeos Favoritos</h1>
-        </header>
-
-
-         Controle de Rastreamento com Checkbox 
-        <div class="record-controls my-4">
-            <label class="checkbox-label">
-                <input type="checkbox" [(ngModel)]="trackingEnabled" (change)="toggleTracking(trackingEnabled)" />
-                Rastreamento do Histórico
-            </label>
-            <button (click)="sortRecord(true)" class="btn btn-secondary mr-2">Ordenar Crescente</button>
-            <button (click)="sortRecord(false)" class="btn btn-secondary">Ordenar Decrescente</button>
-        </div>
-
-
-        <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl">
-        <div>
-            <div *ngFor="let video of favoriteVideos" class="flex">
-                <div>
-                    <div *ngFor="let image of video.images"  class="cursor-pointer">
-                        <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px]" />
-                    </div>
+<div class="header-title"><h1>Vídeos Favoritos</h1></div>
+<div class="container">
+    <div class="container-videos">
+        <div *ngFor="let video of favoriteVideos">
+            <div>
+                <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="videos-frame">
+                    <img src="{{ image.href }}" alt="{{ video.title }}"/>
                 </div>
             </div>
         </div>
     </div>
 </div>
--->

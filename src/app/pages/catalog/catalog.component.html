@@ -193,7 +193,7 @@
       </div>
     </div>
   </div>
-  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl" *ngIf="filterTitle || filterFavorite || filterWatchLater">
+  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl" *ngIf="filterTitle">
     <div *ngFor="let video of filteredVideos" class="flex">
       <div>
         <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">

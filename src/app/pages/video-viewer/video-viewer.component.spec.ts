@@ -156,20 +156,6 @@ describe('VideoViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /*it('should decode token and set userId as a string', () => {
-    const token = localStorage.getItem('token') as string;
-    const originalJwtDecode = jwt_decode.default;
-
-    // Redefinir a função jwt_decode
-    (jwt_decode as any).default = (): { id: string } => ({ id: '1' });
-
-    component.setUserIdFromToken(token);
-    expect(component.userId).toBe('1'); // Ensure the userId is '1' as string
-
-    // Restaurar a função original após o teste
-    (jwt_decode as any).default = originalJwtDecode;
-  });*/
-
   it('should call findVideoById and set video description', () => {
     const expectedVideo = {
       id: 190329,

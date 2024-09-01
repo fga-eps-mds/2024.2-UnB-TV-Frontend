@@ -21,6 +21,7 @@ export class RecommendationVideosComponent implements OnInit {
   userId: string; 
   user: any;
   recommendVideos: IVideo[] = [];
+  trackingEnabled: boolean = true; // Estado da checkbox de rastreamento
 
   constructor(
     private userService: UserService,
@@ -30,11 +31,23 @@ export class RecommendationVideosComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.setUserIdFromToken(localStorage.getItem('token') as string);
+    this.checkTrackingStatus(); // Verifica o estado inicial do rastreamento
+
     try {
       await this.findAll(); 
       this.getUserDetails(); 
     } catch (error) {
       console.error('Erro ao buscar os vídeos:', error);
+    }
+  }
+
+  checkTrackingStatus(): void {
+    const storedTrackingStatus = localStorage.getItem('trackingEnabled');
+   
+    if (storedTrackingStatus !== null) {
+        this.trackingEnabled = storedTrackingStatus === 'true';
+    } else {
+        this.trackingEnabled = true;
     }
   }
 

@@ -18,10 +18,6 @@ export class BackgroundComponent implements OnInit {
       {
         label: 'Perfil',
         routerLink: '/profile',
-      },
-      {
-        label: 'Histórico de Vídeos',
-        routerLink: '/record',
       }
     ];
     this.identifiesUserDevice();
