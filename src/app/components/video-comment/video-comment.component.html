@@ -8,6 +8,7 @@
       <div
         (click)="toggleComments()"
         class="text-blue-brand w-2 min-w-fit cursor-pointer"
+        (keydown)="dummyKeyDown($event)"
       >
         Recolher comentarios
       </div>
@@ -36,6 +37,7 @@
       *ngIf="!showComments"
       (click)="toggleComments()"
       class="text-blue-brand w-2 min-w-fit cursor-pointer"
+      (keydown)="dummyKeyDown($event)"
     >
       {{ comments.length }} Comentários
     </div>

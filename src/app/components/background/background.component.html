@@ -1,4 +1,4 @@
-<div class="w-full flex h-screen flex-col min-h-screen justify-between">
+<div class="w-full flex flex-col min-h-screen justify-between">
   <nav class="w-full fixed top-0 left-0 z-50 bg-white">
     <div class="pt-10 flex justify-center items-center">
       <img
@@ -65,12 +65,16 @@
             type="button"
             (click)="menu.toggle($event)"
             label="&#9776;"
+            class="menu-button"
           ></button>
+          <div class="notification-badge-wrapper" *ngIf="hasNotifications">
+            <div class="notification-badge"></div> <!-- Badge sem o número -->
+          </div>
         </div>
       </div>
     </div>
   </nav>
-  <div class="flex-grow p-3 mt-28 mb-auto">
+  <div class="flex-grow p-3 mt-40 mb-auto">
     <ng-content></ng-content>
   </div>
   <footer

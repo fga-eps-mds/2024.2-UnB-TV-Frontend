@@ -147,7 +147,9 @@ export class VideoViewsComponent {
       this.isSorted = true;
   }
 
+
   logoutUser() {
+
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja sair?',
       header: 'Confirmação',
@@ -161,6 +163,7 @@ export class VideoViewsComponent {
   }
 
   exportExcel() {
+
     let data = document.getElementById("tabela-videos");
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -172,9 +175,12 @@ export class VideoViewsComponent {
       { wch:20 },
       { wch:20 }
     ];
-
     ws['!cols'] = columnWidths;
     XLSX.utils.book_append_sheet(wb, ws,'Sheet1');
     XLSX.writeFile(wb, this.fileName);
+  }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
   }
 }

@@ -24,6 +24,16 @@ class VideoServiceMock {
     return of(new HttpResponse({ body: mockVideo }));
   }
 
+  getRecommendationFromRecord(userId: string) {
+    const mockRecommendation = {
+      recommend_videos: {
+        1: 'Mock Video Recommendation 1',
+        2: 'Mock Video Recommendation 2',
+      },
+    };
+    return of(mockRecommendation);
+  }
+
   //Procurar próximo vídeo
   findAll() {
     const mockResponse = {
@@ -385,13 +395,59 @@ describe('VideoViewerComponent', () => {
     expect(component.recordVideos).toEqual(expectedResponse);
   });
 
-  /*it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
-    const mySpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of({ track_enabled: true }));
+  it('should check tracking status and set trackingEnabled correctly', fakeAsync(() => {
+    const expectedResponse = { track_enabled: true };
+    const checkTrackingStatusSpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(of(expectedResponse));
+    
     component.userId = '1';
-    tick(); // Simulate passage of time for the async call
     component.checkTrackingStatus().then(() => {
-      expect(mySpy).toHaveBeenCalledWith('1');
+      expect(checkTrackingStatusSpy).toHaveBeenCalledWith('1');
       expect(component.trackingEnabled).toBe(true);
+      console.log('Tracking status:', component.trackingEnabled);
     });
-  }));*/
+    
+    tick(); // Simula a passagem do tempo para a chamada assíncrona
+  }));
+  
+  it('should handle checkTrackingStatus errors gracefully', fakeAsync(() => {
+    const checkTrackingStatusSpy = spyOn(videoService, 'checkTrackingStatus').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error').and.callThrough(); // Usando callThrough para garantir que a função original ainda seja chamada
+  
+    component.userId = '1';
+    component.checkTrackingStatus().catch(() => {
+      expect(checkTrackingStatusSpy).toHaveBeenCalledWith('1');
+      expect(component.trackingEnabled).toBeTrue();
+    });
+  
+    tick(); // Simula a passagem do tempo para a chamada assíncrona
+  }));
+
+  it('should handle errors when adding to watch later', fakeAsync(() => {
+    const addSpy = spyOn(videoService, 'addToWatchLater').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error');
+    const alertSpy = spyOn(alertService, 'showMessage');
+  
+    component.isWatchLater = false;  // Simula o estado inicial
+    component.toggleWatchLater();
+    tick();  // Avança o tempo para resolver a Promise
+  
+    expect(addSpy).toHaveBeenCalledWith('190329', '1');
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error adding to watch later', 'Error');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para assistir mais tarde');
+  }));
+  
+  it('should handle errors when removing from watch later', fakeAsync(() => {
+    const removeSpy = spyOn(videoService, 'removeFromWatchLater').and.returnValue(throwError('Error'));
+    const consoleErrorSpy = spyOn(console, 'error');
+    const alertSpy = spyOn(alertService, 'showMessage');
+  
+    component.isWatchLater = true;  // Simula o estado inicial
+    component.toggleWatchLater();
+    tick();  // Avança o tempo para resolver a Promise
+  
+    expect(removeSpy).toHaveBeenCalledWith('190329', '1');
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error removing from watch later', 'Error');
+    expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Erro ao remover o vídeo da lista de assistir mais tarde');
+  }));
+
 });

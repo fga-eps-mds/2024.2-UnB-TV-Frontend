@@ -199,4 +199,8 @@ export class CategoryTableComponent {
     XLSX.utils.book_append_sheet(wb, ws,'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
+  }
 }

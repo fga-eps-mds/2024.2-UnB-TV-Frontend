@@ -61,13 +61,13 @@
   <testcase name="VideoCommentService should update Comment" time="0" classname="VideoCommentService"/>
   <testcase name="VideoCommentService should delete Comment" time="0" classname="VideoCommentService"/>
   <testcase name="VideoService should be created" time="0.001" classname="VideoService"/>
-  <testcase name="VideoService findAll should return all videos by institution" time="0.001" classname="VideoService findAll"/>
+  <testcase name="VideoService findAll should return all videos by institution" time="0.002" classname="VideoService findAll"/>
   <testcase name="VideoService findVideoById should return a video" time="0.001" classname="VideoService findVideoById"/>
   <testcase name="VideoService setVideosCatalog should set videos catalog" time="0.001" classname="VideoService setVideosCatalog"/>
   <testcase name="VideoService getVideosCatalog should get videos catalog" time="0.001" classname="VideoService getVideosCatalog"/>
   <testcase name="VideoService videosCatalog should categorize videos correctly" time="0.001" classname="VideoService videosCatalog"/>
   <testcase name="VideoService addToWatchLater should add a video to the watch later list" time="0.001" classname="VideoService addToWatchLater"/>
-  <testcase name="VideoService removeFromWatchLater should remove a video from the watch later list" time="0.001" classname="VideoService removeFromWatchLater"/>
+  <testcase name="VideoService removeFromWatchLater should remove a video from the watch later list" time="0.002" classname="VideoService removeFromWatchLater"/>
   <testcase name="VideoService checkWatchLater should check if a video is in the watch later list" time="0.001" classname="VideoService checkWatchLater"/>
   <testcase name="VideoService getWatchLaterVideos should get all videos in the watch later list for a user" time="0.001" classname="VideoService getWatchLaterVideos"/>
   <testcase name="VideoService getFavoriteVideos should get all videos in favorite list for a user" time="0.002" classname="VideoService getFavoriteVideos"/>
@@ -181,7 +181,11 @@
   <testcase name="GridDaysComponent should call redirect when redirect is clicked" time="0.002" classname="GridDaysComponent"/>
   <testcase name="HomeAdminComponent should create" time="0.004" classname="HomeAdminComponent"/>
   <testcase name="HomeAdminComponent should call confirm of confirmationService when logout is clicked" time="0.002" classname="HomeAdminComponent"/>
-  <testcase name="LoginComponent should create" time="0.003" classname="LoginComponent"/>
+  <testcase name="LoginSocialComponent should create" time="0.004" classname="LoginSocialComponent"/>
+  <testcase name="LoginSocialComponent should call signIn when signing in with Facebook" time="0.003" classname="LoginSocialComponent"/>
+  <testcase name="LoginSocialComponent should process JWT response correctly" time="0.002" classname="LoginSocialComponent"/>
+  <testcase name="LoginSocialComponent should handle Facebook login and send user data to server" time="0.003" classname="LoginSocialComponent"/>
+  <testcase name="LoginComponent should create" time="0.004" classname="LoginComponent"/>
   <testcase name="LoginComponent should have a valid form on initialization" time="0.003" classname="LoginComponent"/>
   <testcase name="LoginComponent should call login method when the form is submitted with valid data" time="0.007" classname="LoginComponent"/>
   <testcase name="LoginComponent should call alert when form is submitted with invalid data" time="0.005" classname="LoginComponent"/>
@@ -304,8 +308,7 @@
   <testcase name="WatchLaterVideosComponent should log warning on getWatchLaterVideos with unexpected structure" time="0.002" classname="WatchLaterVideosComponent"/>
   <testcase name="YourUnBTVComponent should create" time="0.003" classname="YourUnBTVComponent"/>
   <system-out>
-    <![CDATA[Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Spec 'VideoService videosCatalog should categorize videos correctly' has no expectations.'
-,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: []
+    <![CDATA[Chrome Headless 128.0.0.0 (Linux x86_64) LOG: []
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: []
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: []
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: Object{body: []}
@@ -415,6 +418,13 @@ Error: Erro
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/grid/grid.component.spec.ts:60:15)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Resposta do servidor:', Object{access_token: 'mock-token', is_new_user: false, user_id: 'mock-user-id'}
+,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Resposta do servidor:', Object{access_token: 'mock-token', is_new_user: false, user_id: 'mock-user-id'}
+,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
+,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Spec 'LoginSocialComponent should process JWT response correctly' has no expectations.'
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Resposta do servidor:', Object{access_token: 'mock-token', is_new_user: false, user_id: 'mock-user-id'}
+,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
 ,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Resposta do servidor:', Object{access_token: 'mock-token', is_new_user: false, user_id: 'mock-user-id'}
 ,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
@@ -445,7 +455,6 @@ Error: Erro
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Video IDs from backend:', ['190329', '190330']
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Filtered videos after processing:', [Object{id: 190329, title: 'Video Title 1'}, Object{id: 190330, title: 'Video Title 2'}]
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Sorting records, ascending:', true
-,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: undefined
 ,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: Error: Erro
 Error: Erro
     at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:161:26)
@@ -456,6 +465,19 @@ Error: Erro
     at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
     at StreamViewComponent.getTodaysSchedule (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.ts:51:36)
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/stream-view/stream-view.component.spec.ts:163:17)
+    at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
+    at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: undefined
+,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: Error: Erro
+Error: Erro
+    at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.spec.ts:192:24)
+    at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+    at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+    at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
+    at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+    at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
+    at VideoComponent.getVideos (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.ts:21:42)
+    at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.spec.ts:194:15)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
 ,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: 'Erro', Error: Erro
@@ -483,20 +505,21 @@ Error: Erro
     at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/update-role/update-role.component.spec.ts:129:15)
     at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
     at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
-,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: Error: Erro
-Error: Erro
-    at errorFactory (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.spec.ts:192:24)
-    at Observable._subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
-    at Observable._trySubscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
-    at cb (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:31:30)
-    at errorContext (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-    at Observable.subscribe (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Observable.js:22:21)
-    at VideoComponent.getVideos (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.ts:21:42)
-    at UserContext.apply (http://localhost:9876/_karma_webpack_/webpack:/src/app/pages/video/video.component.spec.ts:194:15)
-    at _ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone.js:368:26)
-    at ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/webpack:/node_modules/zone.js/fesm2015/zone-testing.js:273:39)
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Compartilhado com sucesso'
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
 ,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'URL copiada com sucesso'
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
+,Chrome Headless 128.0.0.0 (Linux x86_64) LOG: 'Tracking status:', true
 ,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: 'Error removing from favorite', 'Error'
 ,Chrome Headless 128.0.0.0 (Linux x86_64) ERROR: 'Error adding to favorite', 'Error'
 ,Chrome Headless 128.0.0.0 (Linux x86_64) WARN: 'A estrutura da resposta da API não está conforme o esperado:', Object{incorrectKey: []}

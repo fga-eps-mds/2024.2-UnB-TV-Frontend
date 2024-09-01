@@ -80,7 +80,7 @@
             <th>Título</th>
             <th>Descrição</th>
             <th>Categoria</th>
-            <th (click)="changeSortOrder()" class="ordenavel">
+            <th (click)="changeSortOrder()" class="ordenavel" (keydown)="dummyKeyDown($event)">
               Nº Visualizações
               <span
                 class="setinha"
