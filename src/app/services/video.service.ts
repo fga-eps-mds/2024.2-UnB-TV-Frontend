@@ -417,10 +417,11 @@ export class VideoService {
   }
 
   toggleTracking(userId: string, track: boolean): Observable<any> {
-    return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
-      params: { user_id: userId, track: track.toString() }
-    });
+  return this.http.post(`${this.videoServiceApiURL}/record/toggle_tracking/`, null, {
+    params: { user_id: userId, track: track.toString() }
+  });
   }
+
 
   getRecordSorted(userId: string, ascending: boolean): Observable<any> {
     return this.http.get<any>(`${this.videoServiceApiURL}/record/get_record_sorted/`, {

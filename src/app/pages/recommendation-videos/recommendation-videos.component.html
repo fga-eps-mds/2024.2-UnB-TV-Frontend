@@ -1,0 +1,21 @@
+<div class="header-title"><h1>Vídeos Recomendados</h1></div>
+
+<div class="container">
+    <div *ngIf="!trackingEnabled">
+        <p>Adicione o rastreamento do histórico para ver vídeos recomendados!</p>
+    </div>
+
+    <div *ngIf="trackingEnabled && recommendVideos.length === 0">
+        <p>Assista um vídeo para ter vídeos recomendados!</p>
+    </div>
+
+    <div class="container-videos">
+        <div *ngFor="let video of recommendVideos">
+            <div>
+                <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="videos-frame">
+                    <img src="{{ image.href }}" alt="{{ video.title }}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

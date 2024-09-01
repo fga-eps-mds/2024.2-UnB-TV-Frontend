@@ -29,10 +29,6 @@ export class BackgroundComponent implements OnInit, OnDestroy {
         routerLink: '/profile',
       },
       {
-        label: 'Histórico de Vídeos',
-        routerLink: '/record',
-      },
-      {
         label: `Notificações`,
         routerLink: '/notifications',
         escape: false,

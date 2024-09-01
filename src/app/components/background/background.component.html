@@ -27,23 +27,23 @@
           <div class="mx-2 text-blue-brand">|</div>
           <div *ngIf="getActualRoute() === '/catalog'">
             <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/catalog']">Catálogo</a>
+              <a [routerLink]="['/catalog']">Programas</a>
             </li>
           </div>
           <div *ngIf="getActualRoute() !== '/catalog'">
             <li class="text-blue-brand">
-              <a [routerLink]="['/catalog']">Catálogo</a>
+              <a [routerLink]="['/catalog']">Programas</a>
             </li>
           </div>
           <div class="mx-2 text-blue-brand">|</div>
-          <div *ngIf="getActualRoute() === '/grid-days'">
+          <div *ngIf="getActualRoute() === '/sua-unbtv'">
             <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/grid-days']">Programação</a>
+              <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
             </li>
           </div>
-          <div *ngIf="getActualRoute() !== '/grid-days'">
+          <div *ngIf="getActualRoute() !== '/sua-unbtv'">
             <li class="text-blue-brand">
-              <a [routerLink]="['/grid-days']">Programação</a>
+              <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
             </li>
           </div>
           <div class="mx-2 text-blue-brand">|</div>

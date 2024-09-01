@@ -27,6 +27,11 @@ import { CategoryTableComponent } from './pages/category-table/category-table.co
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
+import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
+import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
+import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
+import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
+import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
@@ -128,6 +133,26 @@ const routes: Routes = [
     component: NotificationsComponent, 
     canActivate: [AuthGuard]
   },
+  {
+    path: 'recommendation',
+    component: RecommendationVideosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sua-unbtv',
+    component: YourUnBTVComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'favorites',
+    component: FavoriteVideosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'watch-later',
+    component: WatchLaterVideosComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({
