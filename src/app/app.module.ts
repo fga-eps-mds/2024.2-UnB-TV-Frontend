@@ -56,6 +56,7 @@ import { RecommendationVideosComponent } from './pages/recommendation-videos/rec
 import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
 import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
 import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
+import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
 
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 
@@ -120,6 +121,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     FavoriteVideosComponent,
     WatchLaterVideosComponent,
     NotificationsComponent,
+    ControleSuperAdminComponent
   ],
 
   providers: [
