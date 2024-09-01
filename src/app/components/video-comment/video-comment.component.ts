@@ -112,5 +112,8 @@ export class VideoCommentComponent implements OnInit {
     this.showComments = !this.showComments;
   }
 
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
+  }
 }
 

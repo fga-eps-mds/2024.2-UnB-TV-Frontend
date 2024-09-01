@@ -79,11 +79,9 @@ export class RecordComponent {
     }
   }
 
-
   saveTrackingStatus(): void {
     localStorage.setItem('trackingEnabled', this.trackingEnabled.toString());
   }
-
 
   toggleTracking(enabled: boolean): void {
     this.trackingEnabled = enabled;

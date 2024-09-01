@@ -1,11 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { EmailService } from 'src/app/services/email.service';
 import { SuggestAgendaComponent } from './suggest-agenda.component';
 import { AlertService } from 'src/app/services/alert.service';
-import { MessageService } from 'primeng/api';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 const mockData = "email has been sent";
@@ -43,10 +42,9 @@ describe('SuggestAgendaComponent', () => {
         FormBuilder,
         { provide: EmailService, useValue: new EmailServiceMock() },
         { provide: AlertService, useValue: new AlertServiceMock() },
-        MessageService
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(SuggestAgendaComponent);
     component = fixture.componentInstance;
@@ -113,11 +111,11 @@ describe('SuggestAgendaComponent', () => {
     form.setValue({
       descricao: 'Descrição',
       responsavel: 'Usuário Teste',
-      telefoneResponsavel: 999999999,
+      telefoneResponsavel: '999999999',
       tema: '',
       quando: '',
       local: '',
-      emailContato: 'test@example.xxx',
+      emailContato: 'test@example.com',
       urlVideo: 'invalid-url'
     });
     component.sendSuggestAgenda();
@@ -131,14 +129,76 @@ describe('SuggestAgendaComponent', () => {
     form.setValue({
       descricao: 'Descrição',
       responsavel: 'Usuário Teste',
-      telefoneResponsavel: 99999-9999,
+      telefoneResponsavel: '99999-9999',
       tema: '',
       quando: '',
       local: '',
-      emailContato: 'test@example.xxx',
+      emailContato: 'test@example.com',
       urlVideo: 'https://www.youtube.com/watch?v=bX-8WWmW06Q'
     });
     component.sendSuggestAgenda();
     expect(alertSpy).toHaveBeenCalledWith('error', 'Erro', 'Telefone inválido.');
+  });
+
+  it('should send email successfully when the form is valid', () => {
+    fixture.detectChanges();
+    const alertSpy = spyOn(alertService, 'showMessage');
+    const form = component.suggestAgendaForm;
+    form.setValue({
+      descricao: 'Descrição',
+      responsavel: 'Usuário Teste',
+      telefoneResponsavel: '999999999',
+      tema: 'Tema',
+      quando: 'Amanhã',
+      local: 'Local',
+      emailContato: 'test@example.com',
+      urlVideo: 'https://www.youtube.com/watch?v=bX-8WWmW06Q'
+    });
+
+    component.sendSuggestAgenda();
+    expect(alertSpy).toHaveBeenCalledWith('success', 'Sucesso', 'Sugestão enviada com sucesso');
+  });
+
+  it('should handle server error when sending email', () => {
+    fixture.detectChanges();
+    spyOn(emailService, 'sendEmail').and.returnValue(throwError(mockError));
+    const alertSpy = spyOn(alertService, 'showMessage');
+    const form = component.suggestAgendaForm;
+    form.setValue({
+      descricao: 'Descrição',
+      responsavel: 'Usuário Teste',
+      telefoneResponsavel: '999999999',
+      tema: 'Tema',
+      quando: 'Amanhã',
+      local: 'Local',
+      emailContato: 'test@example.com',
+      urlVideo: 'https://www.youtube.com/watch?v=bX-8WWmW06Q'
+    });
+  
+    component.sendSuggestAgenda();
+    expect(alertSpy).toHaveBeenCalledWith(
+      'error',
+      'Erro',
+      'error: Http failure response for (unknown url): 500 Internal Server Error'
+    );
+  });
+
+  it('should show alert if form is invalid and no specific error message is present', () => {
+    fixture.detectChanges();
+    const alertSpy = spyOn(alertService, 'showMessage');
+    const form = component.suggestAgendaForm;
+    form.setValue({
+      descricao: '',
+      responsavel: '',
+      telefoneResponsavel: '',
+      tema: '',
+      quando: '',
+      local: '',
+      emailContato: '',
+      urlVideo: '',
+    });
+
+    component.sendSuggestAgenda();
+    expect(alertSpy).toHaveBeenCalledWith('info', 'Alerta', 'Preencha todos os campos corretamente!');
   });
 });

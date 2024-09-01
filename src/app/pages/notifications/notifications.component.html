@@ -1,0 +1,13 @@
+<div class="videos-container my-4">
+  <h1 class="header-title">Notificações</h1>
+  <div class="button-container">
+    <button (click)="markAsRead()" class="mark-read-button">Marcar como lido</button> 
+  </div>
+  <div class="videos">
+    <div *ngFor="let video of recommendedVideos; trackBy: trackByVideoId" class="flex">
+      <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
+        <img [src]="image.href" [alt]="video.title" class="video-img" />
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,16 +23,20 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
-import { SuperAdminActivateComponent } from './pages/super-admin-activate/super-admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
 import { RecordComponent } from './pages/record/record.component';
 import { DashboardCategoryComponent } from './pages/dashboard-category/dashboard-category.component';
 import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
+import { RecommendationVideosComponent } from './pages/recommendation-videos/recommendation-videos.component';
+import { YourUnBTVComponent } from './pages/your-unbtv/your-unbtv.component';
+import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos.component';
+import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
-import { TokenSuperAdminGuard } from './guard/super-admin.guard';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
@@ -95,26 +99,22 @@ const routes: Routes = [
     canActivate: [TokenSuperAdminGuard],
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
-  {
-    path: 'homeAdmin',
+
+  { path: 'homeAdmin',
     component: HomeAdminComponent,
     canActivate: [TokenAdminGuard],
   },
   {
     path: 'adminActivate',
-    component: AdminActivateComponent,
+    component: AdminActivateComponent
   },
-  {
-    path: 'superAdminActivate',
-    component: SuperAdminActivateComponent,
-  },
-  {
+  { 
     path: 'category-views',
     component: CategoryTableComponent,
     canActivate: [TokenAdminGuard],
   },
-  {
-    path: 'video-views',
+  { 
+    path: 'video-views', 
     component: VideoViewsComponent,
     canActivate: [TokenAdminGuard],
   },
@@ -124,19 +124,39 @@ const routes: Routes = [
     canActivate: [TokenAdminGuard],
   },
   {
-    path: 'record',
-    component: RecordComponent,
+    path: 'record', 
+    component: RecordComponent, 
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notifications', 
+    component: NotificationsComponent, 
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'recommendation',
+    component: RecommendationVideosComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'controleSuperAdmin',
-    component: ControleSuperAdminComponent,
-    canActivate: [TokenSuperAdminGuard],
+    path: 'sua-unbtv',
+    component: YourUnBTVComponent,
+    canActivate: [AuthGuard],
   },
+  {
+    path: 'favorites',
+    component: FavoriteVideosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'watch-later',
+    component: WatchLaterVideosComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

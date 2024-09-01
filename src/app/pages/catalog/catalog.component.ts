@@ -53,8 +53,6 @@ export class CatalogComponent implements OnInit {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
         this.user = user;
-        this.getFavoriteVideos();
-        this.getWatchLaterVideos(); // Carregue os vídeos de "assistir mais tarde" após obter os detalhes do usuário
       },
       error: (err) => {
         console.error('Error fetching user details', err);
@@ -76,68 +74,6 @@ export class CatalogComponent implements OnInit {
     });
   }
 
-  getFavoriteVideos(): void {
-    if (this.isAuthenticated) {
-      this.videoService.getFavoriteVideos(this.userId).subscribe({
-        next: (data) => {
-
-          // Verifique se `videoList` existe e é um array
-          if (data && Array.isArray(data.videoList)) {
-            const favorite_videos_ids = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
-
-            this.favoriteVideos = this.unbTvVideos.filter(video => favorite_videos_ids.includes(String(video.id))); // Converta IDs para string
-          } else {
-            console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
-          }
-
-          this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "favoritos"
-        },
-        error: (error) => {
-          console.log('Erro ao buscar vídeos marcados como "favoritos"', error);
-        }
-      });
-    }
-  }
-
-  onFilterFavoriteVideosChange() {
-    if (this.filterFavorite) {
-      this.getFavoriteVideos();
-    } else {
-      this.filterVideos();
-    }
-  }
-
-  getWatchLaterVideos(): void {
-    if (this.isAuthenticated) {
-      this.videoService.getWatchLaterVideos(this.userId).subscribe({
-        next: (data) => {
-
-          // Verifique se `videoList` existe e é um array
-          if (data && Array.isArray(data.videoList)) {
-            const watchLaterVideoIds = data.videoList.map((item: any) => String(item.video_id)); // Converta IDs para string
-
-            this.watchLaterVideos = this.unbTvVideos.filter(video => watchLaterVideoIds.includes(String(video.id))); // Converta IDs para string
-          } else {
-            console.warn('A estrutura da resposta da API não está conforme o esperado:', data);
-          }
-
-          this.filterVideos(); // Atualize a filtragem após carregar os vídeos de "assistir mais tarde"
-        },
-        error: (error) => {
-          console.log('Erro ao buscar vídeos marcados como "assistir mais tarde"', error);
-        }
-      });
-    }
-  }
-
-  onFilterWatchLaterChange() {
-    if (this.filterWatchLater) {
-      this.getWatchLaterVideos();
-    } else {
-      this.filterVideos();
-    }
-  }
-
 
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
@@ -150,19 +86,21 @@ export class CatalogComponent implements OnInit {
 
   filterVideos() {
     this.filteredVideos = this.unbTvVideos.filter(video => {
-      const isWatchLater = this.filterWatchLater ? this.watchLaterVideos.some(wlVideo => wlVideo.id == video.id) : true;
-      const isFavorite = this.filterFavorite? this.favoriteVideos.some(wlVideo => wlVideo.id == video.id) : true;
       const matchesTitle = this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
       const matchesDescription = this.filterTitle ? video.description?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
       const matchesKeywords = this.filterTitle ? video.keywords?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
       const matchesCatalog = this.filterTitle ? video.catalog?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
 
-      return isWatchLater && isFavorite && (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
+      return (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
     });
   }
 
   onProgramClick(videos: IVideo[]) {
     this.videoService.setVideosCatalog(videos);
     this.router.navigate(['/videos']);
+  }
+
+  dummyKeyDown(event: KeyboardEvent): void {
+    // Não faz nada
   }
 }
