@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ControleSuperAdminComponent } from './controle-super-admin.component';
+import { FormsModule } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -10,17 +11,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VideoService } from 'src/app/services/video.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Confirmation } from 'primeng/api';
 
 class UserServiceMock {
   getAllUsers() {
     return of({
-      body: [{ id: 1, name: 'User 1' }, { id: 2, name: 'User 2' }]
+      body: [{ id: 1, name: 'User 1', role: 'USER' }, { id: 2, name: 'User 2', role: 'ADMIN' }]
     });
   }
 
   deleteUser(userId: number) {
-    // Simulate successful user deletion
     return of(null);
   }
 
@@ -45,10 +44,8 @@ class AlertServiceMock {
 class ConfirmationServiceMock {
   confirm(options: any) {
     if (options.accept) {
-      console.log("[ConfirmationService] User accepted the confirmation.");
       options.accept();
     } else if (options.reject) {
-      console.log("[ConfirmationService] User rejected the confirmation.");
       options.reject();
     }
   }
@@ -66,11 +63,12 @@ describe('ControleSuperAdminComponent', () => {
   let userService: UserService;
   let alertService: AlertService;
   let confirmationService: ConfirmationService;
+  let authService: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ControleSuperAdminComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
       providers: [
         { provide: UserService, useClass: UserServiceMock },
         { provide: AlertService, useClass: AlertServiceMock },
@@ -88,6 +86,7 @@ describe('ControleSuperAdminComponent', () => {
     userService = TestBed.inject(UserService);
     alertService = TestBed.inject(AlertService);
     confirmationService = TestBed.inject(ConfirmationService);
+    authService = TestBed.inject(AuthService);
     fixture.detectChanges();
   });
 
@@ -137,7 +136,6 @@ describe('ControleSuperAdminComponent', () => {
 
   it('should confirm logout', () => {
     spyOn(confirmationService, 'confirm').and.callThrough();
-    const authService = TestBed.inject(AuthService);
     spyOn(authService, 'logout').and.callThrough();
 
     component.logoutUser();
@@ -147,18 +145,16 @@ describe('ControleSuperAdminComponent', () => {
   });
 
   it('should not logout if reject is called', () => {
-    spyOn(confirmationService, 'confirm').and.callFake((confirmation: Confirmation) => {
+    spyOn(confirmationService, 'confirm').and.callFake((confirmation: any) => {
       if (confirmation.reject) {
         confirmation.reject();
       }
-      return confirmationService; // Retorna o próprio serviço para respeitar o tipo esperado
+      return confirmationService;
     });
-  
-    const authService = TestBed.inject(AuthService);
     spyOn(authService, 'logout').and.callThrough();
-  
+
     component.logoutUser();
-  
+
     expect(confirmationService.confirm).toHaveBeenCalled();
     expect(authService.logout).not.toHaveBeenCalled();
   });
