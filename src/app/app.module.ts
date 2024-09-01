@@ -88,7 +88,6 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     NgChartsModule,
     CommonModule,
   ],
-
   declarations: [
     AppComponent,
     LoginComponent,
@@ -116,11 +115,10 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     VideoViewsComponent,
     DashboardCategoryComponent,
     RecordComponent,
-    ControleSuperAdminComponent,
     RecommendationVideosComponent,
     YourUnBTVComponent,
     FavoriteVideosComponent,
-    WatchLaterVideosComponent
+    WatchLaterVideosComponent,
     NotificationsComponent,
   ],
 
