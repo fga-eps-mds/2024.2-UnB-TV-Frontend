@@ -49,10 +49,7 @@ export class VideoViewsComponent {
   ngOnInit(): void {
     this.findAll();
     this.filteredVideos = this.unbTvVideos;
-    this.categories.forEach(category => this.selectedCategories[category] = false);
-    this.categories.forEach(category => {
-      this.selectedCategories[category] = true;
-    });
+    this.categories.forEach(category => {this.selectedCategories[category] = true;});
   }
 
   findAll(): void {
@@ -96,33 +93,28 @@ export class VideoViewsComponent {
   }
 
   filterVideos() {
-    const selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
+    let selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
 
-    if (selectedCategories.includes("Todas")){
+    if(selectedCategories.includes("Todas")){
       this.categories.forEach(category => {
         this.selectedCategories[category] = true;
       });
       this.filteredVideos = this.unbTvVideos;
-    }else if(
-              !selectedCategories.includes("Todas") &&
-              this.selectedCategories["Todas"] === false &&
-              selectedCategories.length === 8
-             ){
+    }else if(!selectedCategories.includes("Todas") && this.selectedCategories["Todas"] === false && selectedCategories.length === 8){
       this.categories.forEach(category => {
         this.selectedCategories[category] = false;
       });
       this.filteredVideos = [];
+    }
 
-    }else if (selectedCategories.length === 0){
-      this.filteredVideos = [];
-    }else{
-      this.filteredVideos = this.unbTvVideos.filter(video =>
+    selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
+    
+    this.filteredVideos = this.unbTvVideos.filter(video => 
         (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
         (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
         (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
-        (selectedCategories.length === 0 || selectedCategories.includes(video.catalog))
+        (selectedCategories.includes(video.catalog))
     );
-    }
     this.sortVideos();
   }
 
