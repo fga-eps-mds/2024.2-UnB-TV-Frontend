@@ -187,7 +187,9 @@ export class VideoViewerComponent implements OnInit {
   }
 
   nextVideo(): void {
-    if(this.idNextVideo != -1){
+    if(this.idNextVideo == undefined){
+      return;
+    }else if(this.idNextVideo != -1){
       this.router.navigate([`/video/${this.idNextVideo}`]).then(() => {
         window.location.reload();
       });
