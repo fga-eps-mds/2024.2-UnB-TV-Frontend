@@ -24,13 +24,13 @@
         <button class="watch-later-button" (click)="toggleWatchLater()" [ngClass]="{'watch-later-active': isWatchLater}">
           {{ isWatchLater ? 'Remover da lista': 'Assistir Mais Tarde'}}
         </button>
-        <button class="next-video-button" [title]="titleNextVideo" (click)="nextVideo()">
+        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''" (click)="nextVideo()">
           Próximo Vídeo
           <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
         </button>
       </div>
       <div class="button-container" *ngIf="userId==''">
-        <button class="next-video-button" [title]="titleNextVideo" (click)="nextVideo()">
+        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''" (click)="nextVideo()">
           Próximo Vídeo
           <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
         </button>
