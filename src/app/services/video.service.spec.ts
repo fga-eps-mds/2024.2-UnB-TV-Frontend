@@ -1305,5 +1305,24 @@ describe('toggleTracking', () => {
       req.flush(mockResponse);
     });
   });
+
+  describe('removeVideoFromRecord', () => {
+    it('should delete a video from the user record', () => {
+      const mockVideoId = '12345';
+      const mockUserId = 'user123';
+      const mockResponse = { message: 'Vídeo removido do histórico com sucesso.' };
+  
+      service.removeVideoFromRecord(mockVideoId, mockUserId).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
+  
+      const req = httpMock.expectOne(
+        `${environment.videoAPIURL}/record/delete_video?video_id=${mockVideoId}&user_id=${mockUserId}`
+      );
+      expect(req.request.method).toBe('DELETE');
+  
+      req.flush(mockResponse);
+    });
+  });
   
 });
