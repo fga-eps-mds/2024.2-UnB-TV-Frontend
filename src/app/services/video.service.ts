@@ -440,4 +440,11 @@ export class VideoService {
       params: { user_id: userId }
     });
   }
+
+  removeVideoFromRecord(videoId: string, userId: string): Observable<any> {
+    return this.http.delete(`${this.videoServiceApiURL}/record/delete_video`, {
+      params: { video_id: videoId, user_id: userId }
+    });
+  }
+    
 }
