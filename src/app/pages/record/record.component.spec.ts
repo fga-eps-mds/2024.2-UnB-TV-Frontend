@@ -128,58 +128,71 @@ describe('RecordComponent', () => {
   });*/
 
 
- it('should toggle tracking and update tracking status', () => {
-  component.userId = '12345'; // Defina o userId corretamente
- 
-  const toggleSpy = spyOn(videoService, 'toggleTracking').and.returnValue(of({ message: 'Tracking updated' }));
-  const saveSpy = spyOn(component, 'saveTrackingStatus').and.callThrough();
- 
-  component.toggleTracking(false);
- 
-  expect(component.trackingEnabled).toBe(false);
-  expect(saveSpy).toHaveBeenCalled();
-  expect(toggleSpy).toHaveBeenCalledWith('12345', false);
-});
+  it('should toggle tracking and update tracking status', () => {
+    component.userId = '12345'; // Defina o userId corretamente
+  
+    const toggleSpy = spyOn(videoService, 'toggleTracking').and.returnValue(of({ message: 'Tracking updated' }));
+    const saveSpy = spyOn(component, 'saveTrackingStatus').and.callThrough();
+  
+    component.toggleTracking(false);
+  
+    expect(component.trackingEnabled).toBe(false);
+    expect(saveSpy).toHaveBeenCalled();
+    expect(toggleSpy).toHaveBeenCalledWith('12345', false);
+  });
 
 
-it('should sort records in ascending order and update filteredVideos', () => {
-  component.userId = '12345'; // Defina o userId corretamente
- 
-  const mockResponse = {
-    videos: {
-      190329: '2024-08-14 12:00:00',
-      190330: '2024-08-14 13:00:00'
-    }
-  };
- 
-  const sortSpy = spyOn(videoService, 'getRecordSorted').and.returnValue(of(mockResponse));
-  component.unbTvVideos = [
-    { id: 190329, title: 'Video Title 1' },
-    { id: 190330, title: 'Video Title 2' }
-  ];
- 
-  component.sortRecord(true);
- 
-  expect(sortSpy).toHaveBeenCalledWith('12345', true);
-  expect(component.filteredVideos.length).toBe(2);
-  expect(component.filteredVideos[0].id).toBe(190329);
-});
+  it('should sort records in ascending order and update filteredVideos', () => {
+    component.userId = '12345'; // Defina o userId corretamente
+  
+    const mockResponse = {
+      videos: {
+        190329: '2024-08-14 12:00:00',
+        190330: '2024-08-14 13:00:00'
+      }
+    };
+  
+    const sortSpy = spyOn(videoService, 'getRecordSorted').and.returnValue(of(mockResponse));
+    component.unbTvVideos = [
+      { id: 190329, title: 'Video Title 1' },
+      { id: 190330, title: 'Video Title 2' }
+    ];
+  
+    component.sortRecord(true);
+  
+    expect(sortSpy).toHaveBeenCalledWith('12345', true);
+    expect(component.filteredVideos.length).toBe(2);
+    expect(component.filteredVideos[0].id).toBe(190329);
+  });
 
 
 
 
-it('should handle errors when sorting records', () => {
-  component.userId = '12345'; // Defina explicitamente o userId antes de chamar o método
- 
-  const sortSpy = spyOn(videoService, 'getRecordSorted').and.returnValue(throwError({ status: 500 }));
-  const consoleErrorSpy = spyOn(console, 'error');
- 
-  component.sortRecord(true);
- 
-  expect(sortSpy).toHaveBeenCalledWith('12345', true);
-  expect(consoleErrorSpy).toHaveBeenCalledWith('Error sorting record:', { status: 500 });
-});
+  it('should handle errors when sorting records', () => {
+    component.userId = '12345'; // Defina explicitamente o userId antes de chamar o método
+  
+    const sortSpy = spyOn(videoService, 'getRecordSorted').and.returnValue(throwError({ status: 500 }));
+    const consoleErrorSpy = spyOn(console, 'error');
+  
+    component.sortRecord(true);
+  
+    expect(sortSpy).toHaveBeenCalledWith('12345', true);
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error sorting record:', { status: 500 });
+  });
 
+  it('should delete video from record and update filteredVideos', () => {
+    const mockVideoId = '190329';
+    const deleteSpy = spyOn(videoService, 'removeVideoFromRecord').and.returnValue(of({ message: 'Vídeo removido do histórico com sucesso.' }));
+    component.userId = '12345';
 
+    // Supondo que você tenha um método que atualiza a lista após a exclusão
+    const checkRecordSpy = spyOn(component, 'checkRecord').and.callThrough();
+
+    component.deleteVideo(mockVideoId);
+
+    expect(deleteSpy).toHaveBeenCalledWith(mockVideoId, '12345');
+    expect(checkRecordSpy).toHaveBeenCalled();
+
+  });
  
 });
