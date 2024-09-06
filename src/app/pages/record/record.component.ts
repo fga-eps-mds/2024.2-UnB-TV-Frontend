@@ -155,71 +155,80 @@ export class RecordComponent {
   }
 
 
-filterVideosByRecord(): void {
-  if (this.recordVideos && this.recordVideos.videos && Object.keys(this.recordVideos.videos).length > 0) {
-      console.log('Filtering videos with recordVideos:', this.recordVideos);
-      const keys = Object.keys(this.recordVideos.videos).map(id => id.toString());
-      console.log('Keys from recordVideos:', keys);
-      console.log('All Videos:', this.unbTvVideos);
+  filterVideosByRecord(): void {
+    if (this.recordVideos && this.recordVideos.videos && Object.keys(this.recordVideos.videos).length > 0) {
+        console.log('Filtering videos with recordVideos:', this.recordVideos);
+        const keys = Object.keys(this.recordVideos.videos).map(id => id.toString());
+        console.log('Keys from recordVideos:', keys);
+        console.log('All Videos:', this.unbTvVideos);
 
 
-      this.filteredVideos = this.unbTvVideos.filter(video =>
-          video.id !== undefined && keys.includes(video.id.toString()));
+        this.filteredVideos = this.unbTvVideos.filter(video =>
+            video.id !== undefined && keys.includes(video.id.toString()));
 
 
-      console.log('Filtered Videos:', this.filteredVideos);
-  } else {
-      console.log('No recordVideos available or tracking is disabled');
-      this.filteredVideos = []; // Se não houver vídeos no histórico ou se o rastreamento estiver desabilitado
+        console.log('Filtered Videos:', this.filteredVideos);
+    } else {
+        console.log('No recordVideos available or tracking is disabled');
+        this.filteredVideos = []; // Se não houver vídeos no histórico ou se o rastreamento estiver desabilitado
+    }
   }
-}
 
 
-trackByVideoId(index: number, video: IVideo): string {
-  return video.id ? video.id.toString() : index.toString();
-}
+  trackByVideoId(index: number, video: IVideo): string {
+    return video.id ? video.id.toString() : index.toString();
+  }
 
 
-sortRecord(ascending: boolean): void {
-    console.log('Sorting records, ascending:', ascending);
-    this.videoService.getRecordSorted(this.userId, ascending).subscribe({
-        next: (response) => {
-            console.log('Response from backend:', response.videos);
+  sortRecord(ascending: boolean): void {
+      console.log('Sorting records, ascending:', ascending);
+      this.videoService.getRecordSorted(this.userId, ascending).subscribe({
+          next: (response) => {
+              console.log('Response from backend:', response.videos);
 
 
-            this.recordVideos = { videos: response.videos };
+              this.recordVideos = { videos: response.videos };
 
 
-            // Criação de uma nova lista de vídeos filtrados
-            this.filteredVideos = [];
-            const videoIds = Object.keys(this.recordVideos.videos);
-            console.log('Video IDs from backend:', videoIds);
+              // Criação de uma nova lista de vídeos filtrados
+              this.filteredVideos = [];
+              const videoIds = Object.keys(this.recordVideos.videos);
+              console.log('Video IDs from backend:', videoIds);
 
 
-            // Mapeamento de IDs para os vídeos correspondentes
-            videoIds.forEach(id => {
-                const video = this.unbTvVideos.find(v => v.id?.toString() === id);
-                if (video) {
-                    this.filteredVideos.push(video);
-                }
-            });
+              // Mapeamento de IDs para os vídeos correspondentes
+              videoIds.forEach(id => {
+                  const video = this.unbTvVideos.find(v => v.id?.toString() === id);
+                  if (video) {
+                      this.filteredVideos.push(video);
+                  }
+              });
 
 
-            // Se não estiver em ordem ascendente, reverter a ordem dos vídeos
-            if (!ascending) {
-                this.filteredVideos.reverse();
-            }
+              // Se não estiver em ordem ascendente, reverter a ordem dos vídeos
+              if (!ascending) {
+                  this.filteredVideos.reverse();
+              }
 
 
-            console.log('Filtered videos after processing:', this.filteredVideos);
-        },
-        error: (err) => {
-            console.error('Error sorting record:', err);
-        }
+              console.log('Filtered videos after processing:', this.filteredVideos);
+          },
+          error: (err) => {
+              console.error('Error sorting record:', err);
+          }
+      });
+  }
+
+  deleteVideo(videoId: string): void {
+    this.videoService.removeVideoFromRecord(videoId, this.userId).subscribe({
+      next: (response) => {
+        console.log('Video removido com sucesso:', response);
+        this.checkRecord().then(() => this.filterVideosByRecord()); //Atualiza a lista de videos após a exclusão
+      },
+      error: (err) => {
+        console.error('Erro ao remover video do histórico :', err);
+      }
     });
-}
-
-
-
+  }
 
 }

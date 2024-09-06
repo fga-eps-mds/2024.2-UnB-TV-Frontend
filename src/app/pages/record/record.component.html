@@ -19,6 +19,9 @@
         <br>
         <div class="videos">
             <div *ngFor="let video of filteredVideos; trackBy: trackByVideoId" class="flex">
+                <button *ngIf="video.id" (click)="deleteVideo(video.id.toString())" class="delete-btn">
+                    <img src="assets/icons/32px-Cross_red_circle.svg.png" alt="Remover" class="delete-icon" />
+                </button>
                 <div>
                     <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
                         <img [src]="image.href" [alt]="video.title" class="w-36 h-[85px] rounded-[7px]" />
