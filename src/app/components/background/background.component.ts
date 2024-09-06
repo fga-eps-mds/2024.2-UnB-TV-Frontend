@@ -12,7 +12,7 @@ import { Subscription, interval } from 'rxjs';
 export class BackgroundComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   mobileDevide: boolean = true;
-  hasNotifications: boolean = false;  // Indica se há notificações
+  hasNotifications: boolean = false; // Indica se há notificações
   private intervalSubscription: Subscription | null = null;
 
   constructor(
@@ -22,7 +22,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('BackgroundComponent initialized');
-    
+
     this.items = [
       {
         label: 'Perfil',
@@ -32,12 +32,12 @@ export class BackgroundComponent implements OnInit, OnDestroy {
         label: `Notificações`,
         routerLink: '/notifications',
         escape: false,
-      }
+      },
     ];
 
     // Atualiza as notificações imediatamente com base no serviço
-    this.notificationService.recommendedVideosCount$.subscribe(count => {
-      this.hasNotifications = count > 0;  // Verifica se há notificações
+    this.notificationService.recommendedVideosCount$.subscribe((count) => {
+      this.hasNotifications = count > 0; // Verifica se há notificações
       this.updateNotificationLabel();
     });
 
@@ -46,8 +46,9 @@ export class BackgroundComponent implements OnInit, OnDestroy {
       const token = localStorage.getItem('token') as string;
       this.notificationService.setUserIdFromToken(token);
       const userId = this.notificationService.userId;
-      this.notificationService.fetchRecommendedVideosCount(userId)
-        .subscribe(response => {
+      this.notificationService
+        .fetchRecommendedVideosCount(userId)
+        .subscribe((response) => {
           console.log('Response from fetchRecommendedVideosCount:', response);
           this.updateNotificationCount(response);
         });
@@ -60,16 +61,17 @@ export class BackgroundComponent implements OnInit, OnDestroy {
         const token = localStorage.getItem('token') as string;
         this.notificationService.setUserIdFromToken(token);
         const userId = this.notificationService.userId;
-        this.notificationService.fetchRecommendedVideosCount(userId)
-          .subscribe(response => {
+        this.notificationService
+          .fetchRecommendedVideosCount(userId)
+          .subscribe((response) => {
             console.log('Response from interval fetch:', response);
             this.updateNotificationCount(response);
           });
       }
 
-      this.notificationService.recommendedVideosCount$.subscribe(count => {
+      this.notificationService.recommendedVideosCount$.subscribe((count) => {
         console.log('New notifications count (from BehaviorSubject):', count);
-        this.hasNotifications = count > 0;  // Verifica se há notificações
+        this.hasNotifications = count > 0; // Verifica se há notificações
         this.updateNotificationLabel();
       });
     });
@@ -84,7 +86,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   }
 
   updateNotificationCount(response: any): void {
-    if (response && response.recommend_videos) {
+    if (response?.recommend_videos) {
       const count = response.recommend_videos.length;
       console.log('Updating notification count with:', count);
       this.hasNotifications = count > 0;
@@ -99,7 +101,8 @@ export class BackgroundComponent implements OnInit, OnDestroy {
 
   identifiesUserDevice(): void {
     const userAgent = navigator.userAgent;
-    this.mobileDevide = /Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(userAgent);
+    this.mobileDevide =
+      /Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(userAgent);
   }
 
   getActualRoute(): string {
@@ -108,9 +111,13 @@ export class BackgroundComponent implements OnInit, OnDestroy {
 
   updateNotificationLabel(): void {
     console.log('Updating notification label');
-    this.items = this.items.map(item => {
+    this.items = this.items.map((item) => {
       if (item.routerLink === '/notifications') {
-        item.label = `Notificações ${this.hasNotifications ? '<span class="notification-badge"></span>' : ''}`;
+        item.label = `Notificações ${
+          this.hasNotifications
+            ? '<span class="notification-badge"></span>'
+            : ''
+        }`;
       }
       return item;
     });
