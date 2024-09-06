@@ -122,7 +122,7 @@ button:hover {
   background-color: #979ea0;
 }
 
-.btn_and_select_container{
+.btn_and_select_container {
   display: flex;
 }
 
@@ -157,7 +157,6 @@ select {
   align-items: center; /* Centraliza o texto verticalmente */
   justify-content: center; /* Centraliza o texto horizontalmente */
   width: auto; /* Define o tamanho automático para alinhar com o conteúdo */
-  min-width: 10rem; /* Define uma largura mínima para o texto readonly */
   text-align: center; /* Centraliza o texto dentro do elemento */
   cursor: not-allowed; /* Cursor de proibição padrão */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
