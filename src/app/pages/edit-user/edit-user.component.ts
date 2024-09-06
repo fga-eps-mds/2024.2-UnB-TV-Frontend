@@ -24,7 +24,7 @@ export class EditUserComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private alertService: AlertService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const userId = this.route.snapshot.params['id'];
@@ -64,7 +64,7 @@ export class EditUserComponent implements OnInit {
       ],
     });
 
-    if (this.userData && this.userData.connection) {
+    if (this.userData?.connection) {
       this.userForm.get('connection')?.setValue(this.userData.connection);
     }
   }
@@ -85,7 +85,7 @@ export class EditUserComponent implements OnInit {
   }
 
   updateUser() {
-    if (this.userForm && this.userForm.valid) {
+    if (this.userForm?.valid) {
       const data = {
         ...this.userForm.value,
         connection: this.userForm.value.connection.name,

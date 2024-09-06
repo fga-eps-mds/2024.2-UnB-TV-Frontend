@@ -13,7 +13,6 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { AuthGuard } from './guard/auth.guard';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { UpdateRoleComponent } from './pages/update-role/update-role.component';
-import { AdminGuard } from './services/admin.guard';
 import { SuggestAgendaComponent } from './pages/suggest-agenda/suggest-agenda.component';
 import { ParticipateComponent } from './pages/participate/participate.component';
 import { GridDaysComponent } from './pages/grid-days/grid-days.component';
@@ -101,25 +100,26 @@ const routes: Routes = [
   },
   { path: 'privacy', component: PrivacyPolicyComponent },
 
-  { path: 'homeAdmin',
+  {
+    path: 'homeAdmin',
     component: HomeAdminComponent,
     canActivate: [TokenAdminGuard],
   },
   {
     path: 'adminActivate',
-    component: AdminActivateComponent
+    component: AdminActivateComponent,
   },
   {
     path: 'superAdminActivate',
     component: SuperAdminActivateComponent,
   },
-  { 
+  {
     path: 'category-views',
     component: CategoryTableComponent,
     canActivate: [TokenAdminGuard],
   },
-  { 
-    path: 'video-views', 
+  {
+    path: 'video-views',
     component: VideoViewsComponent,
     canActivate: [TokenAdminGuard],
   },
@@ -129,14 +129,14 @@ const routes: Routes = [
     canActivate: [TokenAdminGuard],
   },
   {
-    path: 'record', 
-    component: RecordComponent, 
-    canActivate: [AuthGuard]
+    path: 'record',
+    component: RecordComponent,
+    canActivate: [AuthGuard],
   },
   {
-    path: 'notifications', 
-    component: NotificationsComponent, 
-    canActivate: [AuthGuard]
+    path: 'notifications',
+    component: NotificationsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'recommendation',
@@ -169,4 +169,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

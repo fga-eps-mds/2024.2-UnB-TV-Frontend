@@ -1,8 +1,9 @@
 <div class="mx-5">
   <div class="filter-container">
     <div>
-      <label>Nome ou Email:</label>
+      <label for="filterInput">Nome ou Email:</label>
       <input
+        id="filterInput"
         [(ngModel)]="filterInputValue"
         (change)="filterUser()"
         placeholder="Filtrar pelo nome do usuário"
@@ -10,8 +11,9 @@
       />
     </div>
     <div>
-      <label>Vínculo:</label>
+      <label for="filterConnection">Vínculo:</label>
       <select
+        id="filterConnection"
         (change)="filterUser()"
         [(ngModel)]="filterConnectionValue"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 outline-none"
