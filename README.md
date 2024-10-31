@@ -2,11 +2,11 @@
 
 # Repositórios
 
-- [FrontEnd](https://github.com/fga-eps-mds/2024.1-UnB-TV-Frontend)
-- [Users](https://github.com/fga-eps-mds/2024.1-UnB-TV-Users)
-- [Admin](https://github.com/fga-eps-mds/2024.1-UnB-TV-Admin)
-- [VideoService](https://github.com/fga-eps-mds/2024.1-UnB-TV-VideoService)
-- [Gateway](https://github.com/fga-eps-mds/2024.1-UnB-TV-API-Gateway/tree/develop)
+- [FrontEnd](https://github.com/fga-eps-mds/2024.2-UnB-TV-Frontend)
+- [Users](https://github.com/fga-eps-mds/2024.2-UnB-TV-Users)
+- [Admin](https://github.com/fga-eps-mds/2024.2-UnB-TV-Admin)
+- [VideoService](https://github.com/fga-eps-mds/2024.2-UnB-TV-VideoService)
+- [Gateway](https://github.com/fga-eps-mds/2024.2-UnB-TV-API-Gateway)
 
 # Acessando o repositório localmente
 
@@ -32,23 +32,22 @@ Este projeto está licenciado sob a GNU Affero General Public License v3.0 (AGPL
 
 | Foto | Nome | Github | Discord | Email | Matrícula |
 |:----:|:----:|:------:|:-------:|:-----:|:---------:|
-| <img width="100px" style="border-radius:10%" src="https://github.com/GabrielRoger07.png" alt="Gabriel Roger Amorim da Cruz"> | Gabriel Roger Amorim da Cruz | @GabrielRoger07 | gabriel_roger | gabrielroger4203@gmail.com | 200018248 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/JoaoPedro0803.png" alt="João Pedro de Camargo Vaz"> | João Pedro de Camargo Vaz | @JoaoPedro0803 | _joaopedro. | joaopedrocvaz@gmail.com | 200020650 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/victorleaoo.png" alt="Victor Hugo Oliveira Leão"> | Victor Hugo Oliveira Leão | @victorleaoo | vitin2964 | victor.pessoal1203@gmail.com | 200028367 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/viniman27.png" alt="Vinicius de Assumpção Araújo"> | Vinicius de Assumpção Araújo | @viniman27 | viniman27 | viniciusdearaujo27@gmail.com | 200028472 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/AGoretti.png" alt="André Goretti Motta"> | André Goretti Motta | [@AGoretti](https://github.com/AGoretti) | Frostnoah | andremotta96@gmail.com | 160112028 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/ArturVinicius.png" alt="Artur Vinicius Dias Nunes"> | Artur Vinicius | [@ArturVinicius](https://github.com/ArturVinicius) | artur.vinicius | arturv98@gmail.com | 190142421 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/ErickMVdO.png" alt="Erick Melo Vidal de Oliveira"> | Erick Melo | [@ErickMVdO](https://github.com/ErickMVdO) | erick_mvdo | erickmelovidal@gmail.com | 190027355 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/LeviQ27.png" alt="Levi de Oliveira Queiroz"> | Levi Queiroz | [@LeviQ27](https://github.com/LeviQ27) | maxprimebr | 170108341@aluno.unb.br | 170108341 |
 
 ## Equipe MDS
 
 | Foto | Nome | Github | Discord | Email | Matrícula |
 |:----:|:----:|:------:|:-------:|:-----:|:---------:|
-| <img width="100px" style="border-radius:10%" src="https://github.com/benlacerda.png" alt="Benjamim Lacerda Santos"> | Benjamim Lacerda Santos | @benlacerda | arranhaceu | benjamim.lacerda16@gmail.com | 200062123 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/felipeJRdev.png" alt="Felipe de Jesus Rodrigues"> | Felipe de Jesus Rodrigues | @felipeJRdev | feliperodr0 | felipe123rodrigues1@gmail.com | 211062867 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/GHenriqueLima.png" alt="Gabriel Henrique Rodrigues de Lima"> | Gabriel Henrique Rodrigues de Lima  | @GHenriqueLima | gabigol.lima | ghrl2003@gmail.com | 221022284 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/xzxjesse.png" alt="Jéssica Eveline Saraiva Araújo"> | Jéssica Eveline Saraiva Araújo  | @xzxjesse | xzxjesse | jessicaeveline121@gmail.com | 221022319 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/jmarquees.png" alt="João Victor Marques Reis de Miranda"> | João Victor Marques Reis de Miranda  | @jmarquees | jmarquees_ | rreisjoao@gmail.com | 200058576 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/Jauzimm.png" alt="João Vitor Santos de Oliveira"> | João Vitor Santos de Oliveira  | @Jauzimm | johnyjohnes | joaovitorso071@gmail.com | 221022337 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/Luidooo.png" alt="Luis Eduardo Castro Mendes de Lima"> | Luis Eduardo Castro Mendes de Lima  | @Luidooo | Luido__ | eng.limaluis@gmail.com | 221008285 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/PedroGusta.png" alt="Pedro Gustavo de Souza Santos"> | Pedro Gustavo de Souza Santos  | @PedroGusta | sukoh | pgustavodesouzasantos@gmail.com  | 221008605 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/R-enanVieira.png" alt="Renan Vieira Guedes"> | Renan Vieira Guedes  | @R-enanVieira | renannx | renanv.guedes7@gmail.com  | 221031363 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/Ruan-Carvalho.png" alt="Ruan Sobreira Carvalho"> | Ruan Sobreira Carvalho  | @Ruan-Carvalho | huebr1337 | ruansobreira11@gmail.com | 211043763 |
-| <img width="100px" style="border-radius:10%" src="https://github.com/vcpVitor.png" alt="Vitor Carvalho Pereira"> | Vitor Carvalho Pereira  | @vcpVitor | vitor_cp | vitorpereira032@gmail.com | 211062615 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/navicg.png" alt="Ana Victória Guedes da Costa"> | Ana Victória | [@navicg](https://github.com/navicg) | kiwijjjj | anaguedescosta009@gmail.com | 222022046 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/limonadaquente.png" alt="Bruna Vitori de Lima Liberal"> | Bruna Vitori | [@limonadaquente](https://github.com/limonadaquente) | limonadaquente | bvliberal@gmail.com | 222021942 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/GabrielVilar.png" alt="Gabriel Augusto"> | Gabriel Augusto Vilar | [@gabrielvilar](https://github.com/GabrielVilar) | g.augusto_ | augusto.rocha.real@gmail.com | 221022533 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/JhuliaCristina.png" alt="Jhulia Cristina Gomes de Oliveira"> | Jhulia Cristina | [@JhuliaCristina](https://github.com/JhuliaCristina) | Jhulia Cristina | jhuliacristinagomesdeoliveira@gmail.com | 222008913 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/JJOAOMARCOSS.png" alt="João Marcos Moraes de Andrade"> | João Marcos  | [@JJOAOMARCOSS](https://github.com/JJOAOMARCOSS) | jhon_marks | jm.moraes.andrade@gmail.com | 222006113 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/KarolineLuz.png" alt="Karoline Luz da Conceição"> | Karoline Luz  | [@KarolineLuz](https://github.com/KarolineLuz) | karoluz | karolluz491@gmail.com | 222006267 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/Luizaxx.png" alt="Luiza da Silva Pugas"> | Luiza da Silva Pugas | [@luizaxx](https://github.com/Luizaxx) | luizaxx | silvaluiza308@gmail.com | 222025843 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/rFaelxs.png" alt="Rafael Siqueira Soares"> | Rafael Siqueira  | [@rFaelxs](https://github.com/rFaelxs) | LeafS | rafaelsiqueira12345@gmail.com  | 221022195 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/vicamatos.png" alt="Vitória Aquere Matos"> | Vitória Aquere  | [@vicamatos](https://github.com/vicamatos) | vicamatos | v.aquerematos@gmail.com  | 190096616 |
+| <img width="100px" style="border-radius:10%" src="https://github.com/wChrstphr.png" alt="Wanjo Cristopher Paraizo Escobar"> | Wanjo Cristopher  | [@wChrstphr](https://github.com/wChrstphr) | rbw.chrs | wnajo.christopher@gmail.com | 222037620 |
