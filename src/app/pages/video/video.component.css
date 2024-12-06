@@ -1,3 +1,16 @@
 .center {
   margin: 0 auto;
 }
+
+.video-thumbnail {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.video-thumbnail:hover {
+  transform: scale(1.05);
+  /* Amplia a imagem ao passar o mouse */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  /* Fundo mais escuro e sombra intensificada */
+  filter: brightness(0.6);
+  /* Escurece ainda mais a imagem */
+}
