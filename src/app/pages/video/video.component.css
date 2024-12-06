@@ -70,6 +70,7 @@
   0% {
     transform: translateX(100%);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -112,4 +113,28 @@
 
 .favorite-button:focus {
   outline: none;
+}
+
+/* Estilo para o ícone da estrela */
+.star-icon {
+  position: absolute;
+  top: -5px;
+  /* Posição ajustada para mais em cima */
+  right: 2px;
+  /* Posição ajustada para o canto direito */
+  font-size: 32px;
+  /* Tamanho da estrela */
+  color: #000;
+  /* Cor preta inicialmente */
+  z-index: 2;
+  transition: color 0.3s ease, transform 0.3s ease;
+  /* Transições suaves para cor e escala */
+}
+
+/* Estilo da estrela ao passar o mouse */
+.star-icon:hover {
+  color: #fefb00;
+  /* Cor amarela ao passar o mouse */
+  transform: scale(1.1);
+  /* Leve aumento de tamanho */
 }
