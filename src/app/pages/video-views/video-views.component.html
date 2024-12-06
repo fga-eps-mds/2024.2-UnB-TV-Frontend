@@ -80,13 +80,14 @@
             <th>Título</th>
             <th>Descrição</th>
             <th>Categoria</th>
-            <th (click)="changeSortOrder()" class="ordenavel" (keydown)="dummyKeyDown($event)">
+            <th (click)="changeSortOrder()" class="ordenavel">
               Nº Visualizações
               <span
                 class="setinha"
                 [ngClass]="{ up: !sortAscending, down: sortAscending }"
               ></span>
             </th>
+            <th>Transcrição</th>
           </tr>
         </thead>
         <tbody>
@@ -96,9 +97,24 @@
             <td>{{ video.description }}</td>
             <td>{{ video.catalog }}</td>
             <td>{{ video.qtAccess }}</td>
+            <td>
+              {{ video.transcript }}
+              <!-- Caixa de upload -->
+              <form action="upload" method="post" enctype="multipart/form-data">
+                <label for="transcriptFile" class="custom-file-upload">
+                  <i class="fi fi-br-file-download"></i>
+                </label>
+                <input
+                  type="file"
+                  name="transcriptFile"
+                  id="transcriptFile"
+                  accept=".txt"
+                />
+              </form>
+            </td>
           </tr>
         </tbody>
-      </table>
+      </table>      
     </div>
   </main>
 </div>

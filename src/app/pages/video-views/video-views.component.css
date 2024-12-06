@@ -182,6 +182,15 @@ hr.solid2 {
   background-color: #d0d0d0;
 }
 
+input[type="file"] {
+  /* display: none; Aplicar isso depois de trocar o ícone*/
+  cursor: pointer;
+}
+
+label {
+  padding-bottom: 20px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

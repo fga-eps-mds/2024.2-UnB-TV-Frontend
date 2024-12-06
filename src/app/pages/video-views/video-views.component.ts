@@ -70,7 +70,7 @@ export class VideoViewsComponent {
   }
 
   cleanDescriptions() {
-    const cleanHtml = (html:string) => {
+    const cleanHtml = (html: string) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent ?? "";
     };
@@ -81,7 +81,6 @@ export class VideoViewsComponent {
       }
     });
   }
-
 
   filterVideosByChannel(videos: IVideo[]): void {
     videos.forEach((video) => {
@@ -95,12 +94,12 @@ export class VideoViewsComponent {
   filterVideos() {
     let selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
 
-    if(selectedCategories.includes("Todas")){
+    if (selectedCategories.includes("Todas")) {
       this.categories.forEach(category => {
         this.selectedCategories[category] = true;
       });
       this.filteredVideos = this.unbTvVideos;
-    }else if(!selectedCategories.includes("Todas") && this.selectedCategories["Todas"] === false && selectedCategories.length === 8){
+    } else if (!selectedCategories.includes("Todas") && this.selectedCategories["Todas"] === false && selectedCategories.length === 8) {
       this.categories.forEach(category => {
         this.selectedCategories[category] = false;
       });
@@ -108,40 +107,36 @@ export class VideoViewsComponent {
     }
 
     selectedCategories = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
-    
-    this.filteredVideos = this.unbTvVideos.filter(video => 
-        (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
-        (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
-        (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
-        (selectedCategories.includes(video.catalog))
+
+    this.filteredVideos = this.unbTvVideos.filter(video =>
+      (this.filterId ? video.id?.toString().includes(this.filterId) : true) &&
+      (this.filterTitle ? video.title?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true) &&
+      (this.filterDescription ? video.description?.toLowerCase().includes(this.filterDescription.toLowerCase()) : true) &&
+      (selectedCategories.includes(video.catalog))
     );
     this.sortVideos();
   }
 
   sortVideos(): void {
     this.filteredVideos.sort((videoA, videoB) => {
-        const accessA = videoA.qtAccess ?? 0;
-        const accessB = videoB.qtAccess ?? 0;
+      const accessA = videoA.qtAccess ?? 0;
+      const accessB = videoB.qtAccess ?? 0;
 
-        if (this.sortAscending) {
-            // Ordenação crescente
-            return accessA - accessB;
-        } else {
-            // Ordenação decrescente
-            return accessB - accessA;
-        }
+      if (this.sortAscending) {
+        return accessA - accessB;
+      } else {
+        return accessB - accessA;
+      }
     });
   }
 
   changeSortOrder(): void {
-      this.sortAscending = !this.sortAscending;
-      this.sortVideos();
-      this.isSorted = true;
+    this.sortAscending = !this.sortAscending;
+    this.sortVideos();
+    this.isSorted = true;
   }
-
-
+  
   logoutUser() {
-
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja sair?',
       header: 'Confirmação',
@@ -155,20 +150,19 @@ export class VideoViewsComponent {
   }
 
   exportExcel() {
-
     let data = document.getElementById("tabela-videos");
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
     const columnWidths = [
-      { wch:15 },
-      { wch:120 },
-      { wch:1200 },
-      { wch:20 },
-      { wch:20 }
+      { wch: 15 },
+      { wch: 120 },
+      { wch: 1200 },
+      { wch: 20 },
+      { wch: 20 }
     ];
     ws['!cols'] = columnWidths;
-    XLSX.utils.book_append_sheet(wb, ws,'Sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
 
