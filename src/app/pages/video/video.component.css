@@ -2,15 +2,114 @@
   margin: 0 auto;
 }
 
-.video-thumbnail {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+.video-thumbnail-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
-.video-thumbnail:hover {
+.video-thumbnail {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  display: block;
+  width: 140px;
+  height: 105px;
+  border-radius: 10px;
+}
+
+.video-thumbnail-container:hover .video-thumbnail {
   transform: scale(1.05);
-  /* Amplia a imagem ao passar o mouse */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-  /* Fundo mais escuro e sombra intensificada */
-  filter: brightness(0.6);
-  /* Escurece ainda mais a imagem */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  filter: brightness(0.7);
+}
+
+.video-description-box {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease, bottom 0.2s ease;
+  text-align: center;
+  box-sizing: border-box;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow: hidden;
+}
+
+.video-thumbnail-container:hover .video-description-box {
+  bottom: 0;
+  opacity: 1;
+}
+
+.description-text {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  animation: scroll-text 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.video-thumbnail-container:hover .description-text {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Adicionando a caixa de sombra sobre a miniatura do vídeo */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.video-thumbnail-container:hover .video-overlay {
+  opacity: 1;
+}
+
+/* Estilos para o botão de favoritar */
+.favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #ffcc00;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+}
+
+.favorite-button:focus {
+  outline: none;
 }

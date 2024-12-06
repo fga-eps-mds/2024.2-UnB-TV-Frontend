@@ -12,9 +12,13 @@
   </div>
 
   <div *ngFor="let video of unbTvVideos" class="flex">
-    <div>
+    <div class="video-thumbnail-container">
       <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
         <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px] video-thumbnail" />
+        <div class="video-overlay"></div>
+        <div class="video-description-box">
+          <h6 class="description-text" title="{{ video.title }}">{{ video.title }}</h6>
+        </div>
       </div>
     </div>
   </div>
