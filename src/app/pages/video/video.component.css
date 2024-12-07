@@ -1,196 +1,247 @@
-.center { 
-  margin: 0 auto; 
-} 
- 
-.video-thumbnail-container { 
-  position: relative; 
-  width: 100%; 
-  height: 100%; 
-  display: block; 
-  overflow: hidden; 
-  border-radius: 12px; 
-  border: 2px solid rgba(0, 0, 0, 0.1); 
-} 
- 
-.video-thumbnail { 
-  position: relative; 
-  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; 
-  display: block; 
-  width: 140px; 
-  height: 105px; 
-  border-radius: 10px; 
-} 
- 
-.video-thumbnail-container:hover .video-thumbnail { 
-  transform: scale(1.05); 
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); 
-  filter: brightness(0.7); 
-} 
- 
-.video-description-box { 
-  position: absolute; 
-  bottom: -30px; 
-  left: 0; 
-  width: 100%; 
-  background: rgba(0, 0, 0, 0.8); 
-  color: #fff; 
-  font-size: 12px; 
-  padding: 8px; 
-  opacity: 0; 
-  transition: opacity 0.2s ease, bottom 0.2s ease; 
-  text-align: center; 
-  box-sizing: border-box; 
-  border-top-left-radius: 12px; 
-  border-top-right-radius: 12px; 
-  overflow: hidden; 
-} 
- 
-.video-thumbnail-container:hover .video-description-box { 
-  bottom: 0; 
-  opacity: 1; 
-} 
- 
-.description-text { 
-  margin: 0; 
-  padding: 0; 
-  display: inline-block; 
-  white-space: nowrap; 
-  opacity: 0; 
-  transition: opacity 0.2s ease; 
-  animation: scroll-text 8s linear infinite; 
-  animation-play-state: paused; 
-} 
- 
-.video-thumbnail-container:hover .description-text { 
-  opacity: 1; 
-  animation-play-state: running; 
-} 
- 
-@keyframes scroll-text { 
-  0% { 
-    transform: translateX(100%); 
-  } 
- 
-  100% { 
-    transform: translateX(-100%); 
-  } 
-} 
- 
-/* Adicionando a caixa de sombra sobre a miniatura do vídeo */ 
-.video-overlay { 
-  position: absolute; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%; 
-  background: rgba(0, 0, 0, 0.3); 
-  border-radius: 12px; 
-  transition: opacity 0.3s ease; 
-  opacity: 0; 
-} 
- 
-.video-thumbnail-container:hover .video-overlay { 
-  opacity: 1; 
-} 
- 
-/* Estilos para o botão de favoritar */ 
-.favorite-button { 
-  position: absolute; 
-  top: 8px; 
-  right: 8px; 
-  background: transparent; 
-  border: none; 
-  color: #ffcc00; 
-  font-size: 24px; 
-  cursor: pointer; 
-  z-index: 1; 
-  transition: transform 0.2s ease; 
-} 
- 
-.favorite-button:hover { 
-  transform: scale(1.2); 
-} 
- 
-.favorite-button:focus { 
-  outline: none; 
-} 
- 
-/* Estilo para o ícone da estrela */ 
-.star-icon { 
-  position: absolute; 
-  top: -5px; 
-  left: 115px; 
-  width: 24px; 
-  height: 52px; 
-  z-index: 2; 
-  transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; 
-  cursor: pointer; 
-} 
- 
-/* Estilos para o tooltip da estrela */ 
-.star-icon[title]:hover::after { 
-  content: attr(title); 
-  position: absolute; 
-  top: -1px; 
-  /* Posiciona acima do ícone */ 
-  left: 10%; 
-  transform: translateX(-60%); 
-  background-color: rgba(0, 0, 0, 0.7); 
-  color: white; 
-  padding: 4px 8px; 
-  border-radius: 12px; 
-  font-size: 12px; 
-  white-space: nowrap; 
-  opacity: 1; 
-  transition: opacity 0.2s ease; 
-} 
-.star-icon img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: contain; 
-  filter: brightness(1.2) invert(0) sepia(100%) saturate(500%) hue-rotate(50deg); 
-  opacity: 0.7; /* 50% de transparência */ 
-} 
-.star-icon:hover img { 
-  transform: scale(1.1); 
-  filter: brightness(0) invert(1)sepia(100%) saturate(500%) hue-rotate(160deg); /* Ajuste para cor amarela */ 
-} 
-/* Estilo para o ícone de salvar */ 
-.save-icon { 
-  position: absolute; 
-  top: -5px; 
-  left: 2px; 
-  width: 24px; 
-  height: 58px; 
-  z-index: 2; 
-  transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; 
-  cursor: pointer; 
-} 
- 
-.save-icon img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: contain; 
-  filter: brightness(1.2) invert(0) sepia(100%) saturate(500%) hue-rotate(50deg); 
-  opacity: 0.7; /* 50% de transparência */ 
-} 
-.save-icon:hover img { 
-  transform: scale(1.1); 
-  filter: brightness(0) invert(1)sepia(100%) saturate(500%) hue-rotate(160deg); /* Ajuste para cor amarela */ 
+.center {
+  margin: 0 auto;
 }
-.save-icon[title]:hover::after { 
-  content: attr(title); 
-  position: absolute; 
-  top: -1px; 
-  /* Posiciona acima do ícone */ 
-  left: 50%; 
-  transform: translateX(-20%); 
-  background-color: rgba(0, 0, 0, 0.7); 
-  color: white; 
-  padding: 5px 10px; 
-  border-radius: 12px; 
-  font-size: 12px; 
-  white-space: nowrap; 
-  opacity: 1; 
-  transition: opacity 0.2s ease; 
+
+.video-thumbnail-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible; /* Alterado de hidden para visible para permitir que os tooltips apareçam */
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.video-thumbnail {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  display: block;
+  width: 140px;
+  height: 105px;
+  border-radius: 10px;
+}
+
+.video-thumbnail-container:hover .video-thumbnail {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  filter: brightness(0.7);
+}
+
+.video-description-box {
+  position: absolute;
+  bottom: 0px; /* Posição da caixa de texto */
+  left: 5px; /* Move a caixa de texto para a esquerda */
+  width: auto;
+  max-width: 70%; /* Limita o tamanho da caixa */
+  background: rgba(0, 0, 0, 0.822);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  line-height: 1.2; /* Ajuste a altura da linha */
+  opacity: 0;
+  transition: opacity 0.2s ease, bottom 0.2s ease;
+  text-align: left;
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-thumbnail-container:hover .video-description-box {
+  opacity: 1.7;
+  bottom: 5px; /* Ajuste da posição para cima */
+}
+
+.description-text {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  animation: scroll-text 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.video-thumbnail-container:hover .description-text {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Adicionando a caixa de sombra sobre a miniatura do vídeo */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.video-thumbnail-container:hover .video-overlay {
+  opacity: 1;
+}
+
+/* Estilos para o botão de favoritar */
+.favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #ffcc00;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+}
+
+.favorite-button:focus {
+  outline: none;
+}
+
+/* Estilo para o ícone da estrela */
+.star-icon {
+  position: absolute;
+  top: -5px;
+  left: 115px;
+  width: 24px;
+  height: 52px;
+  z-index: 2;
+  transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  opacity: 0; /* Inicialmente invisível */
+  transition: opacity 0.3s ease;
+}
+
+/* Estilos para o tooltip da estrela */
+.save-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 4px; /* Ajuste para a parte superior do ícone */
+  left: 50%;
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  background-color: rgba(0, 0, 0, 0.863); /* Cor de fundo */
+  color: #ffffff; /* Cor do texto */
+  padding: 2px 9px; /* Aumentando o padding */
+  border-radius: 8px; /* Bordas levemente arredondadas */
+  font-size: 12px; /* Tamanho maior da fonte */
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Transição suave */
+  transform: translateX(-50%) translateY(-10px); /* Levantamento do tooltip */
+}
+
+/* Animação de visibilidade e movimento */
+.save-icon[title]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-30px); /* Movimentação vertical */
+}
+
+/* Criando a ponta do triângulo do tooltip */
+.save-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 54px; /* Coloca o triângulo abaixo */
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent; /* Lado esquerdo transparente */
+  border-right: 8px solid transparent; /* Lado direito transparente */
+  border-top: 8px solid rgba(0, 0, 0, 0.863); /* Cor do triângulo */
+}
+
+.star-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.star-icon:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) invert(1);
+}
+
+/* Estilos para o ícone de salvar */
+.save-icon {
+  position: absolute;
+  top: -5px;
+  left: 2px;
+  width: 24px;
+  height: 58px;
+  z-index: 2;
+  transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  opacity: 0; /* Inicialmente invisível */
+  transition: opacity 0.3s ease;
+}
+
+.save-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.save-icon:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) invert(1);
+}
+
+/* Estilos para o tooltip de salvar */
+.star-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 4px; /* Ajuste para a parte superior do ícone */
+  left: 50%;
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  background-color: rgba(0, 0, 0, 0.863); /* Cor de fundo mais escura */
+  color: #ffffff; /* Texto amarelo */
+  padding: 2px 9px; /* Mais espaço dentro do tooltip */
+  border-radius: 8px; /* Bordas levemente arredondadas */
+  font-size: 12px; /* Tamanho de fonte maior */
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Suaviza a animação */
+  transform: translateX(-50%) translateY(-10px); /* Levanta o tooltip */
+}
+
+/* Animação de visibilidade e movimento */
+.star-icon[title]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-30px); /* Movimentação vertical */
+}
+
+/* Criando a ponta do triângulo do tooltip */
+.star-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 48px; /* Coloca o triângulo abaixo */
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent; /* Cria o lado esquerdo do triângulo */
+  border-right: 8px solid transparent; /* Cria o lado direito do triângulo */
+  border-top: 8px solid rgba(0, 0, 0, 0.863); /* Cor do triângulo */
+}
+
+/* Mostrar os ícones de estrela e salvar quando o mouse passar por cima da miniatura */
+.video-thumbnail-container:hover .star-icon,
+.video-thumbnail-container:hover .save-icon {
+  opacity: 1;
 }
