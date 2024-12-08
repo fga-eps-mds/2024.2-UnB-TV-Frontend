@@ -158,7 +158,7 @@
 .save-icon[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: 54px; /* Coloca o triângulo abaixo */
+  bottom: 55px; /* Coloca o triângulo abaixo */
   left: 50%;
   transform: translateX(-50%);
   border-left: 8px solid transparent; /* Lado esquerdo transparente */
@@ -167,14 +167,16 @@
 }
 
 .star-icon img {
-  width: 100%;
+  width: 90%;
   height: 100%;
   object-fit: contain;
   filter: brightness(0) invert(1);
+  margin-left: 9px; /* Move para a direita */
+  margin-top: 4px; /* Ajuste o valor conforme necessário */
 }
 
 .star-icon:hover img {
-  transform: scale(1.1);
+  transform: scale(1.0);
   filter: brightness(0) invert(1);
 }
 
@@ -200,7 +202,7 @@
 }
 
 .save-icon:hover img {
-  transform: scale(1.1);
+  transform: scale(1.2);
   filter: brightness(0) invert(1);
 }
 
@@ -232,7 +234,7 @@
 .star-icon[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: 48px; /* Coloca o triângulo abaixo */
+  bottom: 49px; /* Coloca o triângulo abaixo */
   left: 50%;
   transform: translateX(-50%);
   border-left: 8px solid transparent; /* Cria o lado esquerdo do triângulo */
@@ -247,9 +249,15 @@
 }
 
 .favorite-button.favorited img {
-  filter: brightness(1.5);
-  /* Aumenta o brilho quando favoritado */
+  filter: brightness(1.5) invert(1) sepia(1) hue-rotate(10deg) saturate(15) contrast(1.2);
+  /* Ajusta pra amarelo quando favoritado */
 }
+
+.save-button.saved img {
+  filter: brightness(1.5) invert(1) sepia(1) hue-rotate(10deg) saturate(15) contrast(1.2);
+  /* Ajusta pra amarelo quando favoritado */
+}
+
 
 .favorite-button {
   position: absolute;
@@ -274,7 +282,6 @@
   left: 8px;
   display: flex;
   gap: 10px;
-  /* Espaçamento entre os ícones */
   z-index: 2;
 }
 
