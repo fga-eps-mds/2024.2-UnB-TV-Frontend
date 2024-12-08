@@ -135,7 +135,32 @@ export class VideoViewsComponent {
     this.sortVideos();
     this.isSorted = true;
   }
-  
+
+  onFileUpload(event: Event, video: IVideo): void {
+    const input = event.target as HTMLInputElement;  // Obtém o elemento de input
+
+    if (input.files && input.files[0]) {  // Verifica se um arquivo foi selecionado
+      const file = input.files[0];  // Pega o primeiro arquivo selecionado
+      console.log(Arquivo enviado para o vídeo ID ${video.id}:, file);
+
+      // Associando o nome do arquivo ao transcript do vídeo
+      if (video.id) {
+        video.transcript = file.name;  // Atualiza o nome do arquivo no campo de transcrição do vídeo
+      }
+
+      // Criação do FormData para envio ao backend
+      const formData = new FormData();
+      formData.append('file', file);  // Adiciona o arquivo no FormData
+      if (video.id) formData.append('videoId', video.id.toString());  // Adiciona o ID do vídeo ao FormData
+
+      // Chamada de API para enviar o arquivo ao backend (comentado para quando estiver implementado)
+      // this.videoService.uploadTranscript(formData).subscribe({
+      //   next: (response) => console.log('Upload realizado com sucesso', response),
+      //   error: (error) => console.error('Erro no upload', error),
+      // });
+    }
+}
+
   logoutUser() {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja sair?',

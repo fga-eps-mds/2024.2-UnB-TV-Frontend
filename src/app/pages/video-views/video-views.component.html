@@ -22,10 +22,8 @@
   <main>
     <header>
       <h1>Dados - Vídeos</h1>
-      <button
-        class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white"
-        (click)="exportExcel()"
-      >
+      <button class="download-button w-full h-[50px] max-w-[160px] bg-blue-brand rounded-lg text-white"
+        (click)="exportExcel()">
         Exportar para Excel
       </button>
     </header>
@@ -33,25 +31,13 @@
     <div class="containerConteudo">
       <div class="containerFiltro">
         <div class="filtroItem">
-          <input
-            [(ngModel)]="filterId"
-            (ngModelChange)="filterVideos()"
-            placeholder="Filtrar por ID"
-          />
+          <input [(ngModel)]="filterId" (ngModelChange)="filterVideos()" placeholder="Filtrar por ID" />
         </div>
         <div class="filtroItem">
-          <input
-            [(ngModel)]="filterTitle"
-            (ngModelChange)="filterVideos()"
-            placeholder="Filtrar por Título"
-          />
+          <input [(ngModel)]="filterTitle" (ngModelChange)="filterVideos()" placeholder="Filtrar por Título" />
         </div>
         <div class="filtroItem">
-          <input
-            [(ngModel)]="filterDescription"
-            (ngModelChange)="filterVideos()"
-            placeholder="Filtrar por Descrição"
-          />
+          <input [(ngModel)]="filterDescription" (ngModelChange)="filterVideos()" placeholder="Filtrar por Descrição" />
         </div>
         <div class="filtroItem">
           <div class="dropdown">
@@ -61,11 +47,7 @@
             <div class="conteudoDropdown">
               <div *ngFor="let category of categories">
                 <label>
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="selectedCategories[category]"
-                    (ngModelChange)="filterVideos()"
-                  />
+                  <input type="checkbox" [(ngModel)]="selectedCategories[category]" (ngModelChange)="filterVideos()" />
                   {{ category }}
                 </label>
               </div>
@@ -82,10 +64,7 @@
             <th>Categoria</th>
             <th (click)="changeSortOrder()" class="ordenavel">
               Nº Visualizações
-              <span
-                class="setinha"
-                [ngClass]="{ up: !sortAscending, down: sortAscending }"
-              ></span>
+              <span class="setinha" [ngClass]="{ up: !sortAscending, down: sortAscending }"></span>
             </th>
             <th>Transcrição</th>
           </tr>
@@ -101,20 +80,13 @@
               {{ video.transcript }}
               <!-- Caixa de upload -->
               <form action="upload" method="post" enctype="multipart/form-data">
-                <label for="transcriptFile" class="custom-file-upload">
-                  <i class="fi fi-br-file-download"></i>
-                </label>
-                <input
-                  type="file"
-                  name="transcriptFile"
-                  id="transcriptFile"
-                  accept=".txt"
-                />
+                <input type="file" name="transcriptFile" id="transcriptFile" accept=".txt"
+                  (change)="onFileUpload($event, video)" />
               </form>
             </td>
           </tr>
         </tbody>
-      </table>      
+      </table>
     </div>
   </main>
 </div>
