@@ -245,3 +245,42 @@
 .video-thumbnail-container:hover .save-icon {
   opacity: 1;
 }
+
+.favorite-button.favorited img {
+  filter: brightness(1.5);
+  /* Aumenta o brilho quando favoritado */
+}
+
+.favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #ffcc00;
+  font-size: 24px;
+  width: 30px;
+  /* Defina uma largura fixa */
+  height: 30px;
+  /* Defina uma altura fixa */
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.icons-container {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  gap: 10px;
+  /* Espaçamento entre os ícones */
+  z-index: 2;
+}
+
+.star-icon,
+.save-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

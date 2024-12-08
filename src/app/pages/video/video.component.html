@@ -19,14 +19,20 @@
         <div class="video-description-box">
           <h6 class="description-text" title="{{ video.title }}">{{ video.title }}</h6>
         </div>
+  
         <!-- Ícones dentro do vídeo -->
         <div class="star-icon" title="Favoritar">
-          <img src="https://cdn-icons-png.flaticon.com/128/126/126482.png" alt="favoritar vídeo">
+          <button class="favorite-button" (click)="toggleFavorite(video)" [class.favorited]="video.isFavorited">
+            <img *ngIf="!video.isFavorited" src="https://cdn-icons-png.flaticon.com/128/126/126482.png"
+              alt="favoritar vídeo">
+            <img *ngIf="video.isFavorited" src="https://cdn-icons-png.flaticon.com/128/126/126483.png"
+              alt="desfavoritar vídeo">
+          </button>
         </div>
+  
         <div class="save-icon" title="Assistir mais tarde">
           <img src="https://cdn-icons-png.flaticon.com/128/5662/5662990.png" alt="salvar vídeo">
-        </div>        
+        </div>
       </div>
     </div>
   </div>
-</div>
