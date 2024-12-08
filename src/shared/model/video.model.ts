@@ -17,6 +17,7 @@ export interface IVideo {
   channels?: IChannel[];
   catalog?: any;
   isFavorited?: boolean; // Adiciona a propriedade isFavorited
+  isWatchLater?: boolean; 
 }
 
 export class Video implements IVideo {
@@ -35,6 +36,7 @@ export class Video implements IVideo {
     public embed?: string,
     public channels?: IChannel[],
     public catalog?: any,
-    public isFavorited?: boolean
+    public isFavorited?: boolean,
+    public isWatchLater?: boolean
   ) {}
 }

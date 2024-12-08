@@ -21,6 +21,7 @@ export class VideoComponent implements OnInit {
   user: any;
   favoriteMessage: string | null = null; // Armazena a mensagem
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
+  isWatchLater = true;
 
   constructor(
     private videoService: VideoService,
@@ -115,7 +116,6 @@ export class VideoComponent implements OnInit {
   }
 }
 
-
   checkFavoriteStatus(): void {
     this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
       next: (response) => {
@@ -133,10 +133,55 @@ export class VideoComponent implements OnInit {
     alert(message);  // Exemplo de alert, mas você pode customizar com mensagens na tela
   }
 
+  // Assistir mais tarde
+  toggleWatchLater(video: IVideo): void {
+    const videoId = video.id ?? 0;
+
+    video.isWatchLater = !video.isWatchLater;
+
+    if (video.isWatchLater) {
+      this.videoService.addToWatchLater(videoId.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Assistir Mais tarde");
+        },
+        error: (err) => {
+          console.error('Error adding to watch later', err);
+          this.alertService.showMessage('error', 'Erro', 'Erro ao adicionar o vídeo para assistir mais tarde')
+        }
+      });
+    } else {
+      this.videoService.removeFromWatchLater(videoId.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Assistir mais tarde.");
+        },
+        error: (err) => {
+          console.error('Error removing from watch later', err);
+          this.alertService.showMessage('error', 'Erro', 'Erro ao remover o vídeo da lista de assistir mais tarde')
+        }
+      });
+    }
+  }
+
+  checkWatchLaterStatus(): void {
+    this.videoService.checkWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
+      next: (response) => {
+        this.isWatchLater = response.status; // Acessa a propriedade status do objeto response
+      },
+      error: (err) => {
+        console.error('Error checking watch later status', err);
+      }
+    });
+  }
+
+  showWatchLaterMessage(isWatchLater: boolean): void {
+    const message = isWatchLater ? 'Vídeo salvo a lista!' : 'Vídeo removido da lista!';
+    this.favoriteMessage = message;  // Armazena a mensagem na variável
+    alert(message);  // Exemplo de alert, mas você pode customizar com mensagens na tela
+  }
+
   returnToCatalog(): void {
     this.router.navigate(['/catalog']);
   }
-
   // Função que retorna a URL do vídeo
   getVideoUrl(): string {
     return `${this.eduplayVideoUrl}${this.idVideo}`;
