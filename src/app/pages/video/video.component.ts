@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { VideoService } from '../../services/video.service';
 import { IVideo } from 'src/shared/model/video.model';
@@ -182,6 +182,7 @@ export class VideoComponent implements OnInit {
   }
 
 
+  // Método para alternar o estado do menu (já existente)
   toggleMenu(video: IVideo, event: Event): void {
     // Fecha outros menus ao abrir o atual
     this.unbTvVideos.forEach(v => {
@@ -189,9 +190,31 @@ export class VideoComponent implements OnInit {
         v.showMenu = false;
       }
     });
-  
+
     // Alterna o estado do menu do vídeo atual
     video.showMenu = !video.showMenu;
+
+    // Asserção de tipo
+    const videoElement = (event.target as HTMLElement).closest('.video-thumbnail-container');
+
+    if (videoElement) {
+      videoElement.classList.toggle('video-hovered');
+    }
+  }
+
+  // Método para fechar o menu ao clicar fora
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event): void {
+    const target = event.target as HTMLElement; // Asserção de tipo
+
+    // Verifica se o clique ocorreu dentro do menu ou do botão
+    const clickedInside = target?.closest('.video-thumbnail-container') || target?.closest('.menu-icon-container');
+    
+    if (!clickedInside) {
+      this.unbTvVideos.forEach(video => {
+        video.showMenu = false; // Fecha todos os menus
+      });
+    }
   }
   
   handleOptionSelection(video: IVideo, option: string): void {

@@ -295,6 +295,13 @@
   position: relative; /* Permite que elementos posicionados absolutamente sejam colocados dentro deste contêiner */
 }
 
+/* Estilo que ativa o hover quando a classe 'video-hovered' for adicionada */
+.video-thumbnail-container.video-hovered:hover {
+  /* Estilo de hover desejado aqui */
+  opacity: 0.8; /* Exemplo de efeito de hover */
+  /* Adicione outros efeitos de hover desejados */
+}
+
 .menu-icon-container {
   position: absolute; /* Posiciona o menu de forma absoluta dentro do vídeo */
   top: 10px; /* Ajuste para a distância do topo */

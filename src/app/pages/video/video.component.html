@@ -38,15 +38,15 @@
         <!-- Menu de 3 pontinhos (Somente para mobile) -->
         <div *ngIf="!isDesktop" class="menu-icon-container">
           <button (click)="toggleMenu(video, $event);$event.stopPropagation()" class="menu-button">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828778.png" alt="menu de 3 pontos" />
+            <img src="https://cdn-icons-png.flaticon.com/512/61/61140.png" alt="menu de 3 pontos" />
           </button>
 
-          <div *ngIf="video.showMenu" class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-            <div class="py-1 text-center" role="none">
+          <div *ngIf="video.showMenu" class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-[#6F6F6F]/90 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1 text-center text-white" role="none">
               <!-- Favoritar -->
-              <span class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" (click)="toggleFavorite(video);$event.stopPropagation()">Favoritar</span>
+              <span class="block px-4 py-1 text-sm" role="menuitem" tabindex="-1" (click)="toggleFavorite(video);$event.stopPropagation()">Favoritar</span>
               <!-- Assistir mais tarde -->
-              <span class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" (click)="toggleWatchLater(video);$event.stopPropagation()">Assistir mais tarde</span>
+              <span class="block px-4 py-1 text-sm" role="menuitem" tabindex="-1" (click)="toggleWatchLater(video);$event.stopPropagation()">Assistir mais tarde</span>
             </div>
           </div>
         </div>
