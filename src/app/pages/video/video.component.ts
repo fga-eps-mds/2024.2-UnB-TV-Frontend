@@ -15,13 +15,14 @@ import jwt_decode from 'jwt-decode';
 
 export class VideoComponent implements OnInit {
   unbTvVideos: IVideo[] = [];
-  isFavorite = true;
+  isFavorite: boolean;
   idVideo!: number;
   userId: string = '';
   user: any;
   favoriteMessage: string | null = null; // Armazena a mensagem
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
-  isWatchLater = true;
+  isWatchLater: boolean;
+  isDesktop: boolean = false;
 
   constructor(
     private videoService: VideoService,
@@ -29,10 +30,11 @@ export class VideoComponent implements OnInit {
     private alertService: AlertService,
     private authService: AuthService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getVideos();
+    this.isDesktop = window.innerWidth > 768; // Detecta se é desktop
     const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
     if (this.authService.isAuthenticated()) {
       this.setUserIdFromToken(localStorage.getItem('token') as string);
@@ -88,33 +90,33 @@ export class VideoComponent implements OnInit {
 
   // Favoritar
   toggleFavorite(video: IVideo): void {
-  const videoId = video.id ?? 0; // Se video.id for undefined, usa 0 como valor
+    const videoId = video.id ?? 0; // Se video.id for undefined, usa 0 como valor
 
-  // Altera o estado do vídeo
-  video.isFavorited = !video.isFavorited;
+    // Altera o estado do vídeo
+    video.isFavorited = !video.isFavorited;
 
-  if (video.isFavorited) {
-    this.videoService.addToFavorite(videoId.toString(), this.userId.toString()).subscribe({
-      next: () => {
-        this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
-      },
-      error: (err) => {
-        console.error('Error adding to favorite', err);
-        this.alertService.showMessage('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
-      }
-    });
-  } else {
-    this.videoService.removeFromFavorite(videoId.toString(), this.userId.toString()).subscribe({
-      next: () => {
-        this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
-      },
-      error: (err) => {
-        console.error('Error removing from favorite', err);
-        this.alertService.showMessage('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
-      }
-    });
+    if (video.isFavorited) {
+      this.videoService.addToFavorite(videoId.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
+        },
+        error: (err) => {
+          console.error('Error adding to favorite', err);
+          this.alertService.showMessage('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
+        }
+      });
+    } else {
+      this.videoService.removeFromFavorite(videoId.toString(), this.userId.toString()).subscribe({
+        next: () => {
+          this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
+        },
+        error: (err) => {
+          console.error('Error removing from favorite', err);
+          this.alertService.showMessage('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
+        }
+      });
+    }
   }
-}
 
   checkFavoriteStatus(): void {
     this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
@@ -177,6 +179,19 @@ export class VideoComponent implements OnInit {
     const message = isWatchLater ? 'Vídeo salvo a lista!' : 'Vídeo removido da lista!';
     this.favoriteMessage = message;  // Armazena a mensagem na variável
     alert(message);  // Exemplo de alert, mas você pode customizar com mensagens na tela
+  }
+
+
+  toggleMenu(video: IVideo, event: Event): void {
+    // Fecha outros menus ao abrir o atual
+    this.unbTvVideos.forEach(v => {
+      if (v !== video) {
+        v.showMenu = false;
+      }
+    });
+
+    // Alterna o estado do menu do vídeo atual
+    video.showMenu = !video.showMenu;
   }
 
   returnToCatalog(): void {
