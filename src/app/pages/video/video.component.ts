@@ -47,6 +47,7 @@ export class VideoComponent implements OnInit {
     }
   }
 
+  //criar outra func fora depois do if do ngonint criar a funcao para filtrar 
   getVideos(): void {
     this.videoService.getVideosCatalog().subscribe({
       next: (videos) => {
@@ -67,7 +68,8 @@ export class VideoComponent implements OnInit {
     this.userService.getUser(this.userId).subscribe({
       next: (user) => {
         this.user = user;
-        this.checkFavoriteStatus(); // Checa o status de favoritos
+        this.checkFavorites(); // Checa o status de favoritos
+        this.checkWatchLater();
       },
       error: (err) => {
         console.error('Error fetching user details', err);
@@ -92,7 +94,7 @@ export class VideoComponent implements OnInit {
   toggleFavorite(video: IVideo): void {
   const videoId = video.id ?? 0; // Se video.id for undefined, usa 0 como valor
 
-  // Altera o estado do vídeo
+  // Altera o estado do vídeo 
   video.isFavorited = !video.isFavorited;
 
   if (video.isFavorited) {
@@ -118,10 +120,19 @@ export class VideoComponent implements OnInit {
   }
 }
 
-  checkFavoriteStatus(): void {
-    this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
+  checkFavorites(){
+    this.unbTvVideos.forEach(video=>{
+      if(video.id)
+        this.checkFavoriteStatus(video.id);
+    })
+  }
+  
+  checkFavoriteStatus(videoId: number): void {
+    this.videoService.checkFavorite(videoId.toString(), this.userId.toString()).subscribe({
       next: (response) => {
         this.isFavorite = response.statusfavorite; // Verifique se a resposta tem a estrutura correta
+        let index = this.unbTvVideos.findIndex(video=>video.id==videoId);
+        this.unbTvVideos[index].isFavorited = response.statusfavorite;
       },
       error: (err) => {
         console.error('Error checking favorite status', err);
@@ -164,10 +175,19 @@ export class VideoComponent implements OnInit {
     }
   }
 
-  checkWatchLaterStatus(): void {
-    this.videoService.checkWatchLater(this.idVideo.toString(), this.userId.toString()).subscribe({
+  checkWatchLater(){
+    this.unbTvVideos.forEach(video=>{
+      if(video.id)
+        this.checkWatchLaterStatus(video.id);
+    })
+  }
+
+  checkWatchLaterStatus(videoId: number): void {
+    this.videoService.checkWatchLater(videoId.toString(), this.userId.toString()).subscribe({
       next: (response) => {
         this.isWatchLater = response.status; // Acessa a propriedade status do objeto response
+        let index = this.unbTvVideos.findIndex(video=>video.id==videoId);
+        this.unbTvVideos[index].isWatchLater = response.status;
       },
       error: (err) => {
         console.error('Error checking watch later status', err);
