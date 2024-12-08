@@ -7,8 +7,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  overflow: visible;
-  /* Alterado de hidden para visible para permitir que os tooltips apareçam */
+  overflow: visible; /* Alterado de hidden para visible para permitir que os tooltips apareçam */
   border-radius: 12px;
   border: 2px solid rgba(0, 0, 0, 0.1);
 }
@@ -30,19 +29,15 @@
 
 .video-description-box {
   position: absolute;
-  bottom: 0px;
-  /* Posição da caixa de texto */
-  left: 5px;
-  /* Move a caixa de texto para a esquerda */
+  bottom: 0px; /* Posição da caixa de texto */
+  left: 5px; /* Move a caixa de texto para a esquerda */
   width: auto;
-  max-width: 70%;
-  /* Limita o tamanho da caixa */
+  max-width: 70%; /* Limita o tamanho da caixa */
   background: rgba(0, 0, 0, 0.822);
   color: #fff;
   font-size: 11px;
   padding: 3px 10px;
-  line-height: 1.2;
-  /* Ajuste a altura da linha */
+  line-height: 1.2; /* Ajuste a altura da linha */
   opacity: 0;
   transition: opacity 0.2s ease, bottom 0.2s ease;
   text-align: left;
@@ -53,8 +48,7 @@
 
 .video-thumbnail-container:hover .video-description-box {
   opacity: 1.7;
-  bottom: 5px;
-  /* Ajuste da posição para cima */
+  bottom: 5px; /* Ajuste da posição para cima */
 }
 
 .description-text {
@@ -132,8 +126,7 @@
   z-index: 2;
   transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
-  opacity: 0;
-  /* Inicialmente invisível */
+  opacity: 0; /* Inicialmente invisível */
   transition: opacity 0.3s ease;
 }
 
@@ -141,50 +134,36 @@
 .save-icon[title]:hover::after {
   content: attr(title);
   position: absolute;
-  top: 4px;
-  /* Ajuste para a parte superior do ícone */
+  top: 4px; /* Ajuste para a parte superior do ícone */
   left: 50%;
-  transform: translateX(-50%);
-  /* Centraliza horizontalmente */
-  background-color: rgba(0, 0, 0, 0.863);
-  /* Cor de fundo */
-  color: #ffffff;
-  /* Cor do texto */
-  padding: 2px 9px;
-  /* Aumentando o padding */
-  border-radius: 8px;
-  /* Bordas levemente arredondadas */
-  font-size: 12px;
-  /* Tamanho maior da fonte */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  background-color: rgba(0, 0, 0, 0.863); /* Cor de fundo */
+  color: #ffffff; /* Cor do texto */
+  padding: 2px 9px; /* Aumentando o padding */
+  border-radius: 8px; /* Bordas levemente arredondadas */
+  font-size: 12px; /* Tamanho maior da fonte */
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  /* Transição suave */
-  transform: translateX(-50%) translateY(-10px);
-  /* Levantamento do tooltip */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Transição suave */
+  transform: translateX(-50%) translateY(-10px); /* Levantamento do tooltip */
 }
 
 /* Animação de visibilidade e movimento */
 .save-icon[title]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(-30px);
-  /* Movimentação vertical */
+  transform: translateX(-50%) translateY(-30px); /* Movimentação vertical */
 }
 
 /* Criando a ponta do triângulo do tooltip */
 .save-icon[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: 55px;
-  /* Coloca o triângulo abaixo */
+  bottom: 55px; /* Coloca o triângulo abaixo */
   left: 50%;
   transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  /* Lado esquerdo transparente */
-  border-right: 8px solid transparent;
-  /* Lado direito transparente */
-  border-top: 8px solid rgba(0, 0, 0, 0.863);
-  /* Cor do triângulo */
+  border-left: 8px solid transparent; /* Lado esquerdo transparente */
+  border-right: 8px solid transparent; /* Lado direito transparente */
+  border-top: 8px solid rgba(0, 0, 0, 0.863); /* Cor do triângulo */
 }
 
 .star-icon img {
@@ -192,10 +171,8 @@
   height: 100%;
   object-fit: contain;
   filter: brightness(0) invert(1);
-  margin-left: 9px;
-  /* Move para a direita */
-  margin-top: 4px;
-  /* Ajuste o valor conforme necessário */
+  margin-left: 9px; /* Move para a direita */
+  margin-top: 4px; /* Ajuste o valor conforme necessário */
 }
 
 .star-icon:hover img {
@@ -213,8 +190,7 @@
   z-index: 2;
   transition: transform 0.3s ease, filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
-  opacity: 0;
-  /* Inicialmente invisível */
+  opacity: 0; /* Inicialmente invisível */
   transition: opacity 0.3s ease;
 }
 
@@ -234,50 +210,36 @@
 .star-icon[title]:hover::after {
   content: attr(title);
   position: absolute;
-  top: 4px;
-  /* Ajuste para a parte superior do ícone */
+  top: 4px; /* Ajuste para a parte superior do ícone */
   left: 50%;
-  transform: translateX(-50%);
-  /* Centraliza horizontalmente */
-  background-color: rgba(0, 0, 0, 0.863);
-  /* Cor de fundo mais escura */
-  color: #ffffff;
-  /* Texto amarelo */
-  padding: 2px 9px;
-  /* Mais espaço dentro do tooltip */
-  border-radius: 8px;
-  /* Bordas levemente arredondadas */
-  font-size: 12px;
-  /* Tamanho de fonte maior */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  background-color: rgba(0, 0, 0, 0.863); /* Cor de fundo mais escura */
+  color: #ffffff; /* Texto amarelo */
+  padding: 2px 9px; /* Mais espaço dentro do tooltip */
+  border-radius: 8px; /* Bordas levemente arredondadas */
+  font-size: 12px; /* Tamanho de fonte maior */
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  /* Suaviza a animação */
-  transform: translateX(-50%) translateY(-10px);
-  /* Levanta o tooltip */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Suaviza a animação */
+  transform: translateX(-50%) translateY(-10px); /* Levanta o tooltip */
 }
 
 /* Animação de visibilidade e movimento */
 .star-icon[title]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(-30px);
-  /* Movimentação vertical */
+  transform: translateX(-50%) translateY(-30px); /* Movimentação vertical */
 }
 
 /* Criando a ponta do triângulo do tooltip */
 .star-icon[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: 49px;
-  /* Coloca o triângulo abaixo */
+  bottom: 49px; /* Coloca o triângulo abaixo */
   left: 50%;
   transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  /* Cria o lado esquerdo do triângulo */
-  border-right: 8px solid transparent;
-  /* Cria o lado direito do triângulo */
-  border-top: 8px solid rgba(0, 0, 0, 0.863);
-  /* Cor do triângulo */
+  border-left: 8px solid transparent; /* Cria o lado esquerdo do triângulo */
+  border-right: 8px solid transparent; /* Cria o lado direito do triângulo */
+  border-top: 8px solid rgba(0, 0, 0, 0.863); /* Cor do triângulo */
 }
 
 /* Mostrar os ícones de estrela e salvar quando o mouse passar por cima da miniatura */
@@ -329,37 +291,27 @@
   align-items: center;
   justify-content: center;
 }
-
 .video-thumbnail-container {
-  position: relative;
-  /* Permite que elementos posicionados absolutamente sejam colocados dentro deste contêiner */
+  position: relative; /* Permite que elementos posicionados absolutamente sejam colocados dentro deste contêiner */
 }
 
 .menu-icon-container {
-  position: absolute;
-  /* Posiciona o menu de forma absoluta dentro do vídeo */
-  top: 10px;
-  /* Ajuste para a distância do topo */
-  right: 10px;
-  /* Ajuste para a distância da borda direita */
-  z-index: 10;
-  /* Garante que o ícone do menu fique acima do conteúdo */
-  display: none;
-  /* Esconde o ícone por padrão em dispositivos maiores */
+  position: absolute; /* Posiciona o menu de forma absoluta dentro do vídeo */
+  top: 10px; /* Ajuste para a distância do topo */
+  right: 10px; /* Ajuste para a distância da borda direita */
+  z-index: 10; /* Garante que o ícone do menu fique acima do conteúdo */
+  display: none; /* Esconde o ícone por padrão em dispositivos maiores */
 }
 
 /* Exibe o menu de 3 pontos apenas em dispositivos móveis */
 @media (max-width: 768px) {
   .menu-icon-container {
-    display: block;
-    /* Exibe o menu de 3 pontos em dispositivos móveis */
+    display: block; /* Exibe o menu de 3 pontos em dispositivos móveis */
   }
 
   /* Esconde os botões "favoritar" e "assistir mais tarde" em dispositivos móveis */
-  .star-icon,
-  .save-icon {
-    display: none;
-    /* Esconde esses botões em dispositivos móveis */
+  .star-icon, .save-icon {
+    display: none; /* Esconde esses botões em dispositivos móveis */
   }
 }
 
@@ -371,8 +323,6 @@
 }
 
 .menu-button img {
-  width: 20px;
-  /* Ajuste o tamanho da imagem do menu de 3 pontos */
-  height: 20px;
-  /* Mantenha a altura proporcional */
+  width: 20px; /* Ajuste o tamanho da imagem do menu de 3 pontos */
+  height: 20px; /* Mantenha a altura proporcional */
 }

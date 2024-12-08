@@ -30,7 +30,7 @@ export class VideoComponent implements OnInit {
     private alertService: AlertService,
     private authService: AuthService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getVideos();
@@ -90,33 +90,33 @@ export class VideoComponent implements OnInit {
 
   // Favoritar
   toggleFavorite(video: IVideo): void {
-    const videoId = video.id ?? 0; // Se video.id for undefined, usa 0 como valor
+  const videoId = video.id ?? 0; // Se video.id for undefined, usa 0 como valor
 
-    // Altera o estado do vídeo
-    video.isFavorited = !video.isFavorited;
+  // Altera o estado do vídeo
+  video.isFavorited = !video.isFavorited;
 
-    if (video.isFavorited) {
-      this.videoService.addToFavorite(videoId.toString(), this.userId.toString()).subscribe({
-        next: () => {
-          this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
-        },
-        error: (err) => {
-          console.error('Error adding to favorite', err);
-          this.alertService.showMessage('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
-        }
-      });
-    } else {
-      this.videoService.removeFromFavorite(videoId.toString(), this.userId.toString()).subscribe({
-        next: () => {
-          this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
-        },
-        error: (err) => {
-          console.error('Error removing from favorite', err);
-          this.alertService.showMessage('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
-        }
-      });
-    }
+  if (video.isFavorited) {
+    this.videoService.addToFavorite(videoId.toString(), this.userId.toString()).subscribe({
+      next: () => {
+        this.alertService.showMessage("success", "Sucesso", "Vídeo adicionado à lista de Favoritos");
+      },
+      error: (err) => {
+        console.error('Error adding to favorite', err);
+        this.alertService.showMessage('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
+      }
+    });
+  } else {
+    this.videoService.removeFromFavorite(videoId.toString(), this.userId.toString()).subscribe({
+      next: () => {
+        this.alertService.showMessage("success", "Sucesso", "Vídeo removido da lista de Favoritos");
+      },
+      error: (err) => {
+        console.error('Error removing from favorite', err);
+        this.alertService.showMessage('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
+      }
+    });
   }
+}
 
   checkFavoriteStatus(): void {
     this.videoService.checkFavorite(this.idVideo.toString(), this.userId.toString()).subscribe({
@@ -189,11 +189,22 @@ export class VideoComponent implements OnInit {
         v.showMenu = false;
       }
     });
-
+  
     // Alterna o estado do menu do vídeo atual
     video.showMenu = !video.showMenu;
   }
-
+  
+  handleOptionSelection(video: IVideo, option: string): void {
+    // Fecha o menu assim que a opção é selecionada
+    video.showMenu = false;
+  
+    if (option === 'favorite') {
+      this.toggleFavorite(video);
+    } else if (option === 'watch-later') {
+      this.toggleWatchLater(video);
+    }
+  }
+  
   returnToCatalog(): void {
     this.router.navigate(['/catalog']);
   }
