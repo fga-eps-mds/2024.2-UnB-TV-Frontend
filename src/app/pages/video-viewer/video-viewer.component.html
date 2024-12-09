@@ -1,55 +1,51 @@
 <div class="justify-center flex flex-col">
   <div class="flex justify-end p-2">
-    <img src="../../../assets/share.png" alt="Share" (click)="shareVideo()" (keydown)="dummyKeyDown($event)"/>
+    <img src="../../../assets/share.png" alt="Share" (click)="shareVideo()" (keydown)="dummyKeyDown($event)" />
   </div>
   <div class="relative w-full max-h-96 overflow-hidden aspect-video">
-    <iframe
-      id="embeddedVideo"
-      title="{{ video.title }}"
-      allowfullscreen
-      class="top-0 left-0 bottom-0 right-0 w-full h-full absolute"
-    ></iframe>
+    <iframe id="embeddedVideo" title="{{ video.title }}" allowfullscreen
+      class="top-0 left-0 bottom-0 right-0 w-full h-full absolute"></iframe>
   </div>
   <div class="flex justify-center flex-col gap-6 p-3 m-3">
-    <div class="title-button-container max-w-full flex justify-between items-center">
-      <h4 class="font-custom font-bold text-gray-800">
-        {{ video.title }}
-      </h4>
+    <div class="title-button-container max-w-full flex flex-col justify-between items-start">
+      <div class="text-content">
+        <p class="text-gray-600 text-sm">
+          Data de Publicação: {{ video.publishDate | date: 'dd/MM/yyyy' }}
+        </p>
+        <h4 class="font-custom font-bold text-gray-800 mt-1">
+          {{ video.title }}
+        </h4>
+      </div>
       <div class="button-container" *ngIf="userId!==''">
         <button class="favorite-button" (click)="toggleFavorite()" [class.favorited]="isFavorite">
-          <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon"/>
+          <img alt="coracao" src="../../../assets/coracao.svg" class="favorite-icon" />
           <span *ngIf="isFavorite"> Favoritado</span>
           <span *ngIf="!isFavorite"> Favoritar </span>
         </button>
-        <button class="watch-later-button" (click)="toggleWatchLater()" [ngClass]="{'watch-later-active': isWatchLater}">
+        <button class="watch-later-button" (click)="toggleWatchLater()"
+          [ngClass]="{'watch-later-active': isWatchLater}">
           {{ isWatchLater ? 'Remover da lista': 'Assistir Mais Tarde'}}
         </button>
-        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''" (click)="nextVideo()">
+        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''"
+          (click)="nextVideo()">
           Próximo Vídeo
           <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
         </button>
       </div>
       <div class="button-container" *ngIf="userId==''">
-        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''" (click)="nextVideo()">
+        <button class="next-video-button" [title]="titleNextVideo !== undefined ? titleNextVideo : ''"
+          (click)="nextVideo()">
           Próximo Vídeo
           <img src="../../../assets/arrow.png" alt="Seta" class="arrow">
         </button>
       </div>
     </div>
-    <div
-      class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800"
-    >
+    <div class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800">
       <div>
-        <span
-          *ngIf="!showDescription && videoDescription.length > characterLimit"
-          class="clamped-description text-gray-800"
-          [innerHTML]="videoDescription"
-        ></span>
-        <button
-          *ngIf="!showDescription && videoDescription.length > characterLimit"
-          class="font-bold text-gray-800"
-          (click)="expandDescription()"
-        >
+        <span *ngIf="!showDescription && videoDescription.length > characterLimit"
+          class="clamped-description text-gray-800" [innerHTML]="videoDescription"></span>
+        <button *ngIf="!showDescription && videoDescription.length > characterLimit" class="font-bold text-gray-800"
+          (click)="expandDescription()">
           Mostrar
         </button>
 

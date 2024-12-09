@@ -231,16 +231,18 @@ export class VideoViewerComponent implements OnInit {
   findVideoById = () => {
     this.videoService.findVideoById(this.idVideo).subscribe({
       next: (data: HttpResponse<IVideo>) => {
-        this.video = data.body ? data.body : this.video;
-        this.videoDescription = this.video.description
-          ? this.video.description
-          : '';
+        if (data.body) {
+          this.video = data.body;
+          this.videoDescription = this.video.description || '';
+        }
       },
       error: (err) => {
         console.error('Error fetching video details', err);
       }
     });
   };
+  
+
 
   // Assistir mais tarde
   toggleWatchLater() {
