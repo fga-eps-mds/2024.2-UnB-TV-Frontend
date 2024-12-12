@@ -41,7 +41,6 @@ export class VideoComponent implements OnInit {
       this.getUserDetails();
     }
     // Carrega o vídeo específico e ajusta o iframe
-    this.findVideoById();
     if (iframe && this.idVideo) {
       iframe.src = `${this.eduplayVideoUrl}${this.idVideo}`;
     }
@@ -73,19 +72,6 @@ export class VideoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching user details', err);
-      },
-    });
-  }
-
-  findVideoById(): void {
-    // Aqui você deve definir como pegar o idVideo, talvez com route ou outro método
-    // Como você já tem o idVideo, só faz a requisição
-    this.videoService.findVideoById(this.idVideo).subscribe({
-      next: (data) => {
-        // Aqui você pode armazenar o vídeo retornado, como já está no código original
-      },
-      error: (err) => {
-        console.error('Error fetching video details', err);
       },
     });
   }
