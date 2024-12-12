@@ -6,6 +6,7 @@ import { of, throwError } from 'rxjs';
 import { VideoComponent } from './video.component';
 import { VideoService } from '../../services/video.service';
 import { IVideo } from 'src/shared/model/video.model';
+import { MessageService } from 'primeng/api';
 
 const mockData: IVideo[] = [
   {
@@ -34,6 +35,8 @@ const mockData: IVideo[] = [
         name: 'UnBTV',
       },
     ],
+    isFavorited: false,
+    isWatchLater: false,
   },
   {
     id: 190984,
@@ -61,6 +64,8 @@ const mockData: IVideo[] = [
         name: 'UnBTV',
       },
     ],
+    isFavorited: false,
+    isWatchLater: false,
   },
   {
     id: 190334,
@@ -88,6 +93,8 @@ const mockData: IVideo[] = [
         name: 'UnBTV',
       },
     ],
+    isFavorited: false,
+    isWatchLater: false,
   },
   {
     id: 190333,
@@ -115,6 +122,8 @@ const mockData: IVideo[] = [
         name: 'UnBTV',
       },
     ],
+    isFavorited: false,
+    isWatchLater: false,
   },
   {
     id: 190324,
@@ -142,6 +151,8 @@ const mockData: IVideo[] = [
         name: 'UnBTV',
       },
     ],
+    isFavorited: false,
+    isWatchLater: false,
   },
 ];
 
@@ -161,7 +172,9 @@ describe('VideoComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
       imports: [HttpClientTestingModule],
-      providers: [{ provide: VideoService, useValue: new VideoServiceMock() }],
+      providers: [{ provide: VideoService, useValue: new VideoServiceMock() },
+                  MessageService,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VideoComponent);

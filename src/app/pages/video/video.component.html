@@ -1,34 +1,55 @@
-<div
-  class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl"
->
-  <div
-    *ngIf="unbTvVideos.length === 0"
-    class="w-full h-full flex flex-col justify-center items-center gap-2 p-[10%] m-0"
-  >
+<div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl">
+  <div *ngIf="unbTvVideos.length === 0" class="w-full h-full flex flex-col justify-center items-center gap-2 p-[10%] m-0">
     <h6 class="text-grey-brand text-[13px]">
       Programação indisponível no momento
     </h6>
-    <button
-      id="returnToCatalog"
-      class="w-full h-[30px] max-w-[103px] bg-transparent rounded-lg text-blue-brand text-[13px]"
-      (click)="returnToCatalog()"
-    >
+    <button id="returnToCatalog" class="w-full h-[30px] max-w-[103px] bg-transparent rounded-lg text-blue-brand text-[13px]" (click)="returnToCatalog()">
       Voltar
     </button>
   </div>
 
   <div *ngFor="let video of unbTvVideos" class="flex">
-    <div>
-      <div
-        *ngFor="let image of video.images"
-        [routerLink]="['/video', video.id]"
-        class="cursor-pointer"
-      >
-        <img
-          src="{{ image.href }}"
-          alt="{{ video.title }}"
-          class="w-36 h-[85px] rounded-[7px]"
-        />
+    <div class="video-thumbnail-container">
+      <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
+        <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px] video-thumbnail" />
+        <div class="video-overlay"></div>
+        <div class="video-description-box">
+          <h6 class="description-text" title="{{ video.title }}">{{ video.title }}</h6>
+        </div>
+
+        <!-- Ícones dentro do vídeo (Somente para desktop) -->
+        <div *ngIf="isDesktop" class="desktop-actions">
+          <!-- Favoritar -->
+          <div class="star-icon" title="Favoritar">
+            <button class="favorite-button" (click)="toggleFavorite(video);$event.stopPropagation()" [class.favorited]="video.isFavorited" data-action="favorite">
+              <img *ngIf="!video.isFavorited" src="https://cdn-icons-png.flaticon.com/128/126/126482.png" alt="favoritar vídeo">
+              <img *ngIf="video.isFavorited" src="https://cdn-icons-png.flaticon.com/128/118/118669.png" alt="desfavoritar vídeo">
+            </button>
+          </div>
+          <!-- Assitir mais tarde -->
+          <div class="save-icon" title="Assistir mais tarde">
+            <button class="save-button" (click)="toggleWatchLater(video);$event.stopPropagation()" [class.saved]="video.isWatchLater" data-action="watch-later">
+              <img *ngIf="!video.isWatchLater" src="https://cdn-icons-png.flaticon.com/128/5662/5662990.png" alt="salvar vídeo">
+              <img *ngIf="video.isWatchLater" src="https://cdn-icons-png.flaticon.com/128/5668/5668020.png" alt="remover vídeo da lista">
+            </button>
+          </div>
+        </div>
+
+        <!-- Menu de 3 pontinhos (Somente para mobile) -->
+        <div *ngIf="!isDesktop" class="menu-icon-container">
+          <button (click)="toggleMenu(video, $event);$event.stopPropagation()" class="menu-button">
+            <img src="https://cdn-icons-png.flaticon.com/512/61/61140.png" alt="menu de 3 pontos" />
+          </button>
+
+          <div *ngIf="video.showMenu" class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-[#6F6F6F]/90 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1 text-center text-white" role="none">
+              <!-- Favoritar -->
+              <span class="block px-4 py-1 text-sm" role="menuitem" tabindex="-1" (click)="toggleFavorite(video);$event.stopPropagation()">Favoritar</span>
+              <!-- Assistir mais tarde -->
+              <span class="block px-4 py-1 text-sm" role="menuitem" tabindex="-1" (click)="toggleWatchLater(video);$event.stopPropagation()">Assistir mais tarde</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
