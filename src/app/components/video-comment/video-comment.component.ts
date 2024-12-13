@@ -46,7 +46,6 @@ export class VideoCommentComponent implements OnInit {
 
     this.getComments();
 
-
   }
 
   getComments() {

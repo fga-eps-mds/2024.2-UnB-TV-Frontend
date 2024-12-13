@@ -90,9 +90,10 @@ export class CatalogComponent implements OnInit {
       const matchesDescription = this.filterTitle ? video.description?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
       const matchesKeywords = this.filterTitle ? video.keywords?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
       const matchesCatalog = this.filterTitle ? video.catalog?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
+      const matchesTranscript = this.filterTitle? video.transcript?.toLowerCase().includes(this.filterTitle.toLowerCase()) : true;
 
-      return (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog);
-    });
+      return (matchesTitle || matchesDescription || matchesKeywords || matchesCatalog || matchesTranscript);
+    }); 
   }
 
   onProgramClick(videos: IVideo[]) {
