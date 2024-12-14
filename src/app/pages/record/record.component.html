@@ -9,17 +9,19 @@
             <input type="checkbox" [(ngModel)]="trackingEnabled" (change)="toggleTracking(trackingEnabled)" />
             Rastreamento do Histórico
         </label>
-        <button 
-            (click)="sortRecord(true)" 
-            class="btn btn-secondary mr-2" 
-            [class.active]="isAscendingActive">
-            Ordenar Crescente
+        <button
+        (click)="sortRecord(true)"
+        class="btn btn-secondary mr-2"
+        [ngClass]="{ 'active': isAscendingActive }"
+    >
+    Ordenar Crescente
         </button>
-        <button 
-            (click)="sortRecord(false)" 
-            class="btn btn-secondary" 
-            [class.active]="!isAscendingActive">
-            Ordenar Decrescente
+        <button
+    (click)="sortRecord(false)"
+    class="btn btn-secondary"
+    [ngClass]="{ 'active': isDescendingActive }"
+    >
+    Ordenar Decrescente
         </button>
     </div>
 
