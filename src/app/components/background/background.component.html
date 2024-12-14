@@ -1,17 +1,13 @@
 <div class="w-full flex flex-col min-h-screen justify-between">
   <nav class="w-full fixed top-0 left-0 z-50 bg-white">
     <div class="pt-10 flex justify-center items-center">
-      <img
-        alt="simbolo-unb"
-        src="../../../assets/Icone-unbtv.svg"
-        class="h-10"
-      />
+      <a [routerLink]="['/catalog']">
+        <img alt="simbolo-unb" src="../../../assets/Icone-unbtv.svg" class="h-10" />
+      </a>
     </div>
-    <div
-      *ngIf="
+    <div *ngIf="
         getActualRoute() !== '/login' && getActualRoute() !== '/loginsocial'
-      "
-    >
+      ">
       <div class="flex flex-row items-center justify-center pl-3">
         <ul class="flex flex-row gap-1 text-xs">
           <div *ngIf="getActualRoute() === '/stream'">
@@ -60,13 +56,7 @@
         </ul>
         <div class="card flex justify-content-center mx-2">
           <p-menu #menu [model]="items" [popup]="true"></p-menu>
-          <button
-            pButton
-            type="button"
-            (click)="menu.toggle($event)"
-            label="&#9776;"
-            class="menu-button"
-          ></button>
+          <button pButton type="button" (click)="menu.toggle($event)" label="&#9776;" class="menu-button"></button>
           <div class="notification-badge-wrapper" *ngIf="hasNotifications">
             <div class="notification-badge"></div> <!-- Badge sem o número -->
           </div>
@@ -77,68 +67,36 @@
   <div class="flex-grow p-3 mt-40 mb-auto">
     <ng-content></ng-content>
   </div>
-  <footer
-    class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0 bg-white"
-  >
+  <footer class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0 bg-white z-20">
     <div>
-      <a
-        [href]="
+      <a [href]="
           mobileDevide ? 'tel:+556131072775' : 'https://unbtv.unb.br/contato'
-        "
-        target="_blank"
-        id="contact_link"
-        rel="noopener"
-      >
+        " target="_blank" id="contact_link" rel="noopener">
         <img alt="telefone" src="../../../assets/telefone.svg" />
       </a>
     </div>
     <div>
-      <a
-        href="https://www.unbtv.unb.br"
-        target="_blank"
-        id="website_link"
-        rel="noopener"
-      >
+      <a href="https://www.unbtv.unb.br" target="_blank" id="website_link" rel="noopener">
         <img alt="website" src="../../../assets/website.svg" />
       </a>
     </div>
     <div>
-      <a
-        href="https://www.youtube.com/@UnBTV"
-        target="_blank"
-        id="youtube_link"
-        rel="noopener"
-      >
+      <a href="https://www.youtube.com/@UnBTV" target="_blank" id="youtube_link" rel="noopener">
         <img alt="youtube" src="../../../assets/youtube.svg" />
       </a>
     </div>
     <div>
-      <a
-        href="https://www.instagram.com/unbtv/"
-        target="_blank"
-        id="instagram_link"
-        rel="noopener"
-      >
+      <a href="https://www.instagram.com/unbtv/" target="_blank" id="instagram_link" rel="noopener">
         <img alt="instagram" src="../../../assets/instagram.svg" />
       </a>
     </div>
     <div>
-      <a
-        href="https://www.facebook.com/UnBTV"
-        target="_blank"
-        id="facebook_link"
-        rel="noopener"
-      >
+      <a href="https://www.facebook.com/UnBTV" target="_blank" id="facebook_link" rel="noopener">
         <img alt="facebook" src="../../../assets/facebook.svg" />
       </a>
     </div>
     <div>
-      <a
-        href="https://www.twitter.com/unb_tv"
-        target="_blank"
-        id="twitter_link"
-        rel="noopener"
-      >
+      <a href="https://www.twitter.com/unb_tv" target="_blank" id="twitter_link" rel="noopener">
         <img alt="x" src="../../../assets/x.svg" />
       </a>
     </div>
