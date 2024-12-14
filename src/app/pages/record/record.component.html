@@ -3,17 +3,25 @@
         <h1 class="header-title">Histórico de Vídeos</h1>
     </header>
 
-
     <!-- Controle de Rastreamento com Checkbox -->
     <div class="record-controls my-4">
         <label class="checkbox-label">
             <input type="checkbox" [(ngModel)]="trackingEnabled" (change)="toggleTracking(trackingEnabled)" />
             Rastreamento do Histórico
         </label>
-        <button (click)="sortRecord(true)" class="btn btn-secondary mr-2">Ordenar Crescente</button>
-        <button (click)="sortRecord(false)" class="btn btn-secondary">Ordenar Decrescente</button>
+        <button 
+            (click)="sortRecord(true)" 
+            class="btn btn-secondary mr-2" 
+            [class.active]="isAscendingActive">
+            Ordenar Crescente
+        </button>
+        <button 
+            (click)="sortRecord(false)" 
+            class="btn btn-secondary" 
+            [class.active]="!isAscendingActive">
+            Ordenar Decrescente
+        </button>
     </div>
-
 
     <main class="videos-container my-4">
         <br>
