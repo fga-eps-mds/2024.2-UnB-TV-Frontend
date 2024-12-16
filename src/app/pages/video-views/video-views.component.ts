@@ -42,7 +42,7 @@ export class VideoViewsComponent {
 
   sortAscending: boolean = true;
   isSorted: boolean = false;
-  fileToUpload: File | null = null;
+  fileToUpload: File | any = null;
 
   fileName = 'DadosVideosUnBTV.xlsx';
 
@@ -289,53 +289,87 @@ export class VideoViewsComponent {
 // });
 //   }
   
-  
-  
-  fileUpload(event: Event, video_id: number): void {
-    event.preventDefault(); // Evita o recarregamento da página.
-
-    // Obtenha o formulário a partir do evento.
-    const form = event.target as HTMLFormElement;
-    // Localize o input de arquivo dentro do formulário.
-    const input = form.querySelector<HTMLInputElement>('input[type="file"]');
-    
-    
-    if (input && input.files && input.files[0]) {
-      const file = input.files[0];
-      const formData = new FormData();
-      console.log(file)
-  
-      formData.append('file', file); // Adiciona o arquivo ao FormData
-      formData.append('videoId', video_id.toString()); // Adiciona o ID do vídeo ao FormData
-      
-      this.videoTranscriptService.uploadFile(formData).subscribe({
-        next: (response) => {
-          console.log('Upload realizado com sucesso:', response);
-          this.alertService.showMessage(
-            'Upload realizado com sucesso!',
-            'success',
-            'Upload do arquivo feito com sucesso!'
-          );
-          this.navigator('/file-upload');
-        },
-        error: (err) => {
-          console.error('Erro ao realizar upload:', err);
-          this.alertService.showMessage(
-            'Erro ao realizar upload. Tente novamente.',
-            'error',
-            'Erro no upload!'
-          );
-        },
-      });
+  handleFileInput(event: Event): void {
+    const input = event.target as HTMLInputElement
+    if (input?.files && input.files.length > 0){
+      this.fileToUpload = input.files.item(0)
     } else {
-      console.warn('Nenhum arquivo foi selecionado.');
-      this.alertService.showMessage(
-        'Por favor, selecione um arquivo antes de enviar.',
-        'Selecione um arquivo!',
-        'Select an input file!'
-      );
+      console.log(Error)
+    }
+  }  
+
+  uploadFileToActivity() {
+    console.log("Ta chegando até o uploadFileToActivity?")
+    this.videoTranscriptService.uploadFile(this.fileToUpload).subscribe(
+      {
+        next: (data) => {
+          console.log("Upload bem-sucedido!", data);
+        },
+        error: (error) => {
+          console.error("Erro no upload:", error);
+        },
+      }
+    );
+  }
+
+  onSubmit(event: Event): void {
+    event.preventDefault(); // Evita o comportamento padrão de recarregar a página
+    if (this.fileToUpload) {
+      console.log('Enviando arquivo:', this.fileToUpload);
+      // Lógica de envio do arquivo
+      this.uploadFileToActivity()
+    } else {
+      console.error('Nenhum arquivo para enviar');
     }
   }
+
+  
+  // fileUpload(event: Event, video_id: number): void {
+  //   event.preventDefault(); // Evita o recarregamento da página.
+
+  //   // Obtenha o formulário a partir do evento.
+  //   const form = event.target as HTMLFormElement;
+  //   // Localize o input de arquivo dentro do formulário.
+  //   const input = form.querySelector<HTMLInputElement>('input[type="file"]');
+    
+    
+  //   if (input && input.files && input.files[0]) {
+  //     const file = input.files[0];
+  //     const formData = new FormData();
+  //     console.log(file)
+  
+  //     formData.append('file', file); // Adiciona o arquivo ao FormData
+  //     formData.append('videoId', video_id.toString()); // Adiciona o ID do vídeo ao FormData
+  //     console.log("Formdata>>>", formData)
+      
+  //     this.videoTranscriptService.uploadFile(formData).subscribe({
+  //       next: (response) => {
+  //         console.log('Upload realizado com sucesso:', response);
+  //         this.alertService.showMessage(
+  //           'Upload realizado com sucesso!',
+  //           'success',
+  //           'Upload do arquivo feito com sucesso!'
+  //         );
+  //         this.navigator('/file-upload');
+  //       },
+  //       error: (err) => {
+  //         console.error('Erro ao realizar upload:', err);
+  //         this.alertService.showMessage(
+  //           'Erro ao realizar upload. Tente novamente.',
+  //           'error',
+  //           'Erro no upload!'
+  //         );
+  //       },
+  //     });
+  //   } else {
+  //     console.warn('Nenhum arquivo foi selecionado.');
+  //     this.alertService.showMessage(
+  //       'Por favor, selecione um arquivo antes de enviar.',
+  //       'Selecione um arquivo!',
+  //       'Select an input file!'
+  //     );
+  //   }
+  // }
 
   logoutUser() {
     this.confirmationService.confirm({

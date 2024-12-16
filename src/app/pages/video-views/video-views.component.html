@@ -81,8 +81,8 @@
               <!-- Caixa de upload  atual -->
               <!-- <form action="/upload" method="post" enctype="multipart/form-data"> -->
               <div class="flex juystify-center items-center h-4/5">
-                <form (submit)="fileUpload($event, video.id!)" class="items-center">  
-                  <input type="file" name="transcriptFile" id="transcriptFile" accept=".txt"/>
+                <form (submit)="onSubmit($event)" class="items-center">  
+                  <input type="file" (change)="handleFileInput($event)" name="transcriptFile" id="transcriptFile" accept=".txt"/>
                 <button type="submit">Enviar</button>
                 </form>
               </div>

@@ -13,23 +13,16 @@ export class VideoTranscriptService {
 
   constructor(private http: HttpClient) {}
 
-  uploadFile(body: FormData): Observable<any> {
-    console.log("Body:", body)
-    let response = this.http.post(`${this.apiURLTranscript}/file-upload`, body)
-    console.log("uploadFile:", response)
-    return this.http.post(`${this.apiURLTranscript}/file-upload`, body)
-  }
 
-//   uploadFile(fileToUpload: File): Observable<boolean> {
-//     const endpoint = '${this.apiURLTranscript}/file-upload';
-//     const formData: FormData = new FormData();
-//     formData.append('fileKey', fileToUpload, fileToUpload.name);
-//     return this.http
-//       .post(endpoint, formData, { headers: new HttpHeaders() })
-//       .catch((e) => this.handleError(e));
-// }
+  uploadFile(fileToUpload: File): Observable<any> {
+    console.log("Ta chengado no uploadFile?")
+    const formDataToUpload: FormData = new FormData();
+    formDataToUpload.append('file', fileToUpload, fileToUpload.name);
+    console.log("formDataToUpload", formDataToUpload.has('file'))
+    return this.http.post(`${this.apiURLTranscript}/file-upload`, formDataToUpload) 
+}
   handleError(e: any) {
-    throw new Error('Erro no uploadFile.');
+    throw new Error('uploadFile Error');
   }
 
   getFile(file_id: any): Observable<any>{
