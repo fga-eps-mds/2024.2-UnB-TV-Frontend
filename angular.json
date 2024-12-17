@@ -21,6 +21,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              { "glob": "**/*", "input": "src/assets/app", "output": "/widget/app" },
               "src/_redirects",
               "src/manifest.webmanifest",
               "src/.well-known"

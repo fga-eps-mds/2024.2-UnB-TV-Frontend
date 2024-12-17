@@ -26,9 +26,15 @@
         <div class="vw-plugin-top-wrapper"></div>
       </div>
     </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script src="assets/app/vlibras-plugin.js"></script>
     <script>
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
+      new window.VLibras.Widget({
+        rootPath: "/assets/app/",
+        personalization: 'https://vlibras.gov.br/config/configs.json',
+        opacity: 0.75,
+        position: 'R',
+        avatar: 'random'
+      });
     </script>
   </body>
 </html>
