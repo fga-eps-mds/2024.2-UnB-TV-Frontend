@@ -13,7 +13,10 @@
       <img alt="sol" *ngIf="!isDarkMode" src="../../../assets/sun.svg" class="h-7" />
       <img alt="lua" *ngIf="isDarkMode" src="../../../assets/moon.svg" class="h-7" />
       <label class="switch">
-        <input type="checkbox" [checked]="isDarkMode" (change)="toggleDarkMode($event)" />
+        <input 
+        type="checkbox" 
+        [checked]="isDarkMode" 
+        (change)="toggleDarkMode($event)" />
         <span class="slider"></span>
       </label>
     </div>
