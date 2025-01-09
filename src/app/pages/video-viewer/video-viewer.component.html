@@ -12,7 +12,7 @@
   </div>
   <div class="flex justify-center flex-col gap-6 p-3 m-3">
     <div class="title-button-container max-w-full flex justify-between items-center">
-      <h4 class="font-custom font-bold text-gray-800">
+      <h4 class="font-custom font-bold ">
         {{ video.title }}
       </h4>
       <div class="button-container" *ngIf="userId!==''">
@@ -37,17 +37,17 @@
       </div>
     </div>
     <div
-      class="max-w-full max-h-full flex text-[12px] font-custom text-gray-800"
+      class="max-w-full max-h-full flex text-[12px] font-custom"
     >
       <div>
         <span
           *ngIf="!showDescription && videoDescription.length > characterLimit"
-          class="clamped-description text-gray-800"
+          class="clamped-description "
           [innerHTML]="videoDescription"
         ></span>
         <button
           *ngIf="!showDescription && videoDescription.length > characterLimit"
-          class="font-bold text-gray-800"
+          class="font-bold "
           (click)="expandDescription()"
         >
           Mostrar
@@ -55,7 +55,7 @@
 
         <span *ngIf="showDescription" [innerHTML]="videoDescription"></span>
         <div *ngIf="showDescription">
-          <button class="font-bold text-gray-800" (click)="expandDescription()">
+          <button class="font-bold " (click)="expandDescription()">
             Mostrar menos
           </button>
         </div>

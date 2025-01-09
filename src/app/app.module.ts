@@ -121,7 +121,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     FavoriteVideosComponent,
     WatchLaterVideosComponent,
     NotificationsComponent,
-    ControleSuperAdminComponent
+    ControleSuperAdminComponent,
   ],
 
   providers: [

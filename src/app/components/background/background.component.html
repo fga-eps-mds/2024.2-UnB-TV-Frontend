@@ -1,10 +1,11 @@
 <div class="w-full flex flex-col min-h-screen justify-between">
-  <nav class="w-full fixed top-0 left-0 z-50 bg-white">
+  <nav class="w-full fixed top-0 left-0 z-50">
     <div class="pt-10 flex justify-center items-center">
       <a [routerLink]="['/catalog']">
         <img alt="simbolo-unb" src="../../../assets/Icone-unbtv.svg" class="h-10" />
       </a>
     </div>
+
     <div *ngIf="
         getActualRoute() !== '/login' && getActualRoute() !== '/loginsocial'
       ">
@@ -67,7 +68,7 @@
   <div class="flex-grow p-3 mt-40 mb-auto">
     <ng-content></ng-content>
   </div>
-  <footer class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0 bg-white z-20">
+  <footer class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0">
     <div>
       <a [href]="
             mobileDevide ? 'tel:+556131072775' : 'https://unbtv.unb.br/contato'
