@@ -15,6 +15,9 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   hasNotifications: boolean = false; // Indica se há notificações
   private intervalSubscription: Subscription | null = null;
 
+  // Variável para armazenar o estado atual do tema
+  isDarkMode: boolean = false;
+
   constructor(
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef
@@ -23,6 +26,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('BackgroundComponent initialized');
 
+    // Configurar o menu inicial
     this.items = [
       {
         label: 'Perfil',
@@ -35,7 +39,12 @@ export class BackgroundComponent implements OnInit, OnDestroy {
       },
     ];
 
-    // Atualiza as notificações imediatamente com base no serviço
+    // Verificar preferências de tema
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    this.isDarkMode = savedTheme === 'dark';
+    this.applyTheme();
+
+    // Assinar notificações
     this.notificationService.recommendedVideosCount$.subscribe((count) => {
       this.hasNotifications = count > 0; // Verifica se há notificações
       this.updateNotificationLabel();
@@ -83,6 +92,27 @@ export class BackgroundComponent implements OnInit, OnDestroy {
     if (this.intervalSubscription) {
       this.intervalSubscription.unsubscribe();
     }
+  }
+
+  toggleDarkMode(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (isChecked) {
+      document.documentElement.classList.add('dark-theme');
+      this.isDarkMode = true;
+    } else {
+      document.documentElement.classList.remove('dark-theme');
+      this.isDarkMode = false;
+    }
+  }
+
+  applyTheme(): void {
+    if (this.isDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+    this.cdr.detectChanges(); // Atualiza a interface se necessário
   }
 
   updateNotificationCount(response: any): void {

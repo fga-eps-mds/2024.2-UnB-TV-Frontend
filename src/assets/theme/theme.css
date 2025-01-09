@@ -1,132 +1,54 @@
+/* Tema claro (default) */
 :root {
 	--surface-a: #ffffff;
 	--surface-b: #f8f9fa;
 	--surface-c: #e9ecef;
 	--surface-d: #dee2e6;
-	--surface-e: #ffffff;
-	--surface-f: #ffffff;
 	--text-color: #495057;
-	--text-color-secondary: #6c757d;
 	--primary-color: #0087c8;
-	--primary-color-text: #ffffff;
-	--font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-	--surface-0: #ffffff;
-	--surface-50: #FAFAFA;
-	--surface-100: #F5F5F5;
-	--surface-200: #EEEEEE;
-	--surface-300: #E0E0E0;
-	--surface-400: #BDBDBD;
-	--surface-500: #9E9E9E;
-	--surface-600: #757575;
-	--surface-700: #616161;
-	--surface-800: #424242;
-	--surface-900: #212121;
-	--gray-50: #FAFAFA;
-	--gray-100: #F5F5F5;
-	--gray-200: #EEEEEE;
-	--gray-300: #E0E0E0;
-	--gray-400: #BDBDBD;
-	--gray-500: #9E9E9E;
-	--gray-600: #757575;
-	--gray-700: #616161;
-	--gray-800: #424242;
-	--gray-900: #212121;
-	--content-padding: 1.25rem;
-	--inline-spacing: 0.5rem;
-	--border-radius: 6px;
-	--surface-ground: #eff3f8;
-	--surface-section: #ffffff;
-	--surface-card: #ffffff;
-	--surface-overlay: #ffffff;
-	--surface-border: #dfe7ef;
-	--surface-hover: #f6f9fc;
-	--focus-ring: 0 0 0 0.2rem #d1f0ff;
-	--maskbg: rgba(0, 0, 0, 0.4);
+	--body: #ffffff;
 	--nav: #ffffff;
 	--footer: #ffffff;
-	--footer-text: #ffffff; /* Texto do footer */
+	--nav-text: #000000;
+	--footer-text: #ffffff;
 }
 
-/* MUDANÇAS FEITAS DARK-THEME */
 /* Tema escuro */
-:root .dark-theme {
-    --primary: #1976d2;
-    --body: #333;
-    --text-menu: #fff;
-    --text-color: #fff;
-    --text-body: #fff;
-    --nav: #333;
-    --nav-bg: #333; /* Fundo do header */
-    --footer-bg: #333; /* Fundo do footer */
-    --footer: #333;
-    --nav-text: #fff; /* Texto do header */
-    --footer-text: #ccc; /* Texto do footer */
-	
+:root.dark-theme {
+	--surface-a: #333333;
+	--surface-b: #424242;
+	--surface-c: #515151;
+	--surface-d: #616161;
+	--text-color: #ffffff;
+	--primary-color: #1976d2;
+	--body: #333333;
+	--nav: #333333;
+	--footer: #333333;
+	--nav-text: #ffffff;
+	--footer-text: #cccccc;
 }
 
-/* PARA MODIFICAR A COR DA NAV "Agora na Tv | Programas | ..."
-.dark-theme nav ul li a {
-	color: white;
-} */
+/* Estilos comuns */
+body {
+	background-color: var(--body);
+	color: var(--text-color);
+}
 
-/* Aplicando as variáveis no CSS */
 nav {
-    background-color: var(--nav);
-    color: var(--nav-text);
+	background-color: var(--nav);
+	color: var(--nav-text);
 }
 
 footer {
-    background-color: var(--footer);
-    color: var(--footer-text);
+	background-color: var(--footer);
+	color: var(--footer-text);
 }
 
-/* Estilos de outros elementos */
-body {
-    background-color: var(--body);
-    color: var(--text-color);
+.dark-theme nav ul li a {
+	color: var(--text-color);
 }
 
-body.dark-theme .checkbox-label {
-    color: var(--text-color);
-}
-
-body.dark-theme .containerPrincipal {
-	background-color: var(--body);
-    color: var(--text-color);
-}
-
-body.dark-theme hr.solid {
-	border-top: 0.0625em solid #444; /* Ajuste a cor para o modo dark */
-}
-
-body.dark-theme hr.solid2 {
-	border-top: 0.125em solid #444; /* Ajuste a cor para o modo dark */
-}
-  
-/* FIM MUDANÇAS FEITAS DARK-THEME */
-/* MUDANÇAS WHITE MODE */
-
-.containerPrincipal {
-  background-color: #ffffff; /* Fundo claro */
-  color: #333; /* Texto padrão */
-}
-
-.informacoesUsuario {
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.linkLogout,
-.linkVoltar {
-  color: #007bff; /* Cor padrão dos links */
-}
-
-
-hr.solid {
-  border-top: 0.0625em solid #bbb;
-}
-	
-/* FIM MUDANÇAS WHITE MODE */
+/*daquiparaci*/
 * {
 	box-sizing: border-box
 }

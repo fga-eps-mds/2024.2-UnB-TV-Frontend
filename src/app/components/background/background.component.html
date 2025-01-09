@@ -6,6 +6,19 @@
       </a>
     </div>
 
+
+
+    <!-- Alternador de Tema --->
+    <div class="dark-mode-toggle dark-theme-switch">
+      <img alt="sol" *ngIf="!isDarkMode" src="../../../assets/sun.svg" class="h-7" />
+      <img alt="lua" *ngIf="isDarkMode" src="../../../assets/moon.svg" class="h-7" />
+      <label class="switch">
+        <input type="checkbox" [checked]="isDarkMode" (change)="toggleDarkMode($event)" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
     <div *ngIf="
         getActualRoute() !== '/login' && getActualRoute() !== '/loginsocial'
       ">
