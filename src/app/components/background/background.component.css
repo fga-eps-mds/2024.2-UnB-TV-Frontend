@@ -78,8 +78,8 @@
 }
 
 .dark-theme-switch {
-  position: absolute;
-  top: 60%;
+  position: relative;
+  top: 1em;
   left: 59%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -94,6 +94,14 @@
   /* Alinha os itens lado a lado */
 }
 
+@media (max-width: 768px) {
+  .dark-theme-switch {
+    top: 1em;
+    /* Ajuste baseado na aparência em dispositivos móveis */
+    left: 74%;
+    transform: translate(-50%, -50%);
+  }
+}
 
 .dark-mode-toggle {
   display: flex;
@@ -148,5 +156,4 @@ input:checked+.slider:before {
 
 body.dark-mode {
   background-color: #121212;
-  color: #ffffff;
 }
