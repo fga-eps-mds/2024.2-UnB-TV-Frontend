@@ -7,6 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { Catalog } from 'src/shared/model/catalog.model';
 import { NotificationService } from 'src/app/services/notification.service';
+import { EmailService } from 'src/app/services/email.service';
+import { IEmailData } from 'src/shared/model/email.model';
+import { find } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -23,11 +26,39 @@ export class NotificationsComponent implements OnInit {
   numberOfRecommendedVideos: number = 0;
   catalog: Catalog = new Catalog();
   notificationsRead: boolean = false;
+  private lastVideoIds: number[]; 
+  private checkInterval: any;  
+  usuarios: [any];
+  emailsNotificacao: string = '';
+  email: IEmailData;
+  videosList: IVideo[] = [];
+videosExeção: IVideo[] = [
+  {
+    id: 1,
+    title: "string",
+    description: "string",
+    keywords: "string",
+    visibility: "string",
+    duration: 0,
+    generateLibras: true,
+    generateSubtitle: true,
+    qtAccess: 0,
+    qtLikes: 0,
+    images: undefined,
+    embed: "string",
+    channels: undefined,
+    catalog: null,
+    isFavorited: true,
+    isWatchLater: true,
+    showMenu: true
+  }
+];
 
   constructor(
     private videoService: VideoService,
     private authService: AuthService,
     private userService: UserService,
+    private emailService: EmailService,
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -41,6 +72,7 @@ export class NotificationsComponent implements OnInit {
       await this.findAll();
       await this.fetchRecommendedVideos();  
       this.notificationService.fetchRecommendedVideosCount(this.userId);
+      this.startCheckingForNewVideos();
     }
   }
 
@@ -111,6 +143,55 @@ export class NotificationsComponent implements OnInit {
         },
       });
     });
+  }
+
+  startCheckingForNewVideos() {
+    setInterval(() => {
+      this.checkForNewVideos();
+    }, 5 * 60 * 1000);  
+  }
+
+  private checkForNewVideos() {
+    this.videoService.findAll().subscribe((videos) => {
+
+    this.videosList = videos.body?.videoList ? videos.body?.videoList : this.videosExeção;
+
+      const currentVideoIds = this.videosList.slice(0, 5).map((video) => video.id ? video.id : 0);
+
+      const newVideos = this.getNewVideos(currentVideoIds);
+
+      if (newVideos.length > 0) {
+        this.userService.getAllUsers({}).subscribe((data) => {
+          this.usuarios = data;
+
+          this.usuarios.forEach(usuario => {
+            this.emailsNotificacao = this.emailsNotificacao + usuario.email + ",";
+          });
+        })
+
+         newVideos.forEach((video: number) => {
+
+            this.email.descricao = "Olá, " + 
+            "Estamos animados em te avisar que um novo vídeo foi lançado em nossa plataforma! 🎉" + 
+            (videos.body?.videoList?.find(id => id == video)?.title ?? 'Título não encontrado');
+        
+            this.email.tema = `Assunto: 🎥 Novo Vídeo Disponível - ${videos.body?.videoList?.find(id => id == video)?.title ?? 'Título não encontrado'}`;
+        
+            this.email.email_contato = this.emailsNotificacao ?? 'contato@empresa.com';
+         })
+
+  
+
+
+        this.emailService.sendEmail(this.email);
+      }
+
+      this.lastVideoIds = currentVideoIds;
+    });
+  }
+
+  private getNewVideos(currentVideoIds: any[]){
+    return currentVideoIds.filter(id => !this.lastVideoIds.includes(id));
   }
 
   filterVideosByChannel(videos: IVideo[]): void {
