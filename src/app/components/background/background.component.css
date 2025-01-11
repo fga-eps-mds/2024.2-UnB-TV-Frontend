@@ -78,27 +78,28 @@
 }
 
 .dark-theme-switch {
-  position: relative;
-  top: 1em;
-  left: 59%;
+  position: absolute;
+  /* Use absolute para controlar a posição relativa ao menu */
+  top: 50%;
+  /* Centraliza verticalmente */
+  right: 33%;
+  /* Centraliza horizontalmente */
   transform: translate(-50%, -50%);
+  /* Ajusta para o centro real */
   display: flex;
-  /* Para alinhar os itens dentro do container */
   align-items: center;
-  /* Alinha o conteúdo verticalmente */
   justify-content: center;
-  /* Alinha o conteúdo horizontalmente */
   gap: 8px;
-  /* Espaçamento entre o texto e o slider */
-  flex-direction: row;
-  /* Alinha os itens lado a lado */
+  /* Espaço entre o texto e o botão */
 }
+
 
 @media (max-width: 768px) {
   .dark-theme-switch {
-    top: 1em;
-    /* Ajuste baseado na aparência em dispositivos móveis */
-    left: 74%;
+    top: 50%;
+    /* Mantém a centralização vertical */
+    left: 50%;
+    /* Mantém a centralização horizontal */
     transform: translate(-50%, -50%);
   }
 }
