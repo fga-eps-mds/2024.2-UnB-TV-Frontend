@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import jwt_decode from 'jwt-decode';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
 import { Catalog } from 'src/shared/model/catalog.model';
+import axios from 'axios';
 
 @Component({
   selector: 'app-video-viewer',
@@ -57,6 +58,7 @@ export class VideoViewerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadVLibrasScript();
     const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
     this.idVideo = this.route.snapshot.params['idVideo'];
 
@@ -345,6 +347,63 @@ export class VideoViewerComponent implements OnInit {
       console.warn('A API de compartilhamento não é suportada neste navegador.');
     }
   }
+
+private loadVLibrasScript(): void {
+  const existingScript = document.querySelector('script[src="assets/app/vlibras-plugin.js"]');
+  if (!existingScript) {
+    const script = document.createElement('script');
+    script.src = 'assets/app/vlibras-plugin.js';
+    script.async = true;
+    script.onload = () => {
+      const vlibras = new (window as any).VLibras.Widget({
+        rootPath: '/assets/app/',
+        personalization: 'https://vlibras.gov.br/config/configs.json',
+        opacity: 0.75,
+        position: 'R',
+        avatar: 'random'
+      });
+
+      // Busca o texto do microsserviço e lê durante a rolagem do vídeo
+      this.fetchTextForVLibras().then((text) => {
+        this.startVLibrasTranslation(vlibras, text);
+      });
+    };
+    document.body.appendChild(script);
+  } else {
+    // Reinitialize VLibras if script already exists
+    this.fetchTextForVLibras().then((text) => {
+      this.startVLibrasTranslation(new (window as any).VLibras.Widget(), text);
+    });
+  }
+}
+
+private async fetchTextForVLibras(): Promise<string> {
+  try {
+    const response = await axios.get(`http://localhost://8020/get-text/${this.idVideo}`);
+    return response.data.text;
+  } catch (error) {
+    console.error('Erro ao buscar texto do microsserviço:', error);
+    return 'Texto não encontrado.';
+  }
+}
+
+private startVLibrasTranslation(vlibras: any, text: string): void {
+  // Configure VLibras para usar o texto retornado
+  vlibras.translateText(text);
+
+  // Escutar eventos de progresso do vídeo para sincronizar a leitura
+  const iframe = document.getElementById('embeddedVideo') as HTMLIFrameElement;
+  const video = iframe?.contentDocument?.querySelector('video');
+  if (video) {
+    video.ontimeupdate = () => {
+      if (!video.paused) {
+        vlibras.readText(text);
+      }
+    };
+  }
+}
+
+
 
   dummyKeyDown(event: KeyboardEvent): void {
     // Não faz nada

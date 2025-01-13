@@ -69,3 +69,7 @@
     justify-content: center; 
   }
 }
+
+[vw] {
+  z-index: 1000;
+}
