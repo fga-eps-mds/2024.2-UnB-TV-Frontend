@@ -1,64 +1,91 @@
 <div class="w-full flex flex-col min-h-screen justify-between">
-  <nav class="w-full fixed top-0 left-0 z-50 bg-white">
+  <nav class="w-full fixed top-0 left-0 z-50">
     <div class="pt-10 flex justify-center items-center">
       <a [routerLink]="['/catalog']">
         <img alt="simbolo-unb" src="../../../assets/Icone-unbtv.svg" class="h-10" />
       </a>
     </div>
+
+
+
+   
+
+
     <div *ngIf="
         getActualRoute() !== '/login' && getActualRoute() !== '/loginsocial'
       ">
       <div class="flex flex-row items-center justify-center pl-3">
-        <ul class="flex flex-row gap-1 text-xs">
-          <div *ngIf="getActualRoute() === '/stream'">
-            <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/stream']">Agora na TV</a>
-            </li>
+        <div class="flex flex-col">
+          <div class="flex self-end mr-10 mb-4 justify-end"> 
+            
+             <!-- Alternador de Tema --->
+              <div class="flex flex-row items-center gap-2">
+                <img alt="sol" *ngIf="!isDarkMode" src="../../../assets/sun.svg" class="h-7" />
+                <img alt="lua" *ngIf="isDarkMode" src="../../../assets/moon.svg" class="h-7" />
+                <label class="switch">
+                  <input 
+                  type="checkbox" 
+                  [checked]="isDarkMode" 
+                  (change)="toggleDarkMode($event)" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
           </div>
-          <div *ngIf="getActualRoute() !== '/stream'">
-            <li class="text-blue-brand">
-              <a [routerLink]="['/stream']">Agora na TV</a>
-            </li>
-          </div>
-          <div class="mx-2 text-blue-brand">|</div>
-          <div *ngIf="getActualRoute() === '/catalog'">
-            <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/catalog']">Programas</a>
-            </li>
-          </div>
-          <div *ngIf="getActualRoute() !== '/catalog'">
-            <li class="text-blue-brand">
-              <a [routerLink]="['/catalog']">Programas</a>
-            </li>
-          </div>
-          <div class="mx-2 text-blue-brand">|</div>
-          <div *ngIf="getActualRoute() === '/sua-unbtv'">
-            <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
-            </li>
-          </div>
-          <div *ngIf="getActualRoute() !== '/sua-unbtv'">
-            <li class="text-blue-brand">
-              <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
-            </li>
-          </div>
-          <div class="mx-2 text-blue-brand">|</div>
-          <div *ngIf="getActualRoute() === '/suggestAgenda'">
-            <li class="font-bold text-[#00A550]">
-              <a [routerLink]="['/suggestAgenda']">Pauta</a>
-            </li>
-          </div>
-          <div *ngIf="getActualRoute() !== '/suggestAgenda'">
-            <li class="text-blue-brand">
-              <a [routerLink]="['/suggestAgenda']">Pauta</a>
-            </li>
-          </div>
-        </ul>
-        <div class="card flex justify-content-center mx-2">
-          <p-menu #menu [model]="items" [popup]="true"></p-menu>
-          <button pButton type="button" (click)="menu.toggle($event)" label="&#9776;" class="menu-button"></button>
-          <div class="notification-badge-wrapper" *ngIf="hasNotifications">
-            <div class="notification-badge"></div> <!-- Badge sem o número -->
+          
+          <div class="flex flex-row items-center justify-center">
+            <ul class="flex flex-row gap-1 text-xs">
+              <div *ngIf="getActualRoute() === '/stream'">
+                <li class="font-bold text-[#00A550]">
+                  <a [routerLink]="['/stream']">Agora na TV</a>
+                </li>
+              </div>
+              <div *ngIf="getActualRoute() !== '/stream'">
+                <li class="text-blue-brand">
+                  <a [routerLink]="['/stream']">Agora na TV</a>
+                </li>
+              </div>
+              <div class="mx-2 text-blue-brand">|</div>
+              <div *ngIf="getActualRoute() === '/catalog'">
+                <li class="font-bold text-[#00A550]">
+                  <a [routerLink]="['/catalog']">Programas</a>
+                </li>
+              </div>
+              <div *ngIf="getActualRoute() !== '/catalog'">
+                <li class="text-blue-brand">
+                  <a [routerLink]="['/catalog']">Programas</a>
+                </li>
+              </div>
+              <div class="mx-2 text-blue-brand">|</div>
+              <div *ngIf="getActualRoute() === '/sua-unbtv'">
+                <li class="font-bold text-[#00A550]">
+                  <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
+                </li>
+              </div>
+              <div *ngIf="getActualRoute() !== '/sua-unbtv'">
+                <li class="text-blue-brand">
+                  <a [routerLink]="['/sua-unbtv']">Sua UnBTV</a>
+                </li>
+              </div>
+              <div class="mx-2 text-blue-brand">|</div>
+              <div *ngIf="getActualRoute() === '/suggestAgenda'">
+                <li class="font-bold text-[#00A550]">
+                  <a [routerLink]="['/suggestAgenda']">Pauta</a>
+                </li>
+              </div>
+              <div *ngIf="getActualRoute() !== '/suggestAgenda'">
+                <li class="text-blue-brand">
+                  <a [routerLink]="['/suggestAgenda']">Pauta</a>
+                </li>
+              </div>
+            </ul>
+            <div class="card flex justify-content-center mx-2">
+              <p-menu #menu [model]="items" [popup]="true"></p-menu>
+              <button pButton type="button" (click)="menu.toggle($event)" label="&#9776;" class="menu-button"></button>
+              <div class="notification-badge-wrapper" *ngIf="hasNotifications">
+                <div class="notification-badge"></div> <!-- Badge sem o número -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -67,7 +94,7 @@
   <div class="flex-grow p-3 mt-40 mb-auto">
     <ng-content></ng-content>
   </div>
-  <footer class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0 bg-white z-20">
+  <footer class="flex flex-row items-center justify-center gap-3 py-6 px-3 md:py-10 sticky bottom-0">
     <div>
       <a [href]="
             mobileDevide ? 'tel:+556131072775' : 'https://unbtv.unb.br/contato'

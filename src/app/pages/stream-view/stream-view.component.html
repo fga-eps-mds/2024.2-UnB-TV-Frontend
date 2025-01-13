@@ -10,7 +10,7 @@
     ></iframe>
   </div>
   <div
-    class="min-w-full flex flex-col justify-center gap-3 font-custom text-[#3C3C3B]"
+    class="min-w-full flex flex-col justify-center gap-3 font-custom"
   >
     <span class="text-center text-[14px] font-medium">
       {{ todaysDate }} • {{ weekDay }}
@@ -23,7 +23,7 @@
         *ngFor="let schedule of schedules; let i = index"
         class="w-full h-7 flex items-center gap-2"
         [ngClass]="{
-          'font-bold text-[#00A550]': currentProgram && i === highlightedIndex
+          'font-bold': currentProgram && i === highlightedIndex
         }"
       >
         <div>{{ schedule.time }}</div>
