@@ -45,7 +45,7 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: black;
+  color: var(--text);
   font-size: 1.1em;
 }
 
