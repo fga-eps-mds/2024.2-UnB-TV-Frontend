@@ -28,6 +28,45 @@
 	--footer-text: #cccccc;
 }
 
+/*Estilo da barra aside na tela admin*/
+aside {
+	width: 13.2em;
+	padding: 1em 0.75em;
+	box-shadow: 0.125em 0 0.3125em rgba(0,0,0,0.1);
+	text-align: left;
+	position: fixed;
+	height: 100%;
+	margin: 0;
+	background-color: var(--body)
+  }
+
+.informacoesUsuario p {
+	margin: 0;
+	font-size: 1.2em;
+  }
+
+.linksBarraLateral {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0.75em 0;
+  }
+
+.aside {
+	width: 13.2em;
+	background-color: var(--body);
+	color: var(--text);
+	padding: 1em 0.75em;
+	box-shadow: 0.125em 0 0.3125em rgba(0, 0, 0, 0.1);
+	text-align: left;
+	position: fixed;
+	height: 100%;
+	margin: 0;
+  }
+.dark-theme .aside {
+	color: var(--text-color);
+}
+
 /* Estilos comuns */
 body {
 	background-color: var(--body);
