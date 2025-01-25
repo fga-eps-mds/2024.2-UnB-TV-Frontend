@@ -1,22 +1,35 @@
+# Etapa 1: Base para construção do projeto Angular
 FROM node:20 as angular
 
+# Define o diretório de trabalho
 WORKDIR /unb-tv-web
 
-RUN apt-get update
-RUN apt-get -y install chromium
+# Instala Chromium e outras dependências necessárias
+RUN apt-get update && \
+    apt-get install -y chromium && \
+    rm -rf /var/lib/apt/lists/*
 
-# set CHROME_BIN environment variable, so that karma knows which crome should be started
+# Define a variável de ambiente para o Chromium
 ENV CHROME_BIN=/usr/bin/chromium
 
+# Define o PATH para o Angular CLI
 ENV PATH /unb-tv-web/node_modules/.bin:$PATH
+
+# Define o ambiente como desenvolvimento
 ENV NODE_ENV=dev
 
-# Install dependencies
-COPY package.json /unb-tv-web/
-RUN npm install -g @angular/cli
-RUN npm install
+# Copia apenas o package.json e package-lock.json para otimizar cache
+COPY package.json package-lock.json ./
 
-COPY . /unb-tv-web
+# Instala o Angular CLI globalmente e as dependências do projeto
+RUN npm install -g @angular/cli && \
+    npm install
 
-EXPOSE 4200
-EXPOSE 9876
+# Copia todo o código para o contêiner
+COPY . .
+
+# Exponha as portas necessárias
+EXPOSE 4200 9876
+
+# Comando padrão para iniciar o servidor de desenvolvimento Angular
+CMD ["ng", "serve", "--host", "0.0.0.0"]

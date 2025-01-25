@@ -59,6 +59,7 @@ import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-
 import { ControleSuperAdminComponent } from './pages/controle-super-admin/controle-super-admin.component';
 
 import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @NgModule({
   imports: [
@@ -78,6 +79,8 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     BrowserAnimationsModule,
     MatPaginatorModule,
     SocialLoginModule,
+    RecaptchaModule, // Importa o RecaptchaModule
+    RecaptchaFormsModule, // Opcional, caso use com formulários
     NgxGoogleAnalyticsModule.forRoot('G-XL7Z0L7VM8'),
     NgxGoogleAnalyticsRouterModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
