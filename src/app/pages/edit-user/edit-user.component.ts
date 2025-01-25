@@ -17,6 +17,7 @@ export class EditUserComponent implements OnInit {
   userId: any;
   userData: any;
   vinculo: any = {};
+  selectedConnection = '';
 
   constructor(
     private router: Router,
@@ -52,6 +53,7 @@ export class EditUserComponent implements OnInit {
   }
 
   initializeForm() {
+    this.selectedConnection = this.userData.connection;
     this.userForm = this.fb.group({
       name: [this.userData ? this.userData.name : '', [Validators.required]],
       email: [
@@ -84,15 +86,19 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+  onDropdownChange(event: any) {
+    this.selectedConnection = event.value;
+  }
+
   updateUser() {
     if (this.userForm?.valid) {
       const data = {
         ...this.userForm.value,
-        connection: this.userForm.value.connection.name,
+        connection: this.selectedConnection,
       };
+
       this.userService.updateUser(this.userId, data).subscribe({
         next: (data) => {
-          console.log(data);
           this.alertService.showMessage(
             'success',
             'Sucesso',
