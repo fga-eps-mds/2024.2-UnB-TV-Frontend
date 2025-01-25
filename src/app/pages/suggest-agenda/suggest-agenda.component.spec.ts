@@ -6,6 +6,7 @@ import { EmailService } from 'src/app/services/email.service';
 import { SuggestAgendaComponent } from './suggest-agenda.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/app/environment/environment';
 
 const mockData = "email has been sent";
 const mockError = new HttpErrorResponse({
@@ -201,4 +202,15 @@ describe('SuggestAgendaComponent', () => {
     component.sendSuggestAgenda();
     expect(alertSpy).toHaveBeenCalledWith('info', 'Alerta', 'Preencha todos os campos corretamente!');
   });
+  
 });
+export class AppComponent {
+  siteKey = environment.recaptcha.siteKey; // Pega a chave do ambiente
+  recaptchaToken: string | null = null;
+  
+
+  onCaptchaResolved(token: string | null) {
+    console.log('Captcha resolvido! Token:', token);
+    this.recaptchaToken = token; // Salva o token retornado
+  }}
+
