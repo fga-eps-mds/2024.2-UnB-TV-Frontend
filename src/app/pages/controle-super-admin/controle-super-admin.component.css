@@ -3,27 +3,11 @@
   display: flex;
 }
 
-aside {
-  width: 13.2em;
-  background-color: white;
-  padding: 1em 0.75em;
-  box-shadow: 0.125em 0 0.3125em rgba(0, 0, 0, 0.1);
-  text-align: left;
-  position: fixed;
-  height: 100%;
-  margin: 0;
-}
+
 
 .user-info p {
   margin: 0;
   font-size: 1.2em;
-}
-
-.linksBarraLateral {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.75em 0;
 }
 
 .linkLogout,
@@ -54,7 +38,7 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: #1d1d1d;
+  color: var(--text);
   font-size: 1.1em;
 }
 
