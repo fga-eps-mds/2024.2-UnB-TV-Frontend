@@ -75,6 +75,11 @@
       <p style="color: #969696; text-align: left; margin-left: 30px">
         <small>*Campo obrigatório</small>
       </p>
+      <re-captcha
+      [siteKey]="siteKey"
+      (resolved)="onCaptchaResolved($event)">
+    </re-captcha>
+
 
       <button type="submit">
         <span *ngIf="isSendingEmail">Enviando...</span>
