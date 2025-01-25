@@ -15,6 +15,28 @@
   max-height: 200vh;
 }
 
+aside {
+  width: 13.2em;
+  background-color: white;
+  padding: 1em 0.75em;
+  box-shadow: 0.125em 0 0.3125em rgba(0,0,0,0.1);
+  text-align: left;
+  position: fixed;
+  height: 100%;
+}
+
+.informacoesUsuario p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.linksBarraLateral {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.75em 0 0.75em 0;
+}
+
 .linkLogout, .linkVoltar {
   color: #0087c8;
   text-decoration: none;
