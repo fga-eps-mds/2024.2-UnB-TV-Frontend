@@ -1,27 +1,31 @@
 <div class="record-container">
     <header>
+        <div class="tracking_history my-4">
+            <label class="checkbox-label">
+                <img src="../../../assets/history_icon.svg" alt="history_icon" class="tracking_icons_history">
+                Rastreamento do Histórico
+                <input type="checkbox" [(ngModel)]="trackingEnabled" (change)="toggleTracking(trackingEnabled)" />
+            </label>
+        </div>
         <h1 class="header-title">Histórico de Vídeos</h1>
     </header>
-
     <!-- Controle de Rastreamento com Checkbox -->
     <div class="record-controls my-4">
-        <label class="checkbox-label">
-            <input type="checkbox" [(ngModel)]="trackingEnabled" (change)="toggleTracking(trackingEnabled)" />
-            Rastreamento do Histórico
-        </label>
         <button
-        (click)="sortRecord(true)"
-        class="btn btn-secondary mr-2"
-        [ngClass]="{ 'active': isAscendingActive }"
-    >
-    Ordenar Crescente
+            (click)="sortRecord(true)"
+            class="btn btn-secondary mr-2"
+            [ngClass]="{ 'active': isAscendingActive }"
+            >
+            <img src="../../../assets/up_arrow.svg" alt="up-arrow-icon" class="tracking_icons">
+            Ordenar Crescente
         </button>
         <button
-    (click)="sortRecord(false)"
-    class="btn btn-secondary"
-    [ngClass]="{ 'active': isDescendingActive }"
-    >
-    Ordenar Decrescente
+            (click)="sortRecord(false)"
+            class="btn btn-secondary"
+            [ngClass]="{ 'active': isDescendingActive }"
+            >
+            <img src="../../../assets/down_arrow.svg" alt="down-arrow-icon" class="tracking_icons">
+            Ordenar Decrescente
         </button>
     </div>
 
