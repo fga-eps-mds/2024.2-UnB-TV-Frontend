@@ -51,6 +51,7 @@
 
 .checkbox-label {
     display: flex;
+    justify-content: center;
     align-items: center;
     font-size: 1.2rem;
     margin-bottom: 20px;
@@ -60,31 +61,51 @@
 
 
 .checkbox-label input[type="checkbox"] {
-    margin-right: 10px;
+    margin-left: 10px;
     width: 24px;
     height: 24px;
     cursor: pointer;
 }
 
 
-.record-controls {
+.tracking_history {
     text-align: center;
     margin-bottom: 20px;
 }
 
+.record-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
 .record-controls button {
+    display: flex;
     background-color: #2980b9;
     color: #fff;
     border: none;
     padding: 12px 24px;
     margin: 5px;
-    border-radius:25px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 1.1rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.tracking_icons {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.tracking_icons_history {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+}
 
 .record-controls button:hover {
     background-color: #1f6395;
