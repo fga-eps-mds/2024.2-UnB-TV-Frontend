@@ -19,7 +19,6 @@ import { GridDaysComponent } from './pages/grid-days/grid-days.component';
 import { GridComponent } from './pages/grid/grid.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
-
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 import { AdminActivateComponent } from './pages/admin-activate/admin-activate.component';
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
@@ -33,10 +32,11 @@ import { FavoriteVideosComponent } from './pages/favorite-videos/favorite-videos
 import { WatchLaterVideosComponent } from './pages/watchlater-videos/watchlater-videos.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { SuperAdminActivateComponent } from './pages/super-admin-activate/super-admin-activate.component';
-
 import { WithTokenGuard } from './guard/with-token.guard';
 import { TokenAdminGuard } from './guard/admin.guard';
 import { TokenSuperAdminGuard } from './guard/super-admin.guard';
+import { FeedbackPageComponent } from './pages/feedback-page/feedback-page.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [WithTokenGuard] },
@@ -45,6 +45,10 @@ const routes: Routes = [
   { path: 'videos', component: VideoComponent },
   { path: 'video/:idVideo', component: VideoViewerComponent },
   { path: 'login', component: LoginComponent, canActivate: [WithTokenGuard] },
+  { path: 'feedback-page', 
+    component: FeedbackPageComponent,
+    canActivate: [AuthGuard],
+   },
   {
     path: 'register',
     component: RegisterComponent,
@@ -163,10 +167,13 @@ const routes: Routes = [
     component: ControleSuperAdminComponent,
     canActivate: [TokenSuperAdminGuard],
   },
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+  
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
