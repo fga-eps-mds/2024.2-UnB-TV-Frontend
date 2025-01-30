@@ -49,22 +49,31 @@ export class ControleSuperAdminComponent implements OnInit {
     });
   }
 
-  deleteUser(userId: any) {
-    this.userService.deleteUser(userId).subscribe({
-      next: () => {
-        this.alertService.showMessage(
-          'success',
-          'Sucesso',
-          'Usuário excluído com sucesso.'
-        );
-        this.loadUsers(); // Recarrega a lista de usuários após exclusão
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Error deleting user:', error);
-        this.alertService.errorMessage(error);
-      },
-    });
-  }
+    deleteUser(userId: any) {
+      this.confirmationService.confirm({
+        message: 'Tem certeza que deseja excluir o perfil?',
+        header: 'Confirmação',
+        key: 'myDialog',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.userService.deleteUser(userId).subscribe({
+            next: () => {
+              this.alertService.showMessage(
+                'success',
+                'Sucesso',
+                'Usuário excluído com sucesso.'
+              );
+              this.loadUsers(); // Recarrega a lista de usuários após exclusão
+            },
+            error: (error: HttpErrorResponse) => {
+              console.error('Error deleting user:', error);
+              this.alertService.errorMessage(error);
+            },
+          });
+        },
+        reject: () => {},
+      });
+    }
 
   logoutUser() {
     this.confirmationService.confirm({
