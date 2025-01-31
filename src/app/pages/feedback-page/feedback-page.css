@@ -5,22 +5,27 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f8f9fa;
+    margin: 0;
+    overflow: hidden; /* Remove qualquer rolagem */
 }
 
-.container {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 500px;
-    margin-left: 650px;
-    margin-top: 30px;
+.containner {
+
+        width: 90%;
+        max-width: 500px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 450px;
+    
+    
 }
+
 
 h2 {
     color: #007bff;
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 
@@ -48,8 +53,48 @@ textarea.input-field {
     cursor: pointer;
     font-size: 14px;
     margin-top: 30px;
+    display: block; /* Garante que ele obedeça margens automáticas */
+    margin-left: auto;
+    margin-right: auto; /* Centraliza horizontalmente */
+    
 }
+
 
 .submit-button:hover {
     background-color: #0056b3;
+}
+
+:host {
+    position: fixed;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    height: 100vh;  /* Mantém o componente fixo na tela inteira */
+    overflow: hidden; 
+}
+
+
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .input-field {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .submit-button {
+        width: 100%;
+        font-size: 12px;
+        padding: 8px;
+    }
 }
