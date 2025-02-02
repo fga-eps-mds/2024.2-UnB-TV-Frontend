@@ -67,7 +67,7 @@
   color: #333;
 }
 
-/* Media Query para dispositivos maiores que desktop (opcional) */
+/* Media Query para dispositivos maiores que tablet/desktop (opcional) */
 @media (min-width: 768px) {
 
   /* Ajuste para garantir que as thumbnails fiquem alinhadas à esquerda */
@@ -98,3 +98,59 @@
   }
 }
 
+.arrow-container {
+  display: flex;
+  gap: 100px;
+  /* Espaçamento entre as setas */
+  margin-left: 10px;
+  /* Espaçamento entre as setas e o título */
+  align-items: center;
+  /* Alinha as setas verticalmente ao centro */
+}
+
+.arrow-box {
+  background-color: rgba(153, 153, 153, 0.3);
+  /* Cor de fundo cinza com 30% de opacidade */
+  border-radius: 14px;
+  /* Bordas arredondadas */
+  padding: 6px;
+  /* Espaçamento interno para as setas */
+  transition: background-color 0.3s ease;
+  /* Transição suave para a cor de fundo */
+  display: flex;
+  /* Garante que a imagem da seta se centralize */
+  justify-content: center;
+  /* Centraliza a seta dentro do box */
+  align-items: center;
+  /* Garante que a imagem esteja verticalmente centralizada */
+}
+
+.arrow-box img {
+  width: 1.25rem;
+  /* Tamanho das setas */
+  height: 1.25rem;
+  cursor: pointer;
+  filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
+  /* Cor da seta */
+  transition: filter 0.3s ease;
+  flex-shrink: 0;
+  /* Impede que a seta encolha */
+}
+
+.arrow-box:hover {
+  background-color: rgba(168, 166, 166, 0.5);
+  /* Aumenta a opacidade do fundo ao passar o mouse */
+}
+
+.arrow-box:hover img {
+  filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
+  /* Ajusta o brilho ao passar o mouse */
+}
+
+.flex.items-center {
+  display: flex;
+  justify-content: flex-start;
+  /* Alinha o título à esquerda */
+  width: 100%;
+  /* Garante que o título ocupe o espaço disponível */
+}
