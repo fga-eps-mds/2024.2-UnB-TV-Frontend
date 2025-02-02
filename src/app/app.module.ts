@@ -47,6 +47,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import { FeedbackPageComponent } from './pages/feedback-page/feedback-page.component';
 
 import { CategoryTableComponent } from './pages/category-table/category-table.component';
 import { VideoViewsComponent } from './pages/video-views/video-views.component';
@@ -122,6 +123,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     WatchLaterVideosComponent,
     NotificationsComponent,
     ControleSuperAdminComponent,
+    FeedbackPageComponent,
   ],
 
   providers: [
