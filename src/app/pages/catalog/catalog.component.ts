@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
@@ -28,28 +27,46 @@ export class CatalogComponent implements OnInit {
   isAuthenticated: boolean = false; // Propriedade pública para o estado de autenticação
   filterFavorite: boolean = false;
   favoriteVideos: IVideo[] = [];
-  // Definindo o número inicial de thumbnails visíveis
-  thumbnailsVisibleCount = 4;
+   // Definindo o número inicial de thumbnails visíveis
+   thumbnailsVisible: { [key: string]: number } = {};
+   sliderStates: { [section: string]: number } = {};
 
-  videoCatalog: {
+  
+   videoCatalog: {
     [key: string]: { title: string; imageUrl: string }[];
-  } = {
+    } = {
       interviews: [
-        { title: 'Brasil em Questão', imageUrl: '../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg' },
-        { title: 'Diálogos', imageUrl: '../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg' },
-        { title: 'Tirando de Letra', imageUrl: '../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg' },
-        { title: 'UnBTV Entrevista', imageUrl: '../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg' },
-        { title: 'Vasto Mundo', imageUrl: '../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg' },
-        { title: 'Vozes Diplomáticas', imageUrl: '../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg' }
-      ]
-    };
+      { title: 'Brasil em Questão', imageUrl: '../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg' },
+      { title: 'Diálogos', imageUrl: '../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg' },
+      { title: 'Tirando de Letra', imageUrl: '../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg' },
+      { title: 'UnBTV Entrevista', imageUrl: '../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg' },
+      { title: 'Vasto Mundo', imageUrl: '../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg' },
+      { title: 'Vozes Diplomáticas', imageUrl: '../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg' }
+    ],
+    researchAndScience: [
+      { title: 'Explique sua Tese', imageUrl: '../../../assets/imgs/catalog-thumbs/10.Explique-sua-Tese.jpg' },
+      { title: 'Fazendo Ciência Formando Cientistas', imageUrl: '../../../assets/imgs/catalog-thumbs/11.Fazendo-Ciencia-Formando-Cientistas.jpg' },
+      { title: 'Radar da Extensão', imageUrl: '../../../assets/imgs/catalog-thumbs/12.Radar-da-Extensao.jpg' },
+      { title: 'Se Liga no PAS', imageUrl: '../../../assets/imgs/catalog-thumbs/13.Se-Liga-no-PAS.jpg' },
+      { title: 'UnBTV Ciência', imageUrl: '../../../assets/imgs/catalog-thumbs/14.UnBTV-Ciencia.png' },
+      { title: 'Universidade Para Quê?', imageUrl: '../../../assets/imgs/catalog-thumbs/15.Universidade-Para-Que.jpg' }
+    ],
+    specialSeries: [
+      { title: 'Floresta de Gente', imageUrl: '../../../assets/imgs/catalog-thumbs/20.Floresta-de-Gente.jpg' },
+      { title: 'Guia do Calouro', imageUrl: '../../../assets/imgs/catalog-thumbs/21.Guia-do-Calouro.jpg' },
+      { title: 'Memórias de Paulo Freire', imageUrl: '../../../assets/imgs/catalog-thumbs/22.Memorias-de-Paulo-Freire.jpg' },
+      { title: 'Os desafios das eleições 2022', imageUrl: '../../../assets/imgs/catalog-thumbs/23.Os-desafios-das-eleicoes2022.jpg' },
+      { title: 'Podcast Vida de Estudante', imageUrl: '../../../assets/imgs/catalog-thumbs/24.Podcast-Vida-de-Estudante.jpg' },
+      { title: 'Série Arquitetura', imageUrl: '../../../assets/imgs/catalog-thumbs/25.Serie-Arquitetura.jpg' }
+    ]
+  };
 
   constructor(
     private videoService: VideoService,
     private router: Router,
     private authService: AuthService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
@@ -58,7 +75,20 @@ export class CatalogComponent implements OnInit {
       this.getUserDetails();
     }
     this.findAll();
+     // Para cada categoria, inicializa com 4 thumbnails visíveis
+  Object.keys(this.videoCatalog).forEach(key => {
+    this.thumbnailsVisible[key] = 4;
+  });
+  // Supondo que você tenha várias seções: 'interviews', 'researchAndScience', 'specialSeries', etc.
+  this.sliderStates['interviews'] = 4;
+  this.sliderStates['researchAndScience'] = 4;
+  this.sliderStates['specialSeries'] = 4;
   }
+
+  getMaxThumbnailsForSection(sectionKey: string): number {
+    return this.videoCatalog[sectionKey].length;
+  }
+  
 
   setUserIdFromToken(token: string) {
     const decodedToken: any = jwt_decode(token);
@@ -120,17 +150,15 @@ export class CatalogComponent implements OnInit {
     // Não faz nada
   }
 
-  // Método para controlar a exibição das thumbnails
-  scrollThumbnails(categoryKey: string, direction: string): void {
-    const maxThumbnails = this.videoCatalog[categoryKey].length; // Total de thumbnails dessa categoria
-
-    // Se for para a direita
-    if (direction === 'right' && this.thumbnailsVisibleCount < maxThumbnails) {
-      this.thumbnailsVisibleCount += 4; // Adiciona mais 4 thumbnails visíveis
-    }
-    // Se for para a esquerda
-    else if (direction === 'left' && this.thumbnailsVisibleCount > 4) {
-      this.thumbnailsVisibleCount -= 4; // Remove 4 thumbnails visíveis
+   // Método para controlar a exibição das thumbnails
+   scrollThumbnails(sectionKey: string, direction: string): void {
+    // Suponha que você tenha um método para obter a quantidade máxima de thumbnails para a seção
+    const maxThumbnails = this.getMaxThumbnailsForSection(sectionKey);
+    
+    if (direction === 'right' && this.sliderStates[sectionKey] < maxThumbnails) {
+      this.sliderStates[sectionKey] += 4;
+    } else if (direction === 'left' && this.sliderStates[sectionKey] > 4) {
+      this.sliderStates[sectionKey] -= 4;
     }
   }
 }

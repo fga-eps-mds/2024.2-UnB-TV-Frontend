@@ -22,290 +22,287 @@
     </div>
 
     <div class="center flex flex-col justify-center content-start flex-wrap gap-y-8 w-full max-w-3xl"></div>
-    <div *ngFor="let category of videoCatalog | keyvalue">
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <h4 class="text-start font-bold text-[13px] text-blue-brand">Entrevista</h4>
-
-          <!-- Box da seta para a esquerda -->
-          <div *ngIf="category.value.length < thumbnailsVisibleCount" class="arrow-box2 arrow-left"
-            (click)="scrollThumbnails(category.key, 'left')">
-            <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda"
-              class="cursor-pointer" />
+    <ng-container *ngFor="let category of videoCatalog | keyvalue">
+      <!-- Apenas processa quando a chave for 'interviews' -->
+      <div *ngIf="category.key === 'interviews'">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <h4 class="text-start font-bold text-[13px] text-blue-brand">Entrevista</h4>
+    
+            <!-- Seta para a esquerda -->
+            <div *ngIf="category.value.length < sliderStates['interviews']" class="arrow-box-left arrow-left" (click)="scrollThumbnails('interviews', 'left')">
+              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda" class="cursor-pointer" />
+            </div>
+            <!-- Seta para a direita -->
+            <div *ngIf="category.value.length > sliderStates['interviews']" class="arrow-box-right arrow-right" (click)="scrollThumbnails('interviews', 'right')">
+              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita" class="cursor-pointer" />
+            </div>
           </div>
-
-          <!-- Box da seta para a direita -->
-          <div *ngIf="category.value.length > thumbnailsVisibleCount" class="arrow-box arrow-right"
-            (click)="scrollThumbnails(category.key, 'right')">
-            <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita"
-              class="cursor-pointer" />
-          </div>
-        </div>
-
-        <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-          <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-            class="w-full h-full max-w-[150px] max-h-[84px]"
-            (click)="onProgramClick(catalog.interviews.brasilEmQuestao)" (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'Brasil em Questão'"
-              src="../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
-          </div>
-
-          <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount, -1)"
-            class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.interviews.dialogos)"
-            (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'Diálogos'" src="../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
-          </div>
-          <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount, -1)"
-            class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.interviews.tirandoDeLetra)"
-            (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'Tirando de letra'"
-              src="../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
-          </div>
-          <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount, -1)"
-            class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.interviews.entrevistas)"
-            (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'UnBTV Entrevista'"
-              src="../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
-          </div>
-          <!-- Modificação feitas a partir daqui em "Entrevista" -->
-          <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-            class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.interviews.vastoMundo)"
-            (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'Vasto Mundo'" src="../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
-          </div>
-          <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-            class="w-full h-full max-w-[150px] max-h-[84px]"
-            (click)="onProgramClick(catalog.interviews.vozesDiplomaticas)" (keydown)="dummyKeyDown($event)">
-            <img alt="capa do programa 'Vozes Diplomáticas'"
-              src="../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg"
-              class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+          <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['interviews'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.brasilEmQuestao)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Brasil em Questão'"
+                   src="../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['interviews'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.dialogos)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Diálogos'" src="../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['interviews'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.tirandoDeLetra)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Tirando de letra'"
+                   src="../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['interviews'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.entrevistas)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'UnBTV Entrevista'"
+                   src="../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <!-- Outros blocos de thumbnails -->
+            <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['interviews'])"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.vastoMundo)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Vasto Mundo'" src="../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+            <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['interviews'])"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.interviews.vozesDiplomaticas)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Vozes Diplomáticas'" src="../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="center flex flex-col justify-center content-start flex-wrap gap-y-8 w-full max-w-3xl"></div>
-      <div *ngFor="let category of videoCatalog | keyvalue">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2">
-            <h4 class="text-start font-bold text-[13px] text-blue-brand">
-              Pesquisa e Ciência
-            </h4>
-            <!-- Box da seta para a esquerda -->
-            <div *ngIf="category.value.length < thumbnailsVisibleCount" class="arrow-box3 arrow-left"
-              (click)="scrollThumbnails(category.key, 'left')">
-              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda"
-                class="cursor-pointer" />
-            </div>
-
-            <!-- Box da seta para a direita -->
-            <div *ngIf="category.value.length > thumbnailsVisibleCount" class="arrow-box arrow-right"
-              (click)="scrollThumbnails(category.key, 'right')">
-              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita"
-                class="cursor-pointer" />
-            </div>
-          </div>
-
-          <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-            <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.expliqueSuaTese)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Explique sua Tese'"
-                src="../../../assets/imgs/catalog-thumbs/10.Explique-sua-Tese.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-
-            <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.fazendoCiencia)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Fazendo Ciência Formando Cientistas'"
-                src="../../../assets/imgs/catalog-thumbs/11.Fazendo-Ciencia-Formando-Cientistas.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-
-            <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.radarDaExtencao)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Radar da Extensão'"
-                src="../../../assets/imgs/catalog-thumbs/12.Radar-da-Extensao.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-
-            <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.seLigaNoPAS)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Se Liga no PAS'"
-                src="../../../assets/imgs/catalog-thumbs/13.Se-Liga-no-PAS.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-
-            <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.unbTvCiencia)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'UnBTV Ciência'" src="../../../assets/imgs/catalog-thumbs/14.UnBTV-Ciencia.png"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-
-            <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-              class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.researchAndScience.universidadeParaQue)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Universidade Para Quê?'"
-                src="../../../assets/imgs/catalog-thumbs/15.Universidade-Para-Que.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-          </div>
-        </div>
-
-
-
-        <div class="flex flex-col gap-2">
-          <h4 class="text-start font-bold text-[13px] text-blue-brand">
-            Arte e Cultura
-          </h4>
-          <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-            <div class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.artAndCulture.emCantos)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Em Cantos'" src="../../../assets/imgs/catalog-thumbs/16.Emcantos.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-            <div class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.artAndCulture.casaDoSom)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Casa do Som'" src="../../../assets/imgs/catalog-thumbs/17.Casa-do-Som.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-            <div class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.artAndCulture.esbocos)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Esboços'" src="../../../assets/imgs/catalog-thumbs/18.Esbocos.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-            <div class="w-full h-full max-w-[150px] max-h-[84px]"
-              (click)="onProgramClick(catalog.artAndCulture.exclusiva)" (keydown)="dummyKeyDown($event)">
-              <img alt="capa do programa 'Exclusiva'" src="../../../assets/imgs/catalog-thumbs/19.Exclusiva.jpg"
-                class="object-cover rounded-md cursor-pointer thumbnail" />
-            </div>
-          </div>
-        </div>
-
-        <div *ngFor="let category of videoCatalog | keyvalue">
+    </ng-container>
+    
+    <div class="center flex flex-col justify-center content-start flex-wrap gap-y-8 w-full max-w-3xl">
+      <ng-container *ngFor="let category of videoCatalog | keyvalue">
+        <!-- Apenas processa quando a chave for 'researchAndScience' -->
+        <div *ngIf="category.key === 'researchAndScience'">
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
               <h4 class="text-start font-bold text-[13px] text-blue-brand">
-                Séries Especiais
+                Pesquisa e Ciência
               </h4>
-
               <!-- Box da seta para a esquerda -->
-              <div *ngIf="category.value.length < thumbnailsVisibleCount" class="arrow-box4 arrow-left"
-                (click)="scrollThumbnails(category.key, 'left')">
-                <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda"
-                  class="cursor-pointer" />
+              <div *ngIf="category.value.length < sliderStates['researchAndScience']" class="arrow-box-left2 arrow-left" (click)="scrollThumbnails(category.key, 'left')">
+                <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda" class="cursor-pointer" />
               </div>
-
+    
               <!-- Box da seta para a direita -->
-              <div *ngIf="category.value.length > thumbnailsVisibleCount" class="arrow-box arrow-right"
-                (click)="scrollThumbnails(category.key, 'right')">
-                <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita"
-                  class="cursor-pointer" />
+              <div *ngIf="category.value.length > sliderStates['researchAndScience']" class="arrow-box-right arrow-right" (click)="scrollThumbnails(category.key, 'right')">
+                <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita" class="cursor-pointer" />
               </div>
             </div>
-
+    
             <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-              <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-                class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.florestaDeGente)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Floresta de Gente'"
-                  src="../../../assets/imgs/catalog-thumbs/20.Floresta-de-Gente.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+              <!-- Cada thumbnail sendo iterada individualmente -->
+              <div *ngFor="let thumbnail of category.value.slice(sliderStates['researchAndScience'], -1)"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.expliqueSuaTese)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'Explique sua Tese'"
+                     src="../../../assets/imgs/catalog-thumbs/10.Explique-sua-Tese.jpg"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
-
-              <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-                class="w-full h-full max-w-[150px] max-h-[84px]" class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.guiaDoCalouro)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Guia do Calouro'"
-                  src="../../../assets/imgs/catalog-thumbs/21.Guia-do-Calouro.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+              <div *ngFor="let thumbnail of category.value.slice(sliderStates['researchAndScience'], -1)"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.fazendoCiencia)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'Fazendo Ciência Formando Cientistas'"
+                     src="../../../assets/imgs/catalog-thumbs/11.Fazendo-Ciencia-Formando-Cientistas.jpg"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
-
-              <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-                class="w-full h-full max-w-[150px] max-h-[84px]" class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.memoriasPauloFreire)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Memórias de Paulo Freire'"
-                  src="../../../assets/imgs/catalog-thumbs/22.Memorias-de-Paulo-Freire.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+              <div *ngFor="let thumbnail of category.value.slice(sliderStates['researchAndScience'], -1)"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.radarDaExtencao)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'Radar da Extensão'"
+                     src="../../../assets/imgs/catalog-thumbs/12.Radar-da-Extensao.jpg"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
-
-              <div *ngFor="let thumbnail of category.value.slice(thumbnailsVisibleCount,-1)"
-                class="w-full h-full max-w-[150px] max-h-[84px]" class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.desafiosDasEleicoes)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Os desafios das eleições 2022'"
-                  src="../../../assets/imgs/catalog-thumbs/23.Os-desafios-das-eleicoes2022.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+              <div *ngFor="let thumbnail of category.value.slice(sliderStates['researchAndScience'], -1)"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.seLigaNoPAS)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'Se Liga no PAS'"
+                     src="../../../assets/imgs/catalog-thumbs/13.Se-Liga-no-PAS.jpg"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
-
-              <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-                class="w-full h-full max-w-[150px] max-h-[84px]" class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.vidaDeEstudante)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Podcast Vida de Estudante'"
-                  src="../../../assets/imgs/catalog-thumbs/24.Podcast-Vida-de-Estudante.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+              <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['researchAndScience'])"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.unbTvCiencia)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'UnBTV Ciência'"
+                     src="../../../assets/imgs/catalog-thumbs/14.UnBTV-Ciencia.png"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
-
-              <div *ngFor="let thumbnail of category.value.slice(-1, thumbnailsVisibleCount)"
-                class="w-full h-full max-w-[150px] max-h-[84px]" class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.specialSeries.arquiteturaICC)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Série Arquitetura'"
-                  src="../../../assets/imgs/catalog-thumbs/25.Serie-Arquitetura.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
-              </div>
-            </div>
-          </div>
-
-
-
-          <div class="flex flex-col gap-2">
-            <h4 class="text-start font-bold text-[13px] text-blue-brand">
-              Documentais
-            </h4>
-            <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-              <div class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.documentaries.miniDoc)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Mini Doc'" src="../../../assets/imgs/catalog-thumbs/26.Mini-Doc.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
-              </div>
-              <div class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.documentaries.documentaries)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Documentários'"
-                  src="../../../assets/imgs/catalog-thumbs/27.Documentarios.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
-              </div>
-            </div>
-          </div>
-
-
-          <div class="flex flex-col gap-2">
-            <h4 class="text-start font-bold text-[13px] text-blue-brand">Variedades</h4>
-            <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
-              <div class="w-full h-full max-w-[150px] max-h-[84px]"
-                (click)="onProgramClick(catalog.varieties.pitadasDoCerrado)" (keydown)="dummyKeyDown($event)">
-                <img alt="capa do programa 'Pitadas do Cerrado'"
-                  src="../../../assets/imgs/catalog-thumbs/28.Pitadas-do-Cerrado.jpg"
-                  class="object-cover rounded-md cursor-pointer thumbnail" />
+    
+              <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['researchAndScience'])"
+                   class="w-full h-full max-w-[150px] max-h-[84px]"
+                   (click)="onProgramClick(catalog.researchAndScience.universidadeParaQue)" (keydown)="dummyKeyDown($event)">
+                <img alt="capa do programa 'Universidade Para Quê?'"
+                     src="../../../assets/imgs/catalog-thumbs/15.Universidade-Para-Que.jpg"
+                     class="object-cover rounded-md cursor-pointer thumbnail" />
               </div>
             </div>
           </div>
         </div>
-
-        <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl"
-          *ngIf="filterTitle">
-          <div *ngFor="let video of filteredVideos" class="flex">
-            <div>
-              <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
-                <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px]" />
-              </div>
+      </ng-container>
+    </div>
+    
+    <div class="flex flex-col gap-2">
+      <h4 class="text-start font-bold text-[13px] text-blue-brand">
+        Arte e Cultura
+      </h4>
+      <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
+        <div class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.artAndCulture.emCantos)"
+          (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Em Cantos'" src="../../../assets/imgs/catalog-thumbs/16.Emcantos.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+        <div class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.artAndCulture.casaDoSom)"
+          (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Casa do Som'" src="../../../assets/imgs/catalog-thumbs/17.Casa-do-Som.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+        <div class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.artAndCulture.esbocos)"
+          (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Esboços'" src="../../../assets/imgs/catalog-thumbs/18.Esbocos.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+        <div class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.artAndCulture.exclusiva)"
+          (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Exclusiva'" src="../../../assets/imgs/catalog-thumbs/19.Exclusiva.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+      </div>
+    </div>
+   
+    <ng-container *ngFor="let category of videoCatalog | keyvalue">
+      <!-- Apenas processa quando a chave for 'specialSeries' -->
+      <div *ngIf="category.key === 'specialSeries'">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <h4 class="text-start font-bold text-[13px] text-blue-brand">
+              Séries Especiais
+            </h4>
+            <!-- Box da seta para a esquerda -->
+            <div *ngIf="category.value.length < sliderStates['specialSeries']" class="arrow-box-left3 arrow-left" (click)="scrollThumbnails(category.key, 'left')">
+              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915999.png" alt="Seta para a esquerda" class="cursor-pointer" />
+            </div>
+    
+            <!-- Box da seta para a direita -->
+            <div *ngIf="category.value.length > sliderStates['specialSeries']" class="arrow-box-right arrow-right" (click)="scrollThumbnails(category.key, 'right')">
+              <img src="https://cdn-icons-png.flaticon.com/128/11915/11915993.png" alt="Seta para a direita" class="cursor-pointer" />
+            </div>
+          </div>
+    
+          <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['specialSeries'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.florestaDeGente)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Floresta de Gente'"
+                   src="../../../assets/imgs/catalog-thumbs/20.Floresta-de-Gente.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['specialSeries'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.guiaDoCalouro)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Guia do Calouro'"
+                   src="../../../assets/imgs/catalog-thumbs/21.Guia-do-Calouro.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['specialSeries'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.memoriasPauloFreire)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Memórias de Paulo Freire'"
+                   src="../../../assets/imgs/catalog-thumbs/22.Memorias-de-Paulo-Freire.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(sliderStates['specialSeries'], -1)"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.desafiosDasEleicoes)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Os desafios das eleições 2022'"
+                   src="../../../assets/imgs/catalog-thumbs/23.Os-desafios-das-eleicoes2022.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['specialSeries'])"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.vidaDeEstudante)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Podcast Vida de Estudante'"
+                   src="../../../assets/imgs/catalog-thumbs/24.Podcast-Vida-de-Estudante.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
+            </div>
+    
+            <div *ngFor="let thumbnail of category.value.slice(-1, sliderStates['specialSeries'])"
+                 class="w-full h-full max-w-[150px] max-h-[84px]"
+                 (click)="onProgramClick(catalog.specialSeries.arquiteturaICC)" (keydown)="dummyKeyDown($event)">
+              <img alt="capa do programa 'Série Arquitetura'"
+                   src="../../../assets/imgs/catalog-thumbs/25.Serie-Arquitetura.jpg"
+                   class="object-cover rounded-md cursor-pointer thumbnail" />
             </div>
           </div>
         </div>
       </div>
+    </ng-container>
+    
+    <div class="flex flex-col gap-2">
+      <h4 class="text-start font-bold text-[13px] text-blue-brand">
+        Documentais
+      </h4>
+      <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
+        <div class="w-full h-full max-w-[150px] max-h-[84px]" (click)="onProgramClick(catalog.documentaries.miniDoc)"
+          (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Mini Doc'" src="../../../assets/imgs/catalog-thumbs/26.Mini-Doc.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+        <div class="w-full h-full max-w-[150px] max-h-[84px]"
+          (click)="onProgramClick(catalog.documentaries.documentaries)" (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Documentários'" src="../../../assets/imgs/catalog-thumbs/27.Documentarios.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex flex-col gap-2">
+      <h4 class="text-start font-bold text-[13px] text-blue-brand">Variedades</h4>
+      <div class="w-full flex flex-wrap justify-between gap-y-6 md:gap-x-2">
+        <div class="w-full h-full max-w-[150px] max-h-[84px]"
+          (click)="onProgramClick(catalog.varieties.pitadasDoCerrado)" (keydown)="dummyKeyDown($event)">
+          <img alt="capa do programa 'Pitadas do Cerrado'"
+            src="../../../assets/imgs/catalog-thumbs/28.Pitadas-do-Cerrado.jpg"
+            class="object-cover rounded-md cursor-pointer thumbnail" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="center flex justify-center content-start flex-wrap gap-2 w-full h-full max-w-3xl" *ngIf="filterTitle">
+    <div *ngFor="let video of filteredVideos" class="flex">
+      <div>
+        <div *ngFor="let image of video.images" [routerLink]="['/video', video.id]" class="cursor-pointer">
+          <img src="{{ image.href }}" alt="{{ video.title }}" class="w-36 h-[85px] rounded-[7px]" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
