@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UNB_TV_CHANNEL_ID } from 'src/app/app.constant';
@@ -27,33 +28,28 @@ export class CatalogComponent implements OnInit {
   isAuthenticated: boolean = false; // Propriedade pública para o estado de autenticação
   filterFavorite: boolean = false;
   favoriteVideos: IVideo[] = [];
-   // Definindo o número inicial de thumbnails visíveis
-   thumbnailsVisibleCount = 4;
-   
-   videoCatalog: {
+  // Definindo o número inicial de thumbnails visíveis
+  thumbnailsVisibleCount = 4;
+
+  videoCatalog: {
     [key: string]: { title: string; imageUrl: string }[];
-    } = {
-      journalism: [
-        { title: 'Fala, jovem', imageUrl: '../../../assets/imgs/catalog-thumbs/1.Fala-Jovem.jpg' },
-        { title: 'Informe UnB', imageUrl: '../../../assets/imgs/catalog-thumbs/2.Informe-UnB.jpg' },
-        { title: 'Zapping', imageUrl: '../../../assets/imgs/catalog-thumbs/3.Zapping.jpg' },
-      ],
+  } = {
       interviews: [
-      { title: 'Brasil em Questão', imageUrl: '../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg' },
-      { title: 'Diálogos', imageUrl: '../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg' },
-      { title: 'Tirando de Letra', imageUrl: '../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg' },
-      { title: 'UnBTV Entrevista', imageUrl: '../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg' },
-      { title: 'Vasto Mundo', imageUrl: '../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg' },
-      { title: 'Vozes Diplomáticas', imageUrl: '../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg' }
-    ]
-  };
+        { title: 'Brasil em Questão', imageUrl: '../../../assets/imgs/catalog-thumbs/4.Brasil-em-Questao.jpg' },
+        { title: 'Diálogos', imageUrl: '../../../assets/imgs/catalog-thumbs/5.Diálogos.jpg' },
+        { title: 'Tirando de Letra', imageUrl: '../../../assets/imgs/catalog-thumbs/6.Tirando-de-Letra.jpg' },
+        { title: 'UnBTV Entrevista', imageUrl: '../../../assets/imgs/catalog-thumbs/7.UnBTV-Entrevista.jpg' },
+        { title: 'Vasto Mundo', imageUrl: '../../../assets/imgs/catalog-thumbs/8.Vasto-Mundo.jpg' },
+        { title: 'Vozes Diplomáticas', imageUrl: '../../../assets/imgs/catalog-thumbs/9.Vozes-Diplomaticas.jpg' }
+      ]
+    };
 
   constructor(
     private videoService: VideoService,
     private router: Router,
     private authService: AuthService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
@@ -124,7 +120,7 @@ export class CatalogComponent implements OnInit {
     // Não faz nada
   }
 
-   // Método para controlar a exibição das thumbnails
+  // Método para controlar a exibição das thumbnails
   scrollThumbnails(categoryKey: string, direction: string): void {
     const maxThumbnails = this.videoCatalog[categoryKey].length; // Total de thumbnails dessa categoria
 
