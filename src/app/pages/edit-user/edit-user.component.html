@@ -11,7 +11,7 @@
       height: '2.25rem',
       textAlign: 'justify',
       alignItems: 'center',
-      display: 'flex'}" [options]="vinculo" optionLabel="name" formControlName="connection" [showClear]="true" placeholder="Vinculo"></p-dropdown>
+      display: 'flex'}" [options]="vinculo" optionLabel="name" optionValue="name" [(ngModel)]="selectedConnection" [showClear]="true" [placeholder]="selectedConnection ? selectedConnection : 'Vinculo'"  (onChange)="onDropdownChange($event)"></p-dropdown>
       </div>
     <button class="w-24 h-8 bg-blue-brand rounded-lg justify-center my-8 text-white" type="submit">Editar</button>
   </form>
