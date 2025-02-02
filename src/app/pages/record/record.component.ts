@@ -22,7 +22,7 @@ export class RecordComponent {
   recordVideos: any = {}; // Inicializado como um objeto vazio
   trackingEnabled: boolean = true; // Estado da checkbox de rastreamento
   isAscendingActive: boolean = false;
-  isDescendingActive: boolean = false;
+  isDescendingActive: boolean = true;
 
   constructor(private videoService: VideoService, private router: Router) {}
 
@@ -34,6 +34,7 @@ export class RecordComponent {
         await this.checkRecord();
         await this.findAll();  
         this.filterVideosByRecord();
+        this.sortRecord(false);
     } else {
         this.filteredVideos = []; // Se o rastreamento estiver desabilitado, não carregar os vídeos
     }

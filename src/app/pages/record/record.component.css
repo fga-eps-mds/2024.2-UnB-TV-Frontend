@@ -136,7 +136,9 @@
 }
 
 .record-controls button.active {
-    background-color: #51A452; /* Cor verde quando o botão está ativo */
+    background-color: #1f6395; /* Cor verde quando o botão está ativo */
     color: white;
     border-radius: 25px;
+    border: 2px solid #51A452; 
+    box-shadow: 0 0 5px rgba(35, 187, 85, 0.8); 
 }
