@@ -33,18 +33,28 @@ export class EditUserComponent implements OnInit {
     console.log(userId);
     this.userId = userId;
 
+    this.initializeForm();
     this.getUser();
     this.getVinculo();
-    this.initializeForm();
   }
 
   getUser() {
     this.userService.getUser(this.userId).subscribe({
       next: (data) => {
         this.userData = data;
-        if (this.userData) {
-          this.initializeForm();
+        if (this.userForm) {
+          this.userForm.patchValue({
+            name: this.userData.name,
+            email: this.userData.email,
+            connection: this.userData.connection,
+          });
+
+          this.selectedConnection = this.userData.connection;
+          this.userForm.get('connection')?.setValue(this.userData.connection);
+
         }
+
+        
       },
       error: (error: ErrorResponseType) => {
         this.alertService.errorMessage(error.error);
@@ -53,22 +63,11 @@ export class EditUserComponent implements OnInit {
   }
 
   initializeForm() {
-    this.selectedConnection = this.userData.connection;
     this.userForm = this.fb.group({
-      name: [this.userData ? this.userData.name : '', [Validators.required]],
-      email: [
-        this.userData ? this.userData.email : '',
-        [Validators.email, Validators.required],
-      ],
-      connection: [
-        this.userData ? this.userData.connection : '',
-        [Validators.required],
-      ],
+      name: ['', [Validators.required]],
+      email: ['', [Validators.email, Validators.required]],
+      connection: ['', [Validators.required]],
     });
-
-    if (this.userData?.connection) {
-      this.userForm.get('connection')?.setValue(this.userData.connection);
-    }
   }
 
   getVinculo() {
