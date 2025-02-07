@@ -1,5 +1,5 @@
 export const environment = {
-  apiURL: process.env["API_URL"] || "http://localhost:8080/api",
+  apiURL: process.env["API_URL"] ?? "http://localhost:8080/api",
   videoAPIURL: process.env["videoAPIURL"],
   usersAPIURL: process.env["usersAPIURL"],
   adminAPIURL: process.env["adminAPIURL"],
