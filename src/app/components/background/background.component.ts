@@ -116,7 +116,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
   }
 
   updateNotificationCount(response: any): void {
-    if (response?.recommend_videos) {
+    if (response?.recommend_videos && response.recommend_videos.length > 0) {
       const count = response.recommend_videos.length;
       console.log('Updating notification count with:', count);
       this.hasNotifications = count > 0;
