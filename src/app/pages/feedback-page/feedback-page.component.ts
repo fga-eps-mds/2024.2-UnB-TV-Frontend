@@ -38,19 +38,19 @@ export class FeedbackPageComponent implements OnInit {
         ['unbtv20241@gmail.com']
       );
 
-      console.log("Enviando Feedback:", JSON.stringify(feedbackData, null, 2));
+      
 
       this.isSendingEmail = true;
 
       this.feedbackService.sendFeedback(feedbackData).subscribe(
         (res: HttpResponse<string>) => {
-          console.log("Resposta do backend:", res);
+          
           this.alertService.showMessage("success", "Sucesso", "Feedback enviado com sucesso!");
           this.feedbackForm.reset();
           this.isSendingEmail = false; // Garante que o status é resetado no sucesso
         },
         (error: HttpErrorResponse) => {
-          console.error('Erro ao enviar feedback:', error);
+          
           this.alertService.showMessage("error", "Erro", 'Erro ao enviar: ' + error.message);
           this.isSendingEmail = false; // Agora também reseta em caso de erro
         }
