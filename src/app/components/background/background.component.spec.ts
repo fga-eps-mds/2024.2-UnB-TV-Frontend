@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MenuModule } from 'primeng/menu';
 import { NotificationService } from 'src/app/services/notification.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 
 describe('BackgroundComponent', () => {
   let component: BackgroundComponent;
@@ -50,6 +50,15 @@ describe('BackgroundComponent', () => {
     expect(notificationService.setUserIdFromToken).toHaveBeenCalled();
     expect(component.hasNotifications).toBeTrue(); // Verifica se as notificações foram atualizadas
   }));
+
+  it('should log "User is not authenticated" when user is not authenticated', () => {
+    (notificationService.isAuthenticated as jasmine.Spy).and.returnValue(false);
+    spyOn(console, 'log');
+
+    component.ngOnInit();
+
+    expect(console.log).toHaveBeenCalledWith('User is not authenticated');
+  });
 
   it('should correctly update the notification count', fakeAsync(() => {
     const response = { recommend_videos: [{}, {}, {}] };
@@ -111,5 +120,102 @@ describe('BackgroundComponent', () => {
     expect(document.documentElement.classList.contains('dark-theme')).toBeFalse();
     expect(component.isDarkMode).toBeFalse();
     expect(localStorage.getItem('theme')).toBe('light');
+  });
+
+  it('should add "dark-theme" class to document element when applyTheme is called with true', () => {
+    document.documentElement.classList.remove('dark-theme'); // Ensure the class is not present
+    expect(document.documentElement.classList.contains('dark-theme')).toBeFalse();
+
+    component.isDarkMode = true; // Defina isDarkMode como true
+    component.applyTheme();
+
+    expect(document.documentElement.classList.contains('dark-theme')).toBeTrue();
+  });
+  
+  it('should remove "dark-theme" class from document element when applyTheme is called with false', () => {
+    document.documentElement.classList.add('dark-theme'); // Ensure the class is present
+    expect(document.documentElement.classList.contains('dark-theme')).toBeTrue();
+
+    component.isDarkMode = false; // Defina isDarkMode como false
+    component.applyTheme();
+
+    expect(document.documentElement.classList.contains('dark-theme')).toBeFalse();
+  });
+  
+  it('should fetch recommended videos count at intervals', fakeAsync(() => {
+    const mockToken = 'mockToken';
+    const mockUserId = 'mockUserId';
+    const mockResponse = 5;
+    const mockCount = new BehaviorSubject<number>(0);
+
+    spyOn(localStorage, 'getItem').and.returnValue(mockToken);
+    (notificationService.isAuthenticated as jasmine.Spy).and.returnValue(true);
+    (notificationService.setUserIdFromToken as jasmine.Spy).and.callFake(() => {
+      notificationService.userId = mockUserId;
+    });
+    (notificationService.fetchRecommendedVideosCount as jasmine.Spy).and.returnValue(of(mockResponse));
+    notificationService.recommendedVideosCount$ = mockCount.asObservable();
+
+    spyOn(component, 'updateNotificationCount');
+    spyOn(component, 'updateNotificationLabel');
+
+    component.ngOnInit();
+
+    // Simula a passagem do tempo
+    tick(300000);
+
+    expect(notificationService.isAuthenticated).toHaveBeenCalled();
+    expect(localStorage.getItem).toHaveBeenCalledWith('token');
+    expect(notificationService.setUserIdFromToken).toHaveBeenCalledWith(mockToken);
+    expect(notificationService.fetchRecommendedVideosCount).toHaveBeenCalledWith(mockUserId);
+    expect(component.updateNotificationCount).toHaveBeenCalledWith(mockResponse);
+
+    // Simula a emissão de um novo valor pelo BehaviorSubject
+    mockCount.next(3);
+    tick();
+
+    expect(component.hasNotifications).toBeTrue();
+    expect(component.updateNotificationLabel).toHaveBeenCalled();
+
+    // Interrompendo qualquer timer ativo
+    component.ngOnDestroy();
+    tick(300000); // Avança o tempo para garantir que o timer foi limpo
+  })); 
+
+  it('should update notification count when there are recommended videos', () => {
+    const response = { recommend_videos: [{}, {}, {}] };
+    spyOn(console, 'log');
+    spyOn(component, 'updateNotificationLabel');
+
+    component.updateNotificationCount(response);
+
+    expect(console.log).toHaveBeenCalledWith('Updating notification count with:', 3);
+    expect(component.hasNotifications).toBeTrue();
+    expect(notificationService.updateRecommendedVideosCount).toHaveBeenCalledWith(3);
+    expect(component.updateNotificationLabel).toHaveBeenCalled();
+  });
+
+  it('should log "No videos found in response" and update notifications when no videos are found', () => {
+    const response = { recommend_videos: [] };
+    spyOn(console, 'log');
+    spyOn(component, 'updateNotificationLabel');
+
+    component.updateNotificationCount(response);
+
+    expect(console.log).toHaveBeenCalledWith('No videos found in response');
+    expect(component.hasNotifications).toBeFalse();
+    expect(component.updateNotificationLabel).toHaveBeenCalled();
+  });
+
+  it('should log "No videos found in response" and update notifications when response is null', () => {
+    const response = null;
+    spyOn(console, 'log');
+    spyOn(component, 'updateNotificationLabel');
+
+    component.updateNotificationCount(response);
+
+    expect(console.log).toHaveBeenCalledWith('No videos found in response');
+    expect(component.hasNotifications).toBeFalse();
+    expect(component.updateNotificationLabel).toHaveBeenCalled();
   });
 });
