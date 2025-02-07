@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EmailService } from 'src/app/services/email.service';
-import { EmailData } from 'src/shared/model/email.model';
+import { FeedbackService } from 'src/app/services/feedback.service';
+import { FeedbackData, IFeedbackData } from 'src/shared/model/feedback.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from 'src/app/services/alert.service';
 
@@ -17,7 +17,7 @@ export class FeedbackPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private emailService: EmailService,
+    private feedbackService: FeedbackService,
     private alertService: AlertService,
   ) {}
 
@@ -31,22 +31,25 @@ export class FeedbackPageComponent implements OnInit {
 
   sendFeedback(): void {
     if (this.feedbackForm.valid) {
-      const emailData = new EmailData();
-      emailData.tema = this.feedbackForm.value.tema;
-      emailData.descricao = this.feedbackForm.value.descricao;
-      emailData.email_contato = this.feedbackForm.value.emailContato || "";
-      const emailUnB = 'unbtv20241@gmail.com';
-      emailData.recipients = [emailUnB];
+      const feedbackData = new FeedbackData(
+        this.feedbackForm.value.tema,
+        this.feedbackForm.value.descricao,
+        this.feedbackForm.value.emailContato || "",
+        ['unbtv20241@gmail.com']
+      );
 
-      console.log("Enviando Feedback:", JSON.stringify(emailData, null, 2));
+      console.log("Enviando Feedback:", JSON.stringify(feedbackData, null, 2));
 
       this.isSendingEmail = true;
-      this.emailService.sendEmail(emailData).subscribe(
+
+      this.feedbackService.sendFeedback(feedbackData).subscribe(
         (res: HttpResponse<string>) => {
+          console.log("Resposta do backend:", res);
           this.alertService.showMessage("success", "Sucesso", "Feedback enviado com sucesso!");
           this.feedbackForm.reset();
         },
         (error: HttpErrorResponse) => {
+          console.error('Erro ao enviar feedback:', error);
           this.alertService.showMessage("error", "Erro", 'Erro ao enviar: ' + error.message);
         },
         () => {
