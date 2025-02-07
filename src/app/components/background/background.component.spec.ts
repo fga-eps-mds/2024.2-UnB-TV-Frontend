@@ -92,4 +92,24 @@ describe('BackgroundComponent', () => {
     component.ngOnDestroy();
     expect(unsubscribeSpy).toHaveBeenCalled();
   });
+
+  it('should toggle dark mode', () => {
+    // Simula a ativação do modo escuro
+    let isChecked = true;
+    let event = { target: { checked: isChecked } } as unknown as Event;
+
+    component.toggleDarkMode(event);
+    expect(document.documentElement.classList.contains('dark-theme')).toBeTrue();
+    expect(component.isDarkMode).toBeTrue();
+    expect(localStorage.getItem('theme')).toBe('dark');
+
+    // Simula a desativação do modo escuro
+    isChecked = false;
+    event = { target: { checked: isChecked } } as unknown as Event;
+
+    component.toggleDarkMode(event);
+    expect(document.documentElement.classList.contains('dark-theme')).toBeFalse();
+    expect(component.isDarkMode).toBeFalse();
+    expect(localStorage.getItem('theme')).toBe('light');
+  });
 });
