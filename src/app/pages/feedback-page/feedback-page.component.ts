@@ -47,13 +47,12 @@ export class FeedbackPageComponent implements OnInit {
           console.log("Resposta do backend:", res);
           this.alertService.showMessage("success", "Sucesso", "Feedback enviado com sucesso!");
           this.feedbackForm.reset();
+          this.isSendingEmail = false; // Garante que o status é resetado no sucesso
         },
         (error: HttpErrorResponse) => {
           console.error('Erro ao enviar feedback:', error);
           this.alertService.showMessage("error", "Erro", 'Erro ao enviar: ' + error.message);
-        },
-        () => {
-          this.isSendingEmail = false;
+          this.isSendingEmail = false; // Agora também reseta em caso de erro
         }
       );
     } else {
