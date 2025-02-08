@@ -66,6 +66,25 @@ describe('CatalogComponent', () => {
     expect(component.findAll).toHaveBeenCalled();
   });
 
+  it('should call setUserIdFromToken when token is available', () => {
+    spyOn(component, 'setUserIdFromToken').and.callThrough();
+    localStorage.setItem('token', 'mock-token');
+    component.ngOnInit();
+    expect(component.setUserIdFromToken).toHaveBeenCalledWith('mock-token');
+  });
+
+  it('should handle invalid token in setUserIdFromToken', () => {
+    spyOn(console, 'error');
+    component.setUserIdFromToken(null);
+    expect(console.error).toHaveBeenCalledWith('Token inválido');
+  });
+
+  it('should handle error in setUserIdFromToken', () => {
+    spyOn(console, 'error');
+    component.setUserIdFromToken('invalid-token');
+    expect(console.error).toHaveBeenCalledWith('Erro ao decodificar token:', jasmine.any(Error));
+  });
+
   it('should populate videosEduplay and unbTvVideos on findAll success', () => {
     const videos: IVideo[] = [
       { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
@@ -93,6 +112,16 @@ describe('CatalogComponent', () => {
     component.filterTitle = 'Angular';
     component.filterVideos();
     expect(component.filteredVideos).toEqual([component.unbTvVideos[0]]);
+  });
+
+  it('should filter videos by channel in filterVideosByChannel', () => {
+    const videos: IVideo[] = [
+      { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Video 2', channels: [{ id: 2, name: 'other' }] }
+    ];
+    component.filterVideosByChannel(videos);
+    expect(component.unbTvVideos.length).toBe(1);
+    expect(component.unbTvVideos[0].id).toBe(1);
   });
 
   it('should navigate to /videos on program click', () => {
