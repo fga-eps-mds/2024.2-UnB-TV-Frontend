@@ -67,9 +67,14 @@
   color: #333;
 }
 
-.arrow-box {
-  display: none; /* Inicialmente, esconde as setas */
+.arrow-box-right,
+.arrow-box-left,
+.arrow-box-left2,
+.arrow-box-left3 {
+  display: none;
 }
+
+/* Ocultaas setas em resoluções pra mobile
 
 /* Media Query para dispositivos maiores que tablet/desktop (opcional) */
 @media (min-width: 768px) {
@@ -101,149 +106,156 @@
     /* Adiciona um pequeno espaçamento acima da thumbnail */
   }
 
-.arrow-container {
-  display: flex;
-  justify-content: flex-end; /* Alinha à direita */
-  align-items: center; /* Centraliza verticalmente */
-  gap: 20px; /* Espaçamento entre as setas */
-  margin-right: 20px; /* Ajusta a posição mais à direita */
-}
+  .arrow-container {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinha à direita */
+    align-items: center;
+    /* Centraliza verticalmente */
+    gap: 20px;
+    /* Espaçamento entre as setas */
+    margin-right: 20px;
+    /* Ajusta a posição mais à direita */
+  }
 
-.arrow-box-right {
-  padding: 3px;
-  border-radius: 14px;
-  background-color: rgba(153, 153, 153, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  margin-left: auto; /* Adiciona margem automática para empurrar */
-}
+  .arrow-box-right {
+    padding: 3px;
+    border-radius: 14px;
+    background-color: rgba(153, 153, 153, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+    /* Adiciona margem automática para empurrar */
+  }
 
-.arrow-box-right img {
-  width: 1.25rem;
-  /* Tamanho das setas */
-  height: 1.25rem;
-  cursor: pointer;
-  filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Cor da seta */
-  transition: filter 0.3s ease;
-  flex-shrink: 0;
-  /* Impede que a seta encolha */
-}
+  .arrow-box-right img {
+    width: 1.25rem;
+    /* Tamanho das setas */
+    height: 1.25rem;
+    cursor: pointer;
+    filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Cor da seta */
+    transition: filter 0.3s ease;
+    flex-shrink: 0;
+    /* Impede que a seta encolha */
+  }
 
-.arrow-box-right:hover {
-  background-color: rgba(104, 104, 104, 0.5);
-  /* Aumenta a opacidade do fundo ao passar o mouse */
-}
+  .arrow-box-right:hover {
+    background-color: rgba(104, 104, 104, 0.5);
+    /* Aumenta a opacidade do fundo ao passar o mouse */
+  }
 
-.arrow-box-right:hover img {
-  filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Ajusta o brilho ao passar o mouse */
-}
-.arrow-box-left {
-  padding: 3px;
-  border-radius: 14px;
-  background-color: rgba(153, 153, 153, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  margin-left: -145px;
-}
+  .arrow-box-right:hover img {
+    filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Ajusta o brilho ao passar o mouse */
+  }
 
-.arrow-box-left img {
-  width: 1.25rem;
-  /* Tamanho das setas */
-  height: 1.25rem;
-  cursor: pointer;
-  filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Cor da seta */
-  transition: filter 0.3s ease;
-  flex-shrink: 0;
-  /* Impede que a seta encolha */
-}
+  .arrow-box-left {
+    padding: 3px;
+    border-radius: 14px;
+    background-color: rgba(153, 153, 153, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    margin-left: -145px;
+  }
 
-.arrow-box-left:hover {
-  background-color: rgba(104, 104, 104, 0.5);
-  /* Aumenta a opacidade do fundo ao passar o mouse */
-}
+  .arrow-box-left img {
+    width: 1.25rem;
+    /* Tamanho das setas */
+    height: 1.25rem;
+    cursor: pointer;
+    filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Cor da seta */
+    transition: filter 0.3s ease;
+    flex-shrink: 0;
+    /* Impede que a seta encolha */
+  }
 
-.arrow-box-left:hover img {
-  filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Ajusta o brilho ao passar o mouse */
-}
-.arrow-box-left2 {
-  padding: 3px;
-  border-radius: 14px;
-  background-color: rgba(153, 153, 153, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  margin-left: -190px;
-}
+  .arrow-box-left:hover {
+    background-color: rgba(104, 104, 104, 0.5);
+    /* Aumenta a opacidade do fundo ao passar o mouse */
+  }
 
-.arrow-box-left2 img {
-  width: 1.25rem;
-  /* Tamanho das setas */
-  height: 1.25rem;
-  cursor: pointer;
-  filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Cor da seta */
-  transition: filter 0.3s ease;
-  flex-shrink: 0;
-  /* Impede que a seta encolha */
-}
+  .arrow-box-left:hover img {
+    filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Ajusta o brilho ao passar o mouse */
+  }
 
-.arrow-box-left2:hover {
-  background-color: rgba(104, 104, 104, 0.5);
-  /* Aumenta a opacidade do fundo ao passar o mouse */
-}
+  .arrow-box-left2 {
+    padding: 3px;
+    border-radius: 14px;
+    background-color: rgba(153, 153, 153, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    margin-left: -190px;
+  }
 
-.arrow-box-left2:hover img {
-  filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Ajusta o brilho ao passar o mouse */
-}
+  .arrow-box-left2 img {
+    width: 1.25rem;
+    /* Tamanho das setas */
+    height: 1.25rem;
+    cursor: pointer;
+    filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Cor da seta */
+    transition: filter 0.3s ease;
+    flex-shrink: 0;
+    /* Impede que a seta encolha */
+  }
 
-.arrow-box-left3 {
-  padding: 3px;
-  border-radius: 14px;
-  background-color: rgba(153, 153, 153, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  margin-left: -180px;
-}
+  .arrow-box-left2:hover {
+    background-color: rgba(104, 104, 104, 0.5);
+    /* Aumenta a opacidade do fundo ao passar o mouse */
+  }
 
-.arrow-box-left3 img {
-  width: 1.25rem;
-  /* Tamanho das setas */
-  height: 1.25rem;
-  cursor: pointer;
-  filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Cor da seta */
-  transition: filter 0.3s ease;
-  flex-shrink: 0;
-  /* Impede que a seta encolha */
-}
+  .arrow-box-left2:hover img {
+    filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Ajusta o brilho ao passar o mouse */
+  }
 
-.arrow-box-left3:hover {
-  background-color: rgba(104, 104, 104, 0.5);
-  /* Aumenta a opacidade do fundo ao passar o mouse */
-}
+  .arrow-box-left3 {
+    padding: 3px;
+    border-radius: 14px;
+    background-color: rgba(153, 153, 153, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    margin-left: -180px;
+  }
 
-.arrow-box-left3:hover img {
-  filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
-  /* Ajusta o brilho ao passar o mouse */
-}
+  .arrow-box-left3 img {
+    width: 1.25rem;
+    /* Tamanho das setas */
+    height: 1.25rem;
+    cursor: pointer;
+    filter: grayscale(100%) brightness(0.6) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Cor da seta */
+    transition: filter 0.3s ease;
+    flex-shrink: 0;
+    /* Impede que a seta encolha */
+  }
 
-.flex.items-center {
-  display: flex;
-  justify-content: flex-start;
-  /* Alinha o título à esquerda */
-  width: 100%;
-  /* Garante que o título ocupe o espaço disponível */
-}
+  .arrow-box-left3:hover {
+    background-color: rgba(104, 104, 104, 0.5);
+    /* Aumenta a opacidade do fundo ao passar o mouse */
+  }
+
+  .arrow-box-left3:hover img {
+    filter: grayscale(100%) brightness(0.7) contrast(100%) sepia(100%) hue-rotate(180deg);
+    /* Ajusta o brilho ao passar o mouse */
+  }
+
+  .flex.items-center {
+    display: flex;
+    justify-content: flex-start;
+    /* Alinha o título à esquerda */
+    width: 100%;
+    /* Garante que o título ocupe o espaço disponível */
+  }
 }
