@@ -1,0 +1,25 @@
+<div class="containner">
+    <h2>Selecione o tipo do feedback abaixo</h2>
+    <form [formGroup]="feedbackForm" (ngSubmit)="sendFeedback()">
+        <select formControlName="tema" class="input-field" required>
+            <option value="" disabled selected>Tema *</option>
+            <option value="elogio">Elogio</option>
+            <option value="sugestao">Sugestão</option>
+            <option value="problema">Problema</option>
+        </select>
+
+        <textarea formControlName="descricao" class="input-field" placeholder="Descrição *" required>
+        </textarea>
+
+        <input type="email" formControlName="emailContato" class="input-field"
+            placeholder="E-mail para contato (Opcional)">
+
+        <p style="color: #969696; text-align: left; margin-left: 30px">
+            <small>*Campo obrigatório</small>
+        </p>
+
+        <button type="submit" class="submit-button" [disabled]="isSendingEmail">
+            {{ isSendingEmail ? 'Enviando...' : 'Enviar' }}
+        </button>
+    </form>
+</div>

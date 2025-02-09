@@ -1,1 +1,15 @@
-/* Arquivo vazio */
+html, body {
+    height: 100vh; /* Define a altura igual à altura total da tela */
+    overflow: hidden; /* Impede a rolagem */
+    margin: 0;
+    padding: 0;
+    
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Garante que o conteúdo ocupe toda a tela */
+    position: fixed;
+}

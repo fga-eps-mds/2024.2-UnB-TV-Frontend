@@ -143,4 +143,6 @@ export class ProfileComponent {
     let str = value.toLowerCase();
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-}
+  navigatorFeedback() {
+    this.router.navigate(['/feedback-page']); // Certifique-se de que essa rota está correta
+  }}

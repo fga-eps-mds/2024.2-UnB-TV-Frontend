@@ -25,7 +25,7 @@
 
   <div class="flex flex-initial flex-col gap-4 text-[11px] text-blue-brand">
 
-  <button id="acessaAdmin" class="rounded-lg" (click)="acessoAdmin()" *ngIf="canShowAdminButton">
+    <button id="acessaAdmin" class="rounded-lg" (click)="acessoAdmin()" *ngIf="canShowAdminButton">
       Administração
     </button>
 
@@ -36,6 +36,15 @@
     <button id="changePassword">Alterar senha</button>
 
     <button id="logout" (click)="logoutUser()">Sair</button>
-  </div>
+   
 
+  
+    <button id="editUser" class="w-full h-[40px] max-w-[300px] bg-blue-brand rounded-lg text-white mt-[200px] text-1xl"
+    (click)="navigatorFeedback()" >
+    Deixe seu Feedback
+</button>
+
+    
+
+  </div>
 </div>
