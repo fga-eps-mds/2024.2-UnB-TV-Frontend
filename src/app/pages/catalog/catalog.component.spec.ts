@@ -5,8 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { IVideo } from 'src/shared/model/video.model';
 import { FormsModule } from '@angular/forms';
+import { IVideo } from 'src/shared/model/video.model';
 
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
@@ -20,9 +20,7 @@ describe('CatalogComponent', () => {
     videoServiceMock = {
       findAll: jasmine.createSpy('findAll').and.returnValue(of({ body: { videoList: [] } })),
       videosCatalog: jasmine.createSpy('videosCatalog'),
-      setVideosCatalog: jasmine.createSpy('setVideosCatalog'),
-      getFavoriteVideos: jasmine.createSpy('getFavoriteVideos').and.returnValue(of({ videoList: [] })),
-      getWatchLaterVideos: jasmine.createSpy('getWatchLaterVideos').and.returnValue(of({ videoList: [] }))
+      setVideosCatalog: jasmine.createSpy('setVideosCatalog')
     };
 
     authServiceMock = {
@@ -49,7 +47,6 @@ describe('CatalogComponent', () => {
     }).compileComponents();
   });
 
-
   beforeEach(() => {
     fixture = TestBed.createComponent(CatalogComponent);
     component = fixture.componentInstance;
@@ -69,6 +66,25 @@ describe('CatalogComponent', () => {
     expect(component.findAll).toHaveBeenCalled();
   });
 
+  it('should call setUserIdFromToken when token is available', () => {
+    spyOn(component, 'setUserIdFromToken').and.callThrough();
+    localStorage.setItem('token', 'mock-token');
+    component.ngOnInit();
+    expect(component.setUserIdFromToken).toHaveBeenCalledWith('mock-token');
+  });
+
+  it('should handle invalid token in setUserIdFromToken', () => {
+    spyOn(console, 'error');
+    component.setUserIdFromToken(null);
+    expect(console.error).toHaveBeenCalledWith('Token inválido');
+  });
+
+  it('should handle error in setUserIdFromToken', () => {
+    spyOn(console, 'error');
+    component.setUserIdFromToken('invalid-token');
+    expect(console.error).toHaveBeenCalledWith('Erro ao decodificar token:', jasmine.any(Error));
+  });
+
   it('should populate videosEduplay and unbTvVideos on findAll success', () => {
     const videos: IVideo[] = [
       { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
@@ -76,20 +92,16 @@ describe('CatalogComponent', () => {
     ];
 
     videoServiceMock.findAll.and.returnValue(of({ body: { videoList: videos } }));
-
     component.findAll();
-
     expect(component.videosEduplay.length).toBe(2);
     expect(component.videosEduplay[0].id).toBe(1);
   });
 
   it('should log error on findAll error', () => {
     spyOn(console, 'log');
-    videoServiceMock.findAll.and.returnValue(throwError('Error'));
-
+    videoServiceMock.findAll.and.returnValue(throwError(() => new Error('Error')));
     component.findAll();
-
-    expect(console.log).toHaveBeenCalledWith('Error');
+    expect(console.log).toHaveBeenCalledWith(new Error('Error'));
   });
 
   it('should filter videos based on filterTitle', () => {
@@ -97,11 +109,19 @@ describe('CatalogComponent', () => {
       { id: 1, title: 'Angular', description: '', keywords: '', catalog: '' },
       { id: 2, title: 'React', description: '', keywords: '', catalog: '' }
     ];
-
     component.filterTitle = 'Angular';
     component.filterVideos();
-
     expect(component.filteredVideos).toEqual([component.unbTvVideos[0]]);
+  });
+
+  it('should filter videos by channel in filterVideosByChannel', () => {
+    const videos: IVideo[] = [
+      { id: 1, title: 'Video 1', channels: [{ id: 1, name: 'unbtv' }] },
+      { id: 2, title: 'Video 2', channels: [{ id: 2, name: 'other' }] }
+    ];
+    component.filterVideosByChannel(videos);
+    expect(component.unbTvVideos.length).toBe(1);
+    expect(component.unbTvVideos[0].id).toBe(1);
   });
 
   it('should navigate to /videos on program click', () => {
@@ -109,5 +129,41 @@ describe('CatalogComponent', () => {
     component.onProgramClick(videos);
     expect(videoServiceMock.setVideosCatalog).toHaveBeenCalledWith(videos);
     expect(routerMock.navigate).toHaveBeenCalledWith(['/videos']);
+  });
+
+  it('should return the max number of thumbnails for a section', () => {
+    component.videoCatalog = {
+      interviews: [
+        { title: 'Entrevista 1', imageUrl: 'img1.jpg' },
+        { title: 'Entrevista 2', imageUrl: 'img2.jpg' }
+      ]
+    };
+    expect(component.getMaxThumbnailsForSection('interviews')).toBe(2);
+  });
+
+  it('should increase sliderState when scrolling right', () => {
+    component.videoCatalog = { interviews: new Array(6).fill({}) };
+    component.sliderStates = { interviews: 4 };
+    component.scrollThumbnails('interviews', 'right');
+    expect(component.sliderStates['interviews']).toBe(6);
+  });
+
+  it('should not exceed max thumbnails when scrolling right', () => {
+    component.videoCatalog = { interviews: new Array(6).fill({}) };
+    component.sliderStates = { interviews: 6 };
+    component.scrollThumbnails('interviews', 'right');
+    expect(component.sliderStates['interviews']).toBe(6);
+  });
+
+  it('should decrease sliderState when scrolling left', () => {
+    component.sliderStates = { interviews: 8 };
+    component.scrollThumbnails('interviews', 'left');
+    expect(component.sliderStates['interviews']).toBe(4);
+  });
+
+  it('should not decrease below the minimum when scrolling left', () => {
+    component.sliderStates = { interviews: 4 };
+    component.scrollThumbnails('interviews', 'left');
+    expect(component.sliderStates['interviews']).toBe(4);
   });
 });
