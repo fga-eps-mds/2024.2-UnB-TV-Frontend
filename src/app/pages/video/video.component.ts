@@ -23,13 +23,12 @@ export class VideoComponent implements OnInit {
   eduplayVideoUrl = "https://eduplay.rnp.br/portal/video/embed/";
   isWatchLater: boolean;
   isDesktop: boolean = false;
-
   constructor(
-    private videoService: VideoService,
-    private router: Router,
-    private alertService: AlertService,
-    private authService: AuthService,
-    private userService: UserService
+    public videoService: VideoService,
+    public router: Router,
+    public alertService: AlertService,
+    public authService: AuthService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {

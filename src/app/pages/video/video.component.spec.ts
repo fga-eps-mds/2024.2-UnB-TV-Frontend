@@ -7,6 +7,9 @@ import { VideoComponent } from './video.component';
 import { VideoService } from '../../services/video.service';
 import { IVideo } from 'src/shared/model/video.model';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { AlertService } from '../../services/alert.service';
 
 const mockData: IVideo[] = [
   {
@@ -160,6 +163,14 @@ class VideoServiceMock {
   getVideosCatalog() {
     return of(mockData);
   }
+
+  addToFavorite(videoId: string, userId: string) {
+    return of({});
+  }
+
+  removeFromFavorite(videoId: string, userId: string) {
+    return of({});
+  }
 }
 
 describe('VideoComponent', () => {
@@ -172,8 +183,12 @@ describe('VideoComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
       imports: [HttpClientTestingModule],
-      providers: [{ provide: VideoService, useValue: new VideoServiceMock() },
-                  MessageService,
+      providers: [
+        { provide: VideoService, useClass: VideoServiceMock },
+        MessageService,
+        AuthService,
+        UserService,
+        AlertService
       ],
     }).compileComponents();
 
@@ -213,5 +228,122 @@ describe('VideoComponent', () => {
     const navigateSpy = spyOn(router, 'navigate');
     component.returnToCatalog();
     expect(navigateSpy).toHaveBeenCalledWith(['/catalog']);
+  });
+
+  it('should call getVideos on ngOnInit', () => {
+    spyOn(component, 'getVideos');
+    component.ngOnInit();
+    expect(component.getVideos).toHaveBeenCalled();
+  });
+
+  it('should set isDesktop based on window width on ngOnInit', () => {
+    spyOnProperty(window, 'innerWidth').and.returnValue(1024);
+    component.ngOnInit();
+    expect(component.isDesktop).toBeTrue();
+  });
+
+  it('should set iframe src if iframe and idVideo are present on ngOnInit', () => {
+    component.idVideo = 12345;
+    const iframe = document.createElement('iframe');
+    iframe.id = 'embeddedVideo';
+    document.body.appendChild(iframe);
+    component.ngOnInit();
+    expect(iframe.src).toBe(`${component.eduplayVideoUrl}${component.idVideo}`);
+    document.body.removeChild(iframe);
+  });
+
+  it('should call setUserIdFromToken and getUserDetails if authenticated on ngOnInit', () => {
+    spyOn(component.authService, 'isAuthenticated').and.returnValue(true);
+    spyOn(component, 'setUserIdFromToken');
+    spyOn(component, 'getUserDetails');
+    spyOn(localStorage, 'getItem').and.returnValue('mockToken');
+    component.ngOnInit();
+    expect(component.setUserIdFromToken).toHaveBeenCalledWith('mockToken');
+    expect(component.getUserDetails).toHaveBeenCalled();
+  });
+
+  it('should not call setUserIdFromToken and getUserDetails if not authenticated on ngOnInit', () => {
+    spyOn(component.authService, 'isAuthenticated').and.returnValue(false);
+    spyOn(component, 'setUserIdFromToken');
+    spyOn(component, 'getUserDetails');
+    component.ngOnInit();
+    expect(component.setUserIdFromToken).not.toHaveBeenCalled();
+    expect(component.getUserDetails).not.toHaveBeenCalled();
+  });
+
+  it('should call getUserDetails and set user details correctly', () => {
+    const mockUser = { id: '123', name: 'John Doe' };
+    spyOn(component.userService, 'getUser').and.returnValue(of(mockUser));
+    spyOn(component, 'checkFavorites');
+    spyOn(component, 'checkWatchLater');
+
+    component.getUserDetails();
+
+    expect(component.userService.getUser).toHaveBeenCalledWith(component.userId);
+    expect(component.user).toEqual(mockUser);
+    expect(component.checkFavorites).toHaveBeenCalled();
+    expect(component.checkWatchLater).toHaveBeenCalled();
+  });
+
+  it('should handle error when getUserDetails fails', () => {
+    const consoleSpy = spyOn(console, 'error');
+    spyOn(component.userService, 'getUser').and.returnValue(throwError(() => new Error('Error fetching user details')));
+
+    component.getUserDetails();
+
+    expect(component.userService.getUser).toHaveBeenCalledWith(component.userId);
+    expect(consoleSpy).toHaveBeenCalledWith('Error fetching user details', jasmine.any(Error));
+  });
+
+  it('should toggle favorite status and call addToFavorite when video is not favorited', () => {
+    const video: IVideo = { id: 1, isFavorited: false } as IVideo;
+    spyOn(component.videoService, 'addToFavorite').and.returnValue(of({}));
+    spyOn(component.alertService, 'showMessage');
+
+    component.toggleFavorite(video);
+
+    expect(video.isFavorited).toBeTrue();
+    expect(component.videoService.addToFavorite).toHaveBeenCalledWith('1', component.userId);
+    expect(component.alertService.showMessage).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo adicionado à lista de Favoritos');
+  });
+
+  it('should toggle favorite status and call removeFromFavorite when video is favorited', () => {
+    const video: IVideo = { id: 1, isFavorited: true } as IVideo;
+    spyOn(component.videoService, 'removeFromFavorite').and.returnValue(of({}));
+    spyOn(component.alertService, 'showMessage');
+
+    component.toggleFavorite(video);
+
+    expect(video.isFavorited).toBeFalse();
+    expect(component.videoService.removeFromFavorite).toHaveBeenCalledWith('1', component.userId);
+    expect(component.alertService.showMessage).toHaveBeenCalledWith('success', 'Sucesso', 'Vídeo removido da lista de Favoritos');
+  });
+
+  it('should handle error when adding to favorite fails', () => {
+    const video: IVideo = { id: 1, isFavorited: false } as IVideo;
+    spyOn(component.videoService, 'addToFavorite').and.returnValue(throwError(() => new Error('Error')));
+    spyOn(component.alertService, 'showMessage');
+    spyOn(console, 'error');
+
+    component.toggleFavorite(video);
+
+    expect(video.isFavorited).toBeTrue();
+    expect(component.videoService.addToFavorite).toHaveBeenCalledWith('1', component.userId);
+    expect(component.alertService.showMessage).toHaveBeenCalledWith('error', 'Erro', 'Erro ao adicionar o vídeo para lista de favoritos');
+    expect(console.error).toHaveBeenCalledWith('Error adding to favorite', jasmine.any(Error));
+  });
+
+  it('should handle error when removing from favorite fails', () => {
+    const video: IVideo = { id: 1, isFavorited: true } as IVideo;
+    spyOn(component.videoService, 'removeFromFavorite').and.returnValue(throwError(() => new Error('Error')));
+    spyOn(component.alertService, 'showMessage');
+    spyOn(console, 'error');
+
+    component.toggleFavorite(video);
+
+    expect(video.isFavorited).toBeFalse();
+    expect(component.videoService.removeFromFavorite).toHaveBeenCalledWith('1', component.userId);
+    expect(component.alertService.showMessage).toHaveBeenCalledWith('error', 'Erro', 'Erro ao remover o vídeo da lista de favoritos');
+    expect(console.error).toHaveBeenCalledWith('Error removing from favorite', jasmine.any(Error));
   });
 });
